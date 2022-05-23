@@ -1,0 +1,10 @@
+todolist: 	deadlines
+		taken ordenen naar themas
+		prioriteiten zetten
+		puntensysteem voor afvinken taken
+		attributen vrijspelen
+		mailen voor verwittigen
+boodschappen
+projecten
+achtergronden instellen
+lijsten delen met anderen
