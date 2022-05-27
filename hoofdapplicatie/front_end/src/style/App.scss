@@ -1,0 +1,178 @@
+@use "./base/reset";
+@use "./base/extends";
+@use "./base/variables" as *;
+@use "./base/fonts" as *;
+@use "./base/mixins" as *;
+@use "./base/icons.scss";
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/utilities";
+@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
+
+body {
+  font-family: "Permanent Marker", Helvetica, sans-serif;
+  background-color: #eff;
+}
+
+* {
+  font-family: "Permanent Marker";
+}
+
+.container {
+  padding: 10px 20px;
+  &__title {
+    font-size: 20px;
+    margin: 0 0 20px 10px;
+  }
+}
+
+.navigation {
+  margin-top: 10px;
+  padding-right: 10px;
+  &__textlabel {
+    display: flex;
+    justify-content: flex-end;
+    gap: 50px;
+    &__switch {
+    }
+  }
+}
+.header {
+  background-color: lightblue;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  &__panel {
+    display: flex;
+    justify-content: space-between;
+    &__title {
+      margin: 10px;
+      font-size: 25px;
+      font-weight: bolder;
+      color: $cyan-800;
+    }
+    &__config {
+      margin: 5px;
+      padding: 7.5px;
+      &__sublink {
+        display: block;
+        color: black;
+
+        &:hover {
+          transition: 2s;
+          color: gray;
+        }
+        &:after {
+          content: "\e995";
+          font-family: "icomoon";
+          font-size: 22px;
+          visibility: visible;
+        }
+        &__text {
+          position: absolute;
+          left: -10000px;
+        }
+      }
+    }
+  }
+  &__todoform {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    &__label {
+      text-align: center;
+
+      &__todoinput {
+        margin-top: 10px;
+        height: 20px;
+        width: 225px;
+        font-size: 16px;
+      }
+    }
+    &__addtodo {
+      position: relative;
+      aspect-ratio: 1/1;
+      width: 40px;
+
+      background-color: transparent;
+      border-color: transparent;
+      color: white;
+      &:after {
+        content: "\ea0a";
+        font-family: "icomoon";
+        font-size: 20px;
+      }
+      &:hover {
+        color: black;
+      }
+
+      &__text {
+        position: absolute;
+        left: -10000px;
+      }
+    }
+  }
+}
+
+.todolist {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  &__item {
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+  }
+}
+
+.todo {
+  &__title {
+  }
+}
+
+.login {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  &__block {
+    display: flex;
+    flex-direction: column;
+    &__title {
+      margin: 30px 0 30px 0;
+      text-align: center;
+    }
+    &__text {
+      text-align: center;
+      padding: 15px;
+      font-size: 14px;
+      margin: 30px;
+    }
+  }
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    &__label {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      &__input {
+        height: 20px;
+        font-size: 16px;
+      }
+      &__checkboxinput {
+        margin-top: 10px;
+      }
+    }
+    &__buttongroup {
+      display: flex;
+      gap: 20px;
+      &__button {
+      }
+    }
+  }
+}
