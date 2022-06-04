@@ -1,0 +1,13 @@
+api_platform:
+    # The title of the API.
+    title: 'Todo API'
+    # The description of the API.
+    description: 'Registers todos and appointments for users online.'
+    # Allow using plain IDs for JSON format.
+    allow_plain_identifiers: true
+    mapping:
+        paths: ['%kernel.project_dir%/src/Entity']
+    patch_formats:
+        json: ['application/merge-patch+json']
+    swagger:
+        versions: [3]

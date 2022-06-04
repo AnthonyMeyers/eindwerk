@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="7ea40c14-e7a2-401d-a27d-182f8bbc50b3" name="fs_anthonym@wdev2.be" url="http://ftp.wdev2.be">
+        <fileTransfer rootFolder="/web/eindwerk" host="ftp.wdev2.be" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
