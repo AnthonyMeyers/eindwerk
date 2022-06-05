@@ -102,6 +102,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $usrHasAgreed;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVerified = false;
+
     public function __construct()
     {
 
@@ -109,6 +114,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->todos = new ArrayCollection();
         $this->usrCreatedAt = new \DateTimeImmutable();
 
+    }
+
+    public function getIsVerified(): ?bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
+        return $this;
     }
 
 

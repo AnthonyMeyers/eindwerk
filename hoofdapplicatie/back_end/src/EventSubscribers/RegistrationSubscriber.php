@@ -16,8 +16,10 @@ class RegistrationSubscriber implements EventSubscriberInterface
 
     private $mailer;
 
+
     public function __construct(MailerInterface $mailer)
     {
+
         $this->mailer = $mailer;
     }
 
@@ -32,6 +34,7 @@ class RegistrationSubscriber implements EventSubscriberInterface
 
     public function sendRegistrationMail(ViewEvent $event): void
     {
+
         $user = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
 
@@ -40,10 +43,12 @@ class RegistrationSubscriber implements EventSubscriberInterface
         }
 
         $message = (new TemplatedEmail())
-            ->to('thony.meyers@gmail.com')
+            ->to($user->getUsrMail())
             ->subject('Thank you for your registration')
             ->htmlTemplate('emails/register.html.twig')
-            ->context(["username"=>$user->getUsername(),"emailaddress" => $user->getUsrMail()]);
+            ->context([
+                "username"=>$user->getUsername(),
+                "emailaddress" => $user->getUsrMail()]);
 
         $this->mailer->send($message);
     }
@@ -58,7 +63,7 @@ class RegistrationSubscriber implements EventSubscriberInterface
         }
 
         $message = (new TemplatedEmail())
-            ->to('thony.meyers@gmail.com')
+            ->to($user->getUsrMail())
             ->subject('Goodbye')
             ->htmlTemplate('emails/register.html.twig')
             ->context(["username"=>$user->getUsername(),"emailaddress" => $user->getUsrMail()]);
