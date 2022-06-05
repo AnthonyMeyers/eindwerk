@@ -5,7 +5,7 @@
       <paths name="fs_anthonym@wdev2.be">
         <serverdata>
           <mappings>
-            <mapping deploy="/back_end/system" local="$PROJECT_DIR$" web="/back_end" />
+            <mapping deploy="/system" local="$PROJECT_DIR$" web="/eindwerk" />
           </mappings>
           <excludedPaths>
             <excludedPath local="true" path="$PROJECT_DIR$/var" />

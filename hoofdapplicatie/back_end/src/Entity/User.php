@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+
+
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -28,7 +30,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"appointments:read","todo_details:read"})
+     * @Groups({"user:read","appointments:read","todo_details:read"})
      */
     private $id;
 
@@ -53,7 +55,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @groups({"user:write"})
      * @SerializedName("password")
-     * @Assert\NotBlank()
      */
     private $plainPassword;
 
@@ -103,11 +104,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
+
         $this->appointments = new ArrayCollection();
         $this->todos = new ArrayCollection();
         $this->usrCreatedAt = new \DateTimeImmutable();
-    }
 
+    }
 
 
     public function getUsrMail(): ?string
@@ -319,10 +321,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @param mixed $plainPassword
+     * @throws \Exception
      */
     public function setPlainPassword($plainPassword): self
     {
-        $this->plainPassword = $plainPassword;
+
+
+        if(strlen($plainPassword) > 6 ){
+            if(preg_match_all("([0-9])",$plainPassword ) >=3 &&
+                preg_match_all("([A-Za-z])", $plainPassword) >=3 )
+            {
+                $this->plainPassword = $plainPassword;
+            }else throw new \Exception("The password should have at least 3 letters and 3 numbers.");
+
+        }
+        else throw new \Exception("The password should be more than 6 characters long.");
 
         return $this;
     }

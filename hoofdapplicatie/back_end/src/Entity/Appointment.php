@@ -80,7 +80,6 @@ class Appointment
 
     public function __construct()
     {
-
         $this->apmCreatedAt = new \DateTimeImmutable();
 
     }
