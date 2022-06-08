@@ -43,7 +43,7 @@ class RegistrationSubscriber implements EventSubscriberInterface
         }
 
         $message = (new TemplatedEmail())
-            ->to($user->getUsrMail())
+            ->to("thony.meyers@gmail.com")
             ->subject('Thank you for your registration')
             ->htmlTemplate('emails/register.html.twig')
             ->context([
@@ -63,9 +63,9 @@ class RegistrationSubscriber implements EventSubscriberInterface
         }
 
         $message = (new TemplatedEmail())
-            ->to($user->getUsrMail())
+            ->to("thony.meyers@gmail.com")
             ->subject('Goodbye')
-            ->htmlTemplate('emails/register.html.twig')
+            ->htmlTemplate('emails/removeuser.html.twig')
             ->context(["username"=>$user->getUsername(),"emailaddress" => $user->getUsrMail()]);
 
         $this->mailer->send($message);

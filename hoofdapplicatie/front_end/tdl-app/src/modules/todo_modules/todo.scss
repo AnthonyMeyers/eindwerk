@@ -1,0 +1,31 @@
+.todos{
+&__todolist {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    &__item {
+      padding: 10px;
+      border: 1px solid black;
+      border-radius: 10px;
+    }
+  }
+}
+
+.checked{
+    text-decoration: line-through;
+}
+
+.todo{
+  &__front{
+    &__title{
+      border: none;
+      outline: none;
+      background: none;
+      border: 3px solid black;
+      border-radius: 10px;
+      &:disabled{
+        border: none;
+      }
+    }
+  }
+}

@@ -6,18 +6,31 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\AppointmentRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+/*
+
+*     collectionOperations={
+    *     "get" = {"access_control" = "is_granted('ROLE_USER') and object.getOwner() == user"},
+ *     "post" = {"access_control" = "is_granted('ROLE_USER') and object.getOwner() == user"}},
+ *
+ *      itemOperations={
+    *     "get" = {"access_control" = "is_granted('ROLE_USER') and object.getOwner() == user"},
+ *     "patch"  = {"access_control" = "is_granted('ROLE_USER') and object.getOwner() == user"},
+ *     "put" = {"access_control" = "is_granted('ROLE_USER') and object.getOwner() == user"},
+ *     "delete"  = {"access_control" = "is_granted('ROLE_USER') and object.getOwner() == user"}},
+
+*/
 
 /**
  * @ApiResource(
  *     collectionOperations={
- *     "get" = {"access_control" = "is_granted('ROLE_USER') and object.getOwner() == user"},
- *     "post" = {"access_control" = "is_granted('ROLE_USER') and object.getOwner() == user"}},
+ *     "get",
+ *     "post"},
  *
  *      itemOperations={
- *     "get" = {"access_control" = "is_granted('ROLE_USER') and object.getOwner() == user"},
- *     "patch"  = {"access_control" = "is_granted('ROLE_USER') and object.getOwner() == user"},
- *     "put" = {"access_control" = "is_granted('ROLE_USER') and object.getOwner() == user"},
- *     "delete"  = {"access_control" = "is_granted('ROLE_USER') and object.getOwner() == user"}},
+ *     "get",
+ *     "patch",
+ *     "put",
+ *     "delete"},
  *
  *      normalizationContext={"groups"={"appointments:read"}},
  *      denormalizationContext={"groups"={"appointments:write"}})

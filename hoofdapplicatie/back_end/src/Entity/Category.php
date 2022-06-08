@@ -10,15 +10,26 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ApiResource(
- *     collectionOperations={
- *     "get" = {"access_control" = "is_granted('ROLE_USER')"},
+/*
+*     "get" = {"access_control" = "is_granted('ROLE_USER')"},
  *     "post" = {"access_control" = "is_granted('ROLE_ADMIN')"}},
  *
  *      itemOperations={
- *     "get" = {"access_control" = "is_granted('ROLE_USER')"},
+    *     "get" = {"access_control" = "is_granted('ROLE_USER')"},
  *     "delete"  = {"access_control" = "is_granted('ROLE_ADMIN')"}},
+*/
+
+
+
+/**
+ * @ApiResource(
+ *     collectionOperations={
+ *     "get",
+ *     "post"},
+ *
+ *      itemOperations={
+ *     "get",
+ *     "delete"},
  *
  *     collectionOperations={"get","post"},
  *     itemOperations={"get"={"normalization_context"={"groups"={"category:item:get"}}},"delete"},
@@ -35,7 +46,7 @@ class Category
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"categories:read","category:item:get"})
+     * @Groups({"categories:read","category:item:get","todo_details:read"})
      *
      */
     private $id;
@@ -56,8 +67,6 @@ class Category
      * @ORM\OneToMany(targetEntity=Todo::class, mappedBy="tdoCty")
      */
     private $todos;
-
-
 
     public function __construct()
     {

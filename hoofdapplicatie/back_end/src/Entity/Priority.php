@@ -9,15 +9,28 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ApiResource(
- *     collectionOperations={
+
+/*
+
  *     "get" = {"access_control" = "is_granted('ROLE_USER')"},
  *     "post" = {"access_control" = "is_granted('ROLE_ADMIN')"}},
  *
  *      itemOperations={
  *     "get" = {"access_control" = "is_granted('ROLE_USER')"},
  *     "delete"  = {"access_control" = "is_granted('ROLE_ADMIN')"}},
+
+ */
+
+
+/**
+ * @ApiResource(
+ *     collectionOperations={
+ *     "get",
+ *     "post"},
+ *
+ *      itemOperations={
+ *     "get",
+ *     "delete"},
  *
  *     collectionOperations={"get","post"},
  *     itemOperations={"get"={"normalization_context"={"groups"={"priority:item:get"}}},"delete"},
@@ -34,7 +47,7 @@ class Priority
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"priorities:read", "priority:item:get"})
+     * @Groups({"priorities:read", "priority:item:get","todo_details:read"})
      *
      */
     private $id;
@@ -46,15 +59,17 @@ class Priority
     private $ptyRating;
 
     /**
-     * @ORM\OneToMany(targetEntity=Todo::class, mappedBy="tdoPty", orphanRemoval=false)
-     */
-    private $todos;
-
-    /**
      * @ORM\Column(type="string", length=100)
      * @Groups({"priorities:read", "priorities:write","priority:item:get"})
      */
     private $ptyTitle;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Todo::class, mappedBy="tdoPty", orphanRemoval=false)
+     */
+    private $todos;
+
+
 
     public function __construct()
     {

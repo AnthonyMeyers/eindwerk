@@ -11,3 +11,9 @@ api_platform:
         json: ['application/merge-patch+json']
     swagger:
         versions: [3]
+    defaults:
+        pagination_items_per_page: 20
+        pagination_client_enabled: true
+    collection:
+        pagination:
+            enabled_parameter_name: pagination # optional

@@ -2,13 +2,15 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\TodoRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ApiResource(
+/*
+
  *     collectionOperations={
  *     "get" = {"access_control" = "is_granted('ROLE_USER') and object.getOwner() == user"},
  *     "post" = {"access_control" = "is_granted('ROLE_USER') and object.getOwner() == user"}},
@@ -18,10 +20,27 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     "patch"  = {"access_control" = "is_granted('ROLE_USER') and object.getOwner() == user"},
  *     "put" = {"access_control" = "is_granted('ROLE_USER') and object.getOwner() == user"},
  *     "delete"  = {"access_control" = "is_granted('ROLE_USER') and object.getOwner() == user"}},
+
+
+
+ */
+
+/**
+ * @ApiResource(
+ *     collectionOperations={
+ *     "get",
+ *     "post"},
+ *
+ *      itemOperations={
+ *     "get",
+ *     "patch",
+ *     "put",
+ *     "delete"},
  *
  *     normalizationContext={"groups"={"todo_details:read"}},
  *     denormalizationContext={"groups"={"todo_details:write"}})
  * @ORM\Entity(repositoryClass=TodoRepository::class)
+ * @ApiFilter(SearchFilter::class, properties={"tdoUsr"})
  */
 class Todo
 {
