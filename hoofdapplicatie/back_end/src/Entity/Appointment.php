@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\AppointmentRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -35,6 +37,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      normalizationContext={"groups"={"appointments:read"}},
  *      denormalizationContext={"groups"={"appointments:write"}})
  *      @ORM\Entity(repositoryClass=AppointmentRepository::class)
+ *      @ApiFilter(SearchFilter::class, properties={"tdoUsr"})
  */
 class Appointment
 {
@@ -87,7 +90,7 @@ class Appointment
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="appointments")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"appointments:read", "appointments:write"})
+     * @Groups({"appointments:read", "appointments:write","user:read"})
      */
     private $apmUsr;
 
