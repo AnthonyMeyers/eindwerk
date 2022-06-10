@@ -94,6 +94,11 @@ class Appointment
      */
     private $apmUsr;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Contact::class, inversedBy="contact")
+     */
+    private $apmCnt;
+
     public function __construct()
     {
         $this->apmCreatedAt = new \DateTimeImmutable();
@@ -193,6 +198,18 @@ class Appointment
         if($_SERVER["REQUEST_METHOD"] == "PUT"){
             $this->apmUpdatedAt = new \DateTimeImmutable();
         }
+        return $this;
+    }
+
+    public function getApmCnt(): ?Contact
+    {
+        return $this->apmCnt;
+    }
+
+    public function setApmCnt(?Contact $apmCnt): self
+    {
+        $this->apmCnt = $apmCnt;
+
         return $this;
     }
 }
