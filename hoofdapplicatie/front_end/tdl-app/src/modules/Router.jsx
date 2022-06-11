@@ -6,28 +6,20 @@ import Register from "./login_modules/Register";
 import SplashScreen from "./login_modules/SplashScreen";
 import Settings from "./extra_modules/Settings";
 import Appointments from "./appointment_modules/Appointments";
-import Phonebook from "./phonebook/Phonebook";
-
-function requireAut()
-{
-  let location = useLocation();
-
-
-}
-
+import Phonebook from "./phonebook_modules/Phonebook";
 
 export default function Routing() {
   return (
     <Routes>
-      <Route exact path="/" element={<SplashScreen/>}/>
-      <Route exact path="/login" element={<Login />} />
+      
+      <Route exact path="/" element={<Login />} />
       <Route exact path="/register" element={<Register />} />
-      <Route element={<PersisLogin/>}>
-      <Route exact path="/settings" element={<requireAut><Settings /></requireAut>} />
-      <Route exact path="/todos" element={<requireAut><Todo_list /></requireAut>} />
-      <Route exact path="/appointments" element={<requireAut><Appointments/></requireAut>}/>
-      <Route exact path="/phonebook" element={<requireAut><Phonebook/></requireAut>}/>
-      </Route>
+      <Route exact path="/splashscreen" element={<SplashScreen/>}/>
+      <Route exact path="/settings" element={<Settings />} />
+      <Route exact path="/todos" element={<Todo_list />} />
+      <Route exact path="/appointments" element={<Appointments/>}/>
+      <Route exact path="/phonebook" element={<Phonebook/>}/>
+
     </Routes>
   );
 }

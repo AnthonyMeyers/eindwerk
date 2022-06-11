@@ -5,16 +5,23 @@ import Status from "../standard_modules/App-Status";
 import axios from "axios";
 import { useSelector,useDispatch } from "react-redux";
 import { loadCategories,loadPriorities } from "../../data/general";
+import { useNavigate } from "react-router";
+import { useJwt } from "react-jwt";
 
 const Todo_list = () => {
   const dispatch = useDispatch();
   const {categories, priorities} = useSelector((state)=> state.generalState);
-
-  const {data: userData, isLoading, isError, isSuccess} = useGetAllUserInfoQuery(9);
+  const nav= useNavigate();
+  const userId = localStorage.getItem("userId");
+console.log(userId)
+  if(!userId || userId === 0)
+  {
+    nav("/");
+  }
 
   const {data: allUserTodos, isLoading: isLoadingTodos,
     isError: isErrorTodos, isSuccess: isSuccessTodos}
-    = useGetAllUserTodosQuery(9);
+    = useGetAllUserTodosQuery(userId);
 
     useEffect(()=>{
 

@@ -3,6 +3,10 @@ import {useState, useEffect} from "react";
 import { useAddOneContactMutation } from "../../data/todoApi";
 
 const PhonebookHeader = () => {
+
+const userId = localStorage.getItem("userId");
+
+
   //Set states
   const [contact, setContact] = useState("");
   const [addOneContact] = useAddOneContactMutation();
@@ -11,7 +15,7 @@ const PhonebookHeader = () => {
 function handleAddcontactSubmit(e)
 {
     e.preventDefault();
-    addOneContact({userId: 9,name: contact });
+    addOneContact({userId,name: contact });
     setContact("");
 }
 

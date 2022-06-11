@@ -1,21 +1,22 @@
 import { NavLink, Routes, Route } from "react-router-dom";
 import {useState, useEffect} from "react";
 import { useAddOnetodoMutation } from "../../data/todoApi";
-import Todo_list from "../todo_modules/Todo_list";
 
 const AppHeaderTodos = () => {
   //Set states
   const [todo, setTodo] = useState("");
   const [addOneTodo] = useAddOnetodoMutation();
 
+  //Get user id from localstorage
+  const userId = localStorage.getItem("userId");
+  console.log(userId)
   //Add a todo
 function handleAddtodoSubmit(e)
 {
   e.preventDefault();
-    addOneTodo({id: 9,title: todo });
+    addOneTodo({id: userId,title: todo });
     setTodo("");
 }
-
 
   return (
     <>

@@ -2,9 +2,11 @@ import { NavLink, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { convertToAccurateDay } from "../../helpers/datehelpers";
 import { useAddOneAppointmentMutation } from "../../data/todoApi";
-
+import { useNavigate } from "react-router";
 
  const AppHeaderAppointments = () => {
+const userId = localStorage.getItem("userId");
+
    //Set usestates
    const [appointmentTitle,setAppointmentTitle] = useState("");
   const [startDate, setStartDate] = useState(convertToAccurateDay());
@@ -31,7 +33,7 @@ useEffect(()=>{
     const stop = new Date(stopDate + " " + stopTime).getTime();
     if(start <= stop && appointmentTitle.length >= 4){
 
-      addOneAppointment({id: "9", title: appointmentTitle, startsAt: startDate +  " " + startTime, stopsAt: stopDate + " " + stopTime})
+      addOneAppointment({id: userId, title: appointmentTitle, startsAt: startDate +  " " + startTime, stopsAt: stopDate + " " + stopTime})
     }
     setAppointmentTitle("");
   }

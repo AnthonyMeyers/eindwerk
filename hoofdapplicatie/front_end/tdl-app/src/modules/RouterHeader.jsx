@@ -1,8 +1,8 @@
 
 import { Route, Routes } from "react-router-dom";
-import AppHeaderAppointments from "./standard_modules/App-Header-Appointments";
-import AppHeaderTodos from "./standard_modules/App-header-todos";
-import PhonebookHeader from "./phonebook/Phonebook_header";
+import AppHeaderAppointments from "./appointment_modules/App-Header-Appointments";
+import AppHeaderTodos from "./todo_modules/App-header-todos";
+import PhonebookHeader from "./phonebook_modules/Phonebook_header";
 
 export default function RouterHeader() {
   return (

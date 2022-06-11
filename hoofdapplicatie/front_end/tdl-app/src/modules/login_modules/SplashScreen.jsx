@@ -8,7 +8,7 @@ const SplashScreen = () => {
 //Set states
 const dispatch = useDispatch();
 const [hasLoaded, setHasLoaded] = useState(false);
-const nav= useNavigate();
+const nav = useNavigate();
 const [error, setError] = useState(false);
 
 const {data: categories, isLoading: isLoadingCat, isError: isErrorCat, isSuccess: isSuccessCat} = useGetAllCategoriesQuery();
@@ -20,7 +20,7 @@ useEffect(()=>{
   if(isSuccessCat && isSuccessPty){
 dispatch(loadCategories({categories}));
 dispatch(loadPriorities({priorities}));
-nav("/login");
+nav("/todos");
 }
 if(isErrorCat & isErrorPty){
 setError(true);}

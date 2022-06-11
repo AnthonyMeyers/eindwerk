@@ -14,11 +14,21 @@ const api = createApi({
   endpoints: (builder) => ({
       //Get alle categorieen
       getAllCategories: builder.query({
-        query: () => `/categories.json?pagination=false`,
+        query: () => ({url: `/categories.json?pagination=false`,
+        headers: {
+          "Content-Type": "application/json",
+          accept: "application/json",
+        }
+      })
       }),
       //Get alle prioriteiten
       getAllPriorities: builder.query({
-        query: () => `/priorities.json?pagination=false`,
+        query: () => ({url: `/priorities.json?pagination=false`, 
+        headers: {
+          "Content-Type": "application/json",
+          accept: "application/json",
+        }
+      }),
       }),
       //Get alle user informatie
       getAllUserInfo: builder.query({
@@ -66,7 +76,7 @@ const api = createApi({
     }),
       //Get alle todos van een user
       getAllUserTodos: builder.query({
-        query: (id) => ({url: `/todos?tdoUsr=${id}.json?pagination=false`,
+        query: (id) => ({url: `todos?page=1&pagination=false&tdoUsr=${id}`,
         headers: {
           "Content-Type": "application/json",
           accept: "application/json",
@@ -89,6 +99,23 @@ const api = createApi({
       result
         ? [...result.map(({ id }) => ({ type: 'APPOINTMENTLIST', id })), 'APPOINTMENTLIST']
         : ['APPOINTMENTLIST'],
+      }),
+      //Register user
+      registerUser: builder.mutation({
+        query: ({username, password, email, hasAgreed}) => ({
+          url: `/users.json`,
+          headers: {
+            "Content-Type": "application/json",
+            accept: "application/json",
+          },
+          method: "POST",
+          body: {
+            username,
+            password,
+            usrMail: email,
+            usrHasAgreed: hasAgreed
+          },
+        }),
       }),
       //Post een todo
     addOnetodo: builder.mutation({
@@ -255,6 +282,7 @@ useGetAllUserInfoQuery,
 useGetAllUserTodosQuery,
 useGetAllUserAppointmentsQuery,
 useGetAllUserContactsIndexedQuery,
+useRegisterUserMutation,
 useAddOneContactAppointmentMutation,
 useAddOnetodoMutation,
 useChangeAppointmentContactMutation,
