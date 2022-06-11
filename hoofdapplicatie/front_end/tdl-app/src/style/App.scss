@@ -5,6 +5,7 @@
 @use "./base/mixins" as *;
 @use "./base/icons.scss";
 @use "../modules/todo_modules/todo.scss";
+@use "../modules/appointment_modules/calendar.scss";
 @import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins";
@@ -14,6 +15,10 @@
 body {
   font-family: "Permanent Marker", Helvetica, sans-serif;
   background-color: #eff;
+}
+
+li {
+  list-style-type: none;
 }
 
 * {
@@ -29,17 +34,22 @@ h2 {
   padding: 10px 20px;
 }
 
-.navigation {
-  margin-top: 10px;
+.navcontainer{
+  display: flex;
+  justify-content: flex-end;
+&__navigation {
+  width: 200px;
   padding-right: 10px;
   &__textlabel {
     display: flex;
     justify-content: flex-end;
-    gap: 50px;
+    gap: 38px;
     &__switch {
     }
   }
 }
+}
+
 .header {
   background-color: lightblue;
   display: flex;

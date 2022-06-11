@@ -1,21 +1,19 @@
-import { NavLink, Routes, Route } from "react-router-dom";
+import { NavLink} from "react-router-dom";
 import {useState, useEffect} from "react";
-import { useAddOnetodoMutation } from "../../data/todoApi";
-import Todo_list from "../todo_modules/Todo_list";
+import { useAddOneContactMutation } from "../../data/todoApi";
 
-const AppHeaderTodos = () => {
+const PhonebookHeader = () => {
   //Set states
-  const [todo, setTodo] = useState("");
-  const [addOneTodo] = useAddOnetodoMutation();
+  const [contact, setContact] = useState("");
+  const [addOneContact] = useAddOneContactMutation();
 
   //Add a todo
-function handleAddtodoSubmit(e)
+function handleAddcontactSubmit(e)
 {
-  e.preventDefault();
-    addOneTodo({id: 9,title: todo });
-    setTodo("");
+    e.preventDefault();
+    addOneContact({userId: 9,name: contact });
+    setContact("");
 }
-
 
   return (
     <>
@@ -37,17 +35,17 @@ function handleAddtodoSubmit(e)
             </button>
           </NavLink>
         </div>
-        <form className="header__todoform" onSubmit={handleAddtodoSubmit}>
+        <form className="header__todoform" onSubmit={handleAddcontactSubmit}>
           <label for="input-todo" className="header__todoform__label">
-            Add a todo
+           Contact name
             <input
               class="header__todoform__label__todoinput form-control form-control-lg"
               type="text"
               id="input-todo"
               autoComplete="off"
               spellCheck="false"
-              value={todo}
-              onInput={(e) => setTodo(e.target.value)}
+              value={contact}
+              onInput={(e) => setContact(e.target.value)}
             />
           </label>
           <button type="submit" className="header__todoform__addtodo">
@@ -61,4 +59,4 @@ function handleAddtodoSubmit(e)
   );
 }
 
-export default AppHeaderTodos;
+export default PhonebookHeader;

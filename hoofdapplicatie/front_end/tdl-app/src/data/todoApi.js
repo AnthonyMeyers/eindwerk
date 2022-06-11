@@ -9,24 +9,64 @@ const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://wdev2.be/fs_anthonym/eindwerk/api",
   }),
-  tagTypes: ["TODOLIST"],
+  tagTypes: ["TODOLIST","APPOINTMENTLIST","CONTACTLIST"],
   refetchOnReconnect: true,
   endpoints: (builder) => ({
       //Get alle categorieen
       getAllCategories: builder.query({
-        query: () => `/categories.json`,
+        query: () => `/categories.json?pagination=false`,
       }),
       //Get alle prioriteiten
       getAllPriorities: builder.query({
-        query: () => `/priorities.json`,
+        query: () => `/priorities.json?pagination=false`,
       }),
       //Get alle user informatie
       getAllUserInfo: builder.query({
-        query: (id) => `/users/${id}.json`,
+        query: (id) => `/users/${id}.json?pagination=false`,
       }),
+      //Get alle user informatie
+      getContactInfo: builder.query({
+        query: (id) => `/contacts/${id}`,
+      }),
+      //Get alle contacts asc
+      getAllUserContacts: builder.query({
+        query: (id) => ({url: `/contacts?pagination=false&cntUser=${id}&order%5BcntName%5D=asc`,
+        headers: {
+          "Content-Type": "application/json",
+          accept: "application/json",
+        }
+      }),
+      providesTags: ['CONTACTLIST'],
+    }),
+      //Get alle contacts van een user order by asc, set title index
+      getAllUserContactsIndexed: builder.query({
+        query: (id) => ({url: `/contacts?pagination=false&cntUser=${id}&order%5BcntName%5D=asc`,
+        headers: {
+          "Content-Type": "application/json",
+          accept: "application/json",
+        }
+      }),
+      transformResponse(response){
+        let capital = "";
+        const indexing = response.map(contact => {
+            if("cntName" in contact && contact.cntName.length > 0){
+        const index = contact.cntName[0].toString().toUpperCase();
+        if(capital[0]?.toString().toUpperCase() !== index)
+        {
+            capital = index;
+            return {...contact, index}
+        }
+        return {...contact, index: ""};
+        }
+        return {...contact}
+        })
+        return indexing
+      },
+      providesTags: ['CONTACTLIST'],
+    }),
       //Get alle todos van een user
       getAllUserTodos: builder.query({
-        query: (id) => ({url: `/todos?tdoUsr=${id}.json`,
+        query: (id) => ({url: `/todos?tdoUsr=${id}.json?pagination=false`,
         headers: {
           "Content-Type": "application/json",
           accept: "application/json",
@@ -36,6 +76,19 @@ const api = createApi({
       result
         ? [...result.map(({ id }) => ({ type: 'TODOLIST', id })), 'TODOLIST']
         : ['TODOLIST'],
+      }),
+      //Get alle appointments van een user
+      getAllUserAppointments: builder.query({
+        query: (id) => ({url: `/appointments?tdoUsr=${id}.json?pagination=false`,
+        headers: {
+          "Content-Type": "application/json",
+          accept: "application/json",
+        }
+      }),
+      providesTags: (result, error, arg) =>
+      result
+        ? [...result.map(({ id }) => ({ type: 'APPOINTMENTLIST', id })), 'APPOINTMENTLIST']
+        : ['APPOINTMENTLIST'],
       }),
       //Post een todo
     addOnetodo: builder.mutation({
@@ -56,6 +109,41 @@ const api = createApi({
       }),
       invalidatesTags: ["TODOLIST"],
     }),
+      //Post een contact
+      addOneContact: builder.mutation({
+        query: ({userId, name}) => ({
+          url: `/contacts.json`,
+          headers: {
+            "Content-Type": "application/json",
+            accept: "application/json",
+          },
+          method: "POST",
+          body: {
+            cntUser: userId,
+            cntName: name
+          },
+        }),
+        invalidatesTags: ['CONTACTLIST'],
+      }),
+      //Post een appointment
+      addOneAppointment: builder.mutation({
+        query: ({id, title, startsAt, stopsAt}) => ({
+          url: `/appointments.json`,
+          headers: {
+            "Content-Type": "application/json",
+            accept: "application/json",
+          },
+          method: "POST",
+          body: {
+            apmTitle: title,
+            apmDescription: "description",
+            apmStartsAt: startsAt,
+            apmStopsAt: stopsAt,
+            apmUsr: id
+          },
+        }),
+        invalidatesTags: ["APPOINTMENTLIST"],
+      }),
         //Wijzig isChecked van een todo
         updateIsCheckedTodo: builder.mutation({
           query: ({ id, tdoChecked}) => ({
@@ -82,7 +170,40 @@ const api = createApi({
           }),
           invalidatesTags: (result, error, arg) => [{ type: 'TODOLIST', id: arg.id }],
         }),
-            //DELETE een todo
+        //Wijzig een appointment (PUT)
+        updateAppointment: builder.mutation({
+          query: ({ appId, appTitle, appStartsAt, appStopsAt, userId,appDescription, contactId, }) => ({
+            url: `/appointments/${appId}.json`,
+            headers: {
+              "Content-Type": "application/json",
+              accept: "application/json",
+            },
+            method: "PUT",
+            body: {
+              apmTitle: appTitle,
+              apmStartsAt: appStartsAt,
+              apmStopsAt: appStopsAt,
+              apmUsr: userId,
+              apmDescription: appDescription,
+              apmCnt: contactId
+            }, 
+          }),
+          invalidatesTags: (result, error, arg) => [{ type: 'APPOINTMENTLIST', id: arg.id }],
+        }),
+        //Wijzig een contact (PUT)
+        updateOneContact: builder.mutation({
+          query: ({ conid, name, tel, street, postal,city,mail}) => ({
+            url: `/contacts/${conid}.json`,
+            headers: {
+              "Content-Type": "application/json",
+              accept: "application/json",
+            },
+            method: "PUT",
+            body: {id: conid,cntName: name,cntTel: tel,cntStreet: street,cntPostal: postal,cntCity:city,cntMail: mail},
+          }),
+          invalidatesTags: (result, error, arg) => [{ type: 'CONTACTLIST', id: arg.id }],
+        }),
+      //DELETE een todo
     removeOneTodo: builder.mutation({
       query: (id) => ({
         url: `/todos/${id}.json`,
@@ -95,137 +216,10 @@ const api = createApi({
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'TODOLIST', id: arg.id }],
     }),
-  })
-});
-
-export default api;
-export const {
-useGetAllCategoriesQuery,
-useGetAllPrioritiesQuery,
-useGetAllUserInfoQuery,
-useGetAllUserTodosQuery,
-useAddOnetodoMutation,
-useUpdateIsCheckedTodoMutation,
-useUpdateTitleTodoMutation,
-useRemoveOneTodoMutation
-} = api;
-
-
-//post a todo example
-/*
-{
-  "tdoTitle": "tester",
-  "tdoDescription": "tester",
-  "tdoIsDone": false,
-  "tdoUsr": 69,
-  "tdoPty": 2,
-  "tdoCty":1
-}*/
-
-
-/*
-  //Get alle landen
-    getAllLanden: builder.query({
-      query: () => `/countries.json`,
-      providesTags: ["LANDEN"],
-    }),
-    //Get alle talen
-    getAllLanguages: builder.query({
-      query: () => `/languages.json`,
-      providesTags: ["TALEN"],
-    }),
-    //Get 1 land
-    getOneLand: builder.query({
-      query: (id) => `/countries/${id}.jsonld`,
-      providesTags: ["LANDEN", "TALEN"],
-    }),
-
-    //Get 1 stad
-    getOneStad: builder.query({
-      query: (id) => ({ url: `/cities/${id}.json` }),
-      providesTags: ["STEDEN"],
-    }),
-    //Get 1 monument
-    getOneMonument: builder.query({
-      query: (id) => ({ url: `/monuments/${id}.json` }),
-      providesTags: ["MONUMENTEN"],
-    }),
-    //Post een land
-    addOneLand: builder.mutation({
-      query: (name) => ({
-        url: `/countries.json`,
-        headers: {
-          "Content-Type": "application/json",
-          accept: "application/json",
-        },
-        method: "POST",
-        body: { name, flag: placeholderFlag, languages: [] },
-      }),
-      invalidatesTags: ["LANDEN"],
-    }),
-    //Post een taal
-    addOneLanguage: builder.mutation({
-      query: (name) => ({
-        url: `/languages.json`,
-        headers: {
-          "Content-Type": "application/json",
-          accept: "application/json",
-        },
-        method: "POST",
-        body: { name },
-      }),
-      invalidatesTags: ["LANDEN", "TALEN"],
-    }),
-    //Post een stad
-    addOneStad: builder.mutation({
-      query: ({ countryId, name }) => ({
-        url: `/cities.json`,
-        headers: {
-          "Content-Type": "application/json",
-          accept: "application/json",
-        },
-        method: "POST",
-        body: {
-          country: `/api/countries/${countryId}`,
-          name,
-          latidude: "0",
-          longitude: "0",
-          img: placeholderImgStad,
-        },
-      }),
-      invalidatesTags: ["STEDEN", "LANDEN"],
-    }),
-    //Post een monument
-    addOneMonument: builder.mutation({
-      query: ({ cityId, name }) => ({
-        url: `/monuments.json`,
-        headers: {
-          "Content-Type": "application/json",
-          accept: "application/json",
-        },
-        method: "POST",
-        body: { city: `/api/cities/${cityId}`, name, img: placeholderImgMon },
-      }),
-      invalidatesTags: ["STEDEN", "MONUMENTEN"],
-    }),
-
-    //Delete een land
-    removeOneLand: builder.mutation({
+    //DELETE een contact
+    removeOneContact: builder.mutation({
       query: (id) => ({
-        url: `/countries/${id}.json`,
-        headers: {
-          "Content-Type": "application/json",
-          accept: "application/json",
-        },
-        method: "DELETE",
-        body: id,
-      }),
-      invalidatesTags: ["LANDEN"],
-    }),
-    //DELETE een taal
-    removeOneLanguage: builder.mutation({
-      query: (id) => ({
-        url: `/languages/${id}.json`,
+        url: `/contacts/${id}.json`,
         headers: {
           "Content-Type": "application/json",
           accept: "application/json",
@@ -233,112 +227,45 @@ useRemoveOneTodoMutation
         method: "DELETE",
         body: { id },
       }),
-      invalidatesTags: ["LANDEN", "TALEN"],
+      invalidatesTags: ["CONTACTLIST"],
     }),
-    //Delete een stad
-    removeOneCity: builder.mutation({
+      //DELETE een appointment
+    removeOneAppointment: builder.mutation({
       query: (id) => ({
-        url: `/cities/${id}.json`,
+        url: `/appointments/${id}.json`,
         headers: {
           "Content-Type": "application/json",
           accept: "application/json",
         },
         method: "DELETE",
-        body: id,
+        body: { id },
       }),
-      invalidatesTags: ["STEDEN", "LANDEN"],
+      invalidatesTags: ["APPOINTMENTLIST"],
     }),
-    //Delete een monument
-    removeOneMonument: builder.mutation({
-      query: (id) => ({
-        url: `/monuments/${id}.json`,
-        headers: {
-          "Content-Type": "application/json",
-          accept: "application/json",
-        },
-        method: "DELETE",
-        body: id,
-      }),
-      invalidatesTags: ["MONUMENTEN", "STEDEN"],
-    }),
-    //Wijzig een land
-    updateOneLand: builder.mutation({
-      query: ({ id, name = "test", flag = "test" }) => ({
-        url: `/countries/${id}.json`,
-        headers: {
-          "Content-Type": "application/json",
-          accept: "application/json",
-        },
-        method: "PUT",
-        body: { id, name, flag },
-      }),
-      invalidatesTags: ["LANDEN"],
-    }),
-    //Voeg taal toe aan land
-    changeLanguagesCity: builder.mutation({
-      query: ({ id, languages }) => (
-        console.log(languages),
-        {
-          url: `/countries/${id}.json`,
-          headers: {
-            "Content-Type": "application/json",
-            accept: "application/json",
-          },
-          method: "PUT",
-          body: { languages },
-        }
-      ),
-      invalidatesTags: ["LANDEN", "TALEN"],
-    }),
-    //Wijzig een stad
-    updateOneCity: builder.mutation({
-      query: ({
-        id,
-        name = "",
-        latidude = 0,
-        longitude = 0,
-        img = placeholderImg,
-      }) => ({
-        url: `/cities/${id}.json`,
-        headers: {
-          "Content-Type": "application/json",
-          accept: "application/json",
-        },
-        method: "PUT",
-        body: { id, name, latidude, longitude, img },
-      }),
-      invalidatesTags: ["STEDEN"],
-    }),
-    //Wijzig een monument
-    updateOneMonument: builder.mutation({
-      query: ({ id, name = "", description = "", img }) => ({
-        url: `/monuments/${id}.json`,
-        headers: {
-          "Content-Type": "application/json",
-          accept: "application/json",
-        },
-        method: "PUT",
-        body: { id, name: name, description, img },
-      }),
-      invalidatesTags: ["MONUMENTEN"],
-    }),
-  }),*/
+  })
+});
 
-  /*  useGetAllLandenQuery,
-  useGetOneLandQuery,
-  useGetStedenLandQuery,
-  useGetOneStadQuery,
-  useGetOneMonumentQuery,
-  useGetAllLanguagesQuery,
-  useAddOneLandMutation,
-  useAddOneStadMutation,
-  useAddOneMonumentMutation,
-  useAddOneLanguageMutation,
-  useRemoveOneLandMutation,
-  useRemoveOneLanguageMutation,
-  useRemoveOneCityMutation,
-  useRemoveOneMonumentMutation,
-  useUpdateOneLandMutation,
-  useUpdateOneCityMutation,
-  useUpdateOneMonumentMutation,
-  useChangeLanguagesCityMutation,*/
+export default api;
+export const {
+  useGetAppointmentContactQuery,
+  useGetContactInfoQuery,
+useGetAllCategoriesQuery,
+useGetAllPrioritiesQuery,
+useGetAllUserInfoQuery,
+useGetAllUserTodosQuery,
+useGetAllUserAppointmentsQuery,
+useGetAllUserContactsIndexedQuery,
+useAddOneContactAppointmentMutation,
+useAddOnetodoMutation,
+useChangeAppointmentContactMutation,
+useUpdateAppointmentMutation,
+useAddOneAppointmentMutation,
+useUpdateIsCheckedTodoMutation,
+useGetAllUserContactsQuery,
+useUpdateTitleTodoMutation,
+useUpdateOneContactMutation,
+useRemoveOneTodoMutation,
+useRemoveOneAppointmentMutation,
+useRemoveOneContactMutation,
+useAddOneContactMutation
+} = api;

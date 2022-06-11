@@ -36,7 +36,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     "patch",
  *     "put",
  *     "delete"},
- *
  *     normalizationContext={"groups"={"todo_details:read"}},
  *     denormalizationContext={"groups"={"todo_details:write"}})
  * @ORM\Entity(repositoryClass=TodoRepository::class)
@@ -61,7 +60,7 @@ class Todo
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"todo_details:read", "todo_details:write","user:read"})
+     * @Groups({"todo_details:read", "todo_details:write"})
      */
     private $tdoDescription;
 

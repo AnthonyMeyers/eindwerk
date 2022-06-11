@@ -4,6 +4,7 @@ namespace App\EventSubscribers;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\User;
+use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTCreatedEvent;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;

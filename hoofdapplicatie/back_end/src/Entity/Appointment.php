@@ -6,8 +6,11 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\AppointmentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 /*
 
 *     collectionOperations={
@@ -37,7 +40,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      normalizationContext={"groups"={"appointments:read"}},
  *      denormalizationContext={"groups"={"appointments:write"}})
  *      @ORM\Entity(repositoryClass=AppointmentRepository::class)
- *      @ApiFilter(SearchFilter::class, properties={"tdoUsr"})
+ *      @ApiFilter(SearchFilter::class, properties={"cntUser"})
+ *      @ApiFilter(OrderFilter::class, properties={"apmStartsAt"})
  */
 class Appointment
 {
@@ -46,7 +50,7 @@ class Appointment
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"appointments:read","user:read"})
-     *
+     * @Groups({"appointments:read", "appointments:write"})
      *
      */
     private $id;
@@ -59,7 +63,7 @@ class Appointment
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"appointments:read", "appointments:write","user:read"})
+     * @Groups({"appointments:read", "appointments:write"})
      */
     private $apmDescription;
 
@@ -90,18 +94,20 @@ class Appointment
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="appointments")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"appointments:read", "appointments:write","user:read"})
+     * @Groups({"appointments:read", "appointments:write"})
      */
     private $apmUsr;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Contact::class, inversedBy="contact")
+     * @ORM\ManyToOne(targetEntity=Contact::class, inversedBy="appointments")
+     * @Groups({"appointments:read", "appointments:write"})
      */
     private $apmCnt;
 
     public function __construct()
     {
         $this->apmCreatedAt = new \DateTimeImmutable();
+        $this->apmContact = new ArrayCollection();
 
     }
 
@@ -208,8 +214,10 @@ class Appointment
 
     public function setApmCnt(?Contact $apmCnt): self
     {
+
         $this->apmCnt = $apmCnt;
 
         return $this;
     }
+
 }

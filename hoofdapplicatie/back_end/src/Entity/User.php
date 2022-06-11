@@ -30,7 +30,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"user:read","appointments:read","todo_details:read"})
+     * @Groups({"user:read","user:write","appointments:read","todo_details:read","contacts:read","contacts:write"})
      */
     private $id;
 
@@ -107,12 +107,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $isVerified = false;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Contact::class, mappedBy="cntUser")
+     */
+    private $contacts;
+
     public function __construct()
     {
 
         $this->appointments = new ArrayCollection();
         $this->todos = new ArrayCollection();
         $this->usrCreatedAt = new \DateTimeImmutable();
+        $this->contacts = new ArrayCollection();
 
     }
 
@@ -352,6 +358,37 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         }
         else throw new \Exception("The password should be more than 6 characters long.");
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Contact>
+     * @Groups({"user:read", "user:write"})
+     */
+    public function getContacts(): Collection
+    {
+        return $this->contacts;
+    }
+
+    public function addContact(Contact $contact): self
+    {
+        if (!$this->contacts->contains($contact)) {
+            $this->contacts[] = $contact;
+            $contact->setCntUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContact(Contact $contact): self
+    {
+        if ($this->contacts->removeElement($contact)) {
+            // set the owning side to null (unless already changed)
+            if ($contact->getCntUser() === $this) {
+                $contact->setCntUser(null);
+            }
+        }
 
         return $this;
     }

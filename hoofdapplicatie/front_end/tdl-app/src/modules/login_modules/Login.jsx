@@ -1,18 +1,36 @@
-import { NavLink } from "react-router-dom";
+import { NavLink} from "react-router-dom";
+import { useNavigate } from "react-router";
 import {useState, useEffect} from "react";
 import axios from "axios";
+import {useJwt} from "react-jwt";
 
 const Login = () => {
+
+//Define useStates
 const [username, setUsername] = useState("");
 const [password, setPassword] = useState("");
 
+//get navigation
+const nav = useNavigate();
+
+//Handle the user login submit
 async function handleUserloginSubmit(e)
 {
+
   e.preventDefault();
-  const response = await axios.post("https://wdev2.be/fs_anthonym/eindwerk", {
+  try{
+  const {data: {token}} = await axios.post("http://localhost:8001/api/login_check", {
     username,
     password,
-  })
+  }
+  )
+  const {decodedToken, isExpired} = useJwt(token);
+  console.log(isExpired);
+
+
+}catch(error){}
+
+  /*nav("/todos");*/
 }
 
   return (
@@ -54,14 +72,15 @@ async function handleUserloginSubmit(e)
           />
         </label>
         <div className="login__form__buttongroup">
+        <button className="login__form__buttongroup__button" type="submit">
+              To application
+            </button>
           <NavLink to="/register">
             <button className="login__form__buttongroup__button">
               Register
             </button>
           </NavLink>
-            <button className="login__form__buttongroup__button" type="submit">
-              To application
-            </button>
+
         </div>
       </form>
     </section>

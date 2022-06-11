@@ -15,14 +15,19 @@
     "chakra": "0.0.3",
     "framer-motion": "^6.3.3",
     "immer": "^9.0.14",
+    "moment": "^2.29.3",
+    "nookies": "^2.5.2",
     "react": "^18.0.0",
+    "react-calendar": "^3.7.0",
     "react-dom": "^18.0.0",
+    "react-jwt": "^1.1.6",
     "react-redux": "^8.0.1",
     "react-router": "^6.3.0",
     "react-router-dom": "^6.3.0",
     "redux-thunk": "^2.4.1",
     "rxjs": "^7.5.5",
-    "sass": "^1.50.0"
+    "sass": "^1.50.0",
+    "util": "^0.12.4"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",
