@@ -5,7 +5,10 @@
 @use "./base/mixins" as *;
 @use "./base/icons.scss";
 @use "../modules/todo_modules/todo.scss";
-@use "../modules/appointment_modules/calendar.scss";
+@use "../modules/login_modules/index.scss";
+@use "../modules/extra_modules/configgroup.scss";
+@use "../modules/phonebook_modules/phonebook.scss";
+@use "../modules/appointment_modules/appointments.scss";
 @import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins";
@@ -14,24 +17,38 @@
 
 body {
   font-family: "Permanent Marker", Helvetica, sans-serif;
-  background-color: #eff;
+  background-color: #86b6ee;
+  font-family: "Permanent Marker", Arial, Helvetica, sans-serif;
+}
+
+.container{
+  margin: 0 auto 50px;
+  padding: 15px;
+  max-width: 1200px;
 }
 
 li {
   list-style-type: none;
 }
-
-* {
-  font-family: "Permanent Marker";
+h1 {
+  color: #0E3865;
+  font-size: 25px;
 }
 
 h2 {
   font-size: 20px;
-  margin: 0 0 20px 10px;
+  margin-bottom: 15px;
+  color: #00638F;
 }
 
-.container {
-  padding: 10px 20px;
+h3{
+  font-size: 16px;
+  margin-bottom: 15px;
+  color: #008FA0;
+}
+
+.hide {
+  display: none;
 }
 
 .navcontainer{
@@ -51,39 +68,16 @@ h2 {
 }
 
 .header {
-  background-color: lightblue;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   &__panel {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     &__title {
       margin: 10px;
       font-size: 25px;
       font-weight: bolder;
       color: $cyan-800;
-    }
-    &__config {
-      margin: 5px;
-      padding: 7.5px;
-      &__sublink {
-        visibility: hidden;
-        &:hover {
-          transition: 2s;
-          color: gray;
-        }
-        &:after {
-          content: "\e995";
-          font-family: "icomoon";
-          font-size: 22px;
-          visibility: visible;
-        }
-        &__text {
-          position: absolute;
-          left: -10000px;
-        }
-      }
     }
   }
   &__todoform {
@@ -93,13 +87,18 @@ h2 {
     align-items: center;
     gap: 20px;
     &__label {
-      text-align: center;
-
+      text-align: center;      
+     display: flex;
+     flex-wrap: wrap;
+     flex-direction: column;
+     gap: 15px;
       &__todoinput {
-        margin-top: 10px;
         height: 20px;
         width: 225px;
         font-size: 16px;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
       }
     }
     &__addtodo {
@@ -127,46 +126,32 @@ h2 {
   }
 }
 
-.login {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  &__block {
-    display: flex;
-    flex-direction: column;
-    &__title {
-      margin: 30px 0 30px 0;
-      text-align: center;
-    }
-    &__text {
-      text-align: center;
-      padding: 15px;
-      font-size: 14px;
-      margin: 30px;
-    }
+.messagetoast{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  margin: 10px;
+  &__header{
+      &__title{
+      }
+      &__button{
+          position: absolute;
+          top: 0;
+          right: 0;
+          margin: 7.5px;
+          padding: 0 5px;
+      }
   }
-  &__form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    &__label {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      &__input {
-        height: 20px;
-        font-size: 16px;
-      }
-      &__checkboxinput {
-        margin-top: 10px;
-      }
-    }
-    &__buttongroup {
-      display: flex;
-      gap: 20px;
-      &__button {
-      }
-    }
-  }
+  &__delete{
+      font-size: 15px;
+      padding: 0 5px;
+      margin: 5px;}
 }
+
+.purple{background-color: #B4869F;}
+
+.green{background-color: #69A297;}
+
+.orange{background-color: #EDC79B}
+
+.blue{background-color: #50808E}

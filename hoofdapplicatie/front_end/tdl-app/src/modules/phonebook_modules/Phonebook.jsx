@@ -1,35 +1,29 @@
 import { useEffect, useState } from 'react';
-import Status from '../standard_modules/App-Status';
 import { useGetAllUserContactsIndexedQuery } from '../../data/todoApi';
 import PhonebookDetails from './PhonebookDetails';
-import { useNavigate } from 'react-router';
+
 const Phonebook = () => {
+  //Get user id
+  const userId = localStorage.getItem("userId");
 
-const nav = useNavigate();
-const userId = localStorage.getItem("userId");
-if(!userId || userId === 0)
-{
-  nav("/");
-}
+  const {data: contacts,isLoading, isError, isSuccess} = useGetAllUserContactsIndexedQuery(userId);
+  const [reset, doReset] = useState(false);
 
-
-const {data: contacts,isLoading, isError, isSuccess} = useGetAllUserContactsIndexedQuery(userId);
-const [reset, doReset] = useState(false);
-
-function handleResetcomponentsClick(e)
-{
+  function handleResetcomponentsClick(e)
+  {
     doReset(!reset)
-}
+  }
 
   return (
-    <section className="phonebook" onClick={handleResetcomponentsClick}>
-    <h2 className="phonebook__title">Contacts:</h2>
-    {contacts && contacts.length >0 && <div className={"tester"}>{contacts.map((contact) =>
-<>
-    <PhonebookDetails contact={contact} key={contact.id} reset={reset}/>
-</>
-)}</div>}
-  </section>
+    <section className="phonebook container" onClick={handleResetcomponentsClick}>
+      <h2 className="phonebook__title">Contacts:</h2>
+      {contacts && contacts.length >0 && <div className={"phonebook__list"}>{contacts.map((contact) =>
+        <>
+          <PhonebookDetails contact={contact} key={contact.id} reset={reset}/>
+        </>
+      )}
+      </div>}
+    </section>
   )
 }
 

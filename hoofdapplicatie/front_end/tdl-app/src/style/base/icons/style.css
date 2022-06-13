@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?e9ksz5');
-  src:  url('fonts/icomoon.eot?e9ksz5#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?e9ksz5') format('truetype'),
-    url('fonts/icomoon.woff?e9ksz5') format('woff'),
-    url('fonts/icomoon.svg?e9ksz5#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?adw2gf');
+  src:  url('fonts/icomoon.eot?adw2gf#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?adw2gf') format('truetype'),
+    url('fonts/icomoon.woff?adw2gf') format('woff'),
+    url('fonts/icomoon.svg?adw2gf#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,9 +25,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-gears:before {
-  content: "\e900";
-}
 .icon-bullhorn:before {
   content: "\e91a";
 }
@@ -58,9 +55,27 @@
 .icon-facebook2:before {
   content: "\ea91";
 }
+.icon-bin2:before {
+  content: "\e9ad";
+}
+.icon-mobile:before {
+  content: "\e958";
+}
 .icon-cogs:before {
   content: "\e995";
 }
-.icon-bin2:before {
-  content: "\e9ad";
+.icon-arrow-right2:before {
+  content: "\ea3c";
+}
+.icon-arrow-left2:before {
+  content: "\ea40";
+}
+.icon-search:before {
+  content: "\e986";
+}
+.icon-list:before {
+  content: "\e9ba";
+}
+.icon-pen-angled:before {
+  content: "\e900";
 }

@@ -1,26 +1,24 @@
 import { useRemoveOneAppointmentMutation } from "../../data/todoApi";
 
-
-
 const ToastDeleteApm = ({id, title}) => {
-const [removeOneAppointment] = useRemoveOneAppointmentMutation();
+  //Remove appointment mutation
+  const [removeOneAppointment] = useRemoveOneAppointmentMutation();
 
-function handledeleteAppointmentClick(){
-    removeOneAppointment(id);
-}
+  //Remove appointment on click
+  function handledeleteAppointmentClick(){
+      removeOneAppointment(id);
+  }
 
   return (
-<div class="messagetoast toast show" role="alert" aria-live="assertive" aria-atomic="true" id={`deletetoast-${id}`}>
-  <div class="messagetoast__header toast-header">
-    <h3>Message appointment: {title}</h3>
-    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-    </button>
-  </div>
-  <div class="toast-body">
-    Are you sure you would like to delete this appointment?
-  </div>
-  <button onClick={handledeleteAppointmentClick}>Yes please</button>
-</div>
+    <div className="messagetoast toast show" role="alert" aria-live="assertive" aria-atomic="true" id={`deletetoast-${id}`}>
+      <div className="messagetoast__header toast-header">
+        <h3 className="messagetoast__header__title">Message appointment: {title}</h3>
+        <button className="ml-2 mb-1 close messagetoast__header__button btn btn-success"
+        type="button" data-dismiss="toast" aria-label="Close">Exit</button>
+        </div>
+      <div class="toast-body">Are you sure you would like to delete this appointment?</div>
+      <button className="messagetoast__delete btn btn-danger" onClick={handledeleteAppointmentClick}>Yes please</button>
+    </div>
   )
 }
 

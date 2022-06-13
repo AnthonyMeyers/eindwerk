@@ -4,22 +4,29 @@ import Todo_list from "./todo_modules/Todo_list";
 import Login from "./login_modules/Login";
 import Register from "./login_modules/Register";
 import SplashScreen from "./login_modules/SplashScreen";
-import Settings from "./extra_modules/Settings";
 import Appointments from "./appointment_modules/Appointments";
 import Phonebook from "./phonebook_modules/Phonebook";
+import ProtectedRoute from "./ProtectedRoute";
+import Home from "./login_modules/Home";
+import Photogallery from "./login_modules/Photogallery";
+import Profile from "./profile_modules/profile";
 
 export default function Routing() {
   return (
     <Routes>
       
-      <Route exact path="/" element={<Login />} />
+      {/*Open routes */}
+      <Route exact path="/login" element={<Login />} />
       <Route exact path="/register" element={<Register />} />
-      <Route exact path="/splashscreen" element={<SplashScreen/>}/>
-      <Route exact path="/settings" element={<Settings />} />
-      <Route exact path="/todos" element={<Todo_list />} />
-      <Route exact path="/appointments" element={<Appointments/>}/>
-      <Route exact path="/phonebook" element={<Phonebook/>}/>
-
+      <Route exact path="/" element={<Home/>}/>
+      <Route exact path="/photogallery" element={<Photogallery/>}/>
+      
+      {/*Protected routes, only when user id known */}
+      <Route exact path="/splashscreen" element={<ProtectedRoute><SplashScreen/></ProtectedRoute>}/>
+      <Route exact path="/todos" element={<ProtectedRoute><Todo_list /></ProtectedRoute>} />
+      <Route exact path="/appointments" element={<ProtectedRoute><Appointments/></ProtectedRoute>}/>
+      <Route exact path="/phonebook" element={<ProtectedRoute><Phonebook/></ProtectedRoute>}/>
+      <Route exact path="/profile" element={<ProtectedRoute><Profile/></ProtectedRoute>}/>
     </Routes>
   );
 }

@@ -10,10 +10,8 @@ export default function App() {
   return (
     <>
     <RouterHeader/>
-    <main className="container">
     <RouterNavigation/>
       <Routing />
-    </main>
     </>
   );
 }

@@ -90,7 +90,7 @@ class Contact
     private $cntUser;
 
     /**
-     * @ORM\OneToMany(targetEntity=Appointment::class, mappedBy="apmCnt")
+     * @ORM\OneToMany(targetEntity=Appointment::class, mappedBy="apmCnt", orphanRemoval="true")
      */
     private $appointments;
 

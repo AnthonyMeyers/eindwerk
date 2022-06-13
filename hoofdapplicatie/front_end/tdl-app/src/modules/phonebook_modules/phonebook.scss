@@ -1,0 +1,70 @@
+.contact{
+    margin-bottom: 30px;
+    &__form{
+        &__namelabel{
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            &__input{
+                background: none;
+                border: none;
+                border: 1px solid black;
+                padding: 10px 0;
+                border-radius: 10px;
+                padding-left: 10px;
+            }
+        }
+        &__buttongroup{
+            display: flex;
+            gap: 10px;
+            &__button{
+                padding: 10px;
+                font-family: "icomoon";
+                background: none;
+                border: none;
+                &:after{font-size: 22px;}
+                &-details{
+                    &:after{
+                        content: "\e986";
+                        }
+                }
+                &-delete{
+                    &:after{
+                    content: "\e9ad";
+                    }
+                }
+                &-submit{
+                    &:after{
+                        content: "\ea10";
+                        }
+
+                }
+                &__text{
+                    position: absolute;
+                    left: -10000px;
+                }
+            }
+        }
+
+        
+    }
+}
+
+.contactaddress{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    &__label{
+        display: flex;
+        flex-direction: column;
+        gap: 13px;
+        &__input{
+            background: none;
+            border: none;
+            border: 1px solid black;
+            padding: 0 10px;
+            border-radius: 10px;
+
+        }
+    }
+}

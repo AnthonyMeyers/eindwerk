@@ -1,9 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const placeholderImgStad = "./src/images/placeholder_city.webp";
-const placeholderImgMon = "./src/images/monument_placeholder.webp";
-const placeholderFlag = "./src/images/unknown_flag.jpg";
-
 const api = createApi({
   reducerPath: "todoApi",
   baseQuery: fetchBaseQuery({
@@ -50,7 +46,7 @@ const api = createApi({
     }),
       //Get alle contacts van een user order by asc, set title index
       getAllUserContactsIndexed: builder.query({
-        query: (id) => ({url: `/contacts?pagination=false&cntUser=${id}&order%5BcntName%5D=asc`,
+        query: (id) => ({url: `/contacts.json?pagination=false&cntUser=${id}&order%5BcntName%5D=asc`,
         headers: {
           "Content-Type": "application/json",
           accept: "application/json",
@@ -76,7 +72,7 @@ const api = createApi({
     }),
       //Get alle todos van een user
       getAllUserTodos: builder.query({
-        query: (id) => ({url: `todos?page=1&pagination=false&tdoUsr=${id}`,
+        query: (id) => ({url: `/todos.json?page=1&pagination=false&tdoUsr=${id}`,
         headers: {
           "Content-Type": "application/json",
           accept: "application/json",
@@ -197,6 +193,32 @@ const api = createApi({
           }),
           invalidatesTags: (result, error, arg) => [{ type: 'TODOLIST', id: arg.id }],
         }),
+        //Wijzig de category van een todo
+        updateCategoryTodo: builder.mutation({
+          query: ({ id, catId}) => ({
+            url: `/todos/${id}.json`,
+            headers: {
+              "Content-Type": "application/json",
+              accept: "application/json",
+            },
+            method: "PUT",
+            body: { id, tdoCty: catId},
+          }),
+          invalidatesTags: (result, error, arg) => [{ type: 'TODOLIST', id: arg.id }],
+        }),
+        //Wijzig de prioriteit van een todo
+        updatePriorityTodo: builder.mutation({
+          query: ({ id, ptyId}) => ({
+            url: `/todos/${id}.json`,
+            headers: {
+              "Content-Type": "application/json",
+              accept: "application/json",
+            },
+            method: "PUT",
+            body: { id, tdoPty: ptyId},
+          }),
+          invalidatesTags: (result, error, arg) => [{ type: 'TODOLIST', id: arg.id }],
+        }),
         //Wijzig een appointment (PUT)
         updateAppointment: builder.mutation({
           query: ({ appId, appTitle, appStartsAt, appStopsAt, userId,appDescription, contactId, }) => ({
@@ -283,7 +305,9 @@ useGetAllUserTodosQuery,
 useGetAllUserAppointmentsQuery,
 useGetAllUserContactsIndexedQuery,
 useRegisterUserMutation,
+useUpdateCategoryTodoMutation,
 useAddOneContactAppointmentMutation,
+useUpdatePriorityTodoMutation,
 useAddOnetodoMutation,
 useChangeAppointmentContactMutation,
 useUpdateAppointmentMutation,

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 
 const AppNavigation = () => {
+  //Get the location
   let url = location.href;
 
   const [isMainPage, setIsMainPage] = useState(url.endsWith("/appointments"));
@@ -22,7 +23,7 @@ const AppNavigation = () => {
     <form className="navcontainer__navigation form-check form-switch">
       <label
         className="navcontainer__navigation__textlabel form-check-label"
-        for="flexSwitchCheckDefault"
+        htmlFor="flexSwitchCheckDefault"
       >
         Todo / calender
         <input

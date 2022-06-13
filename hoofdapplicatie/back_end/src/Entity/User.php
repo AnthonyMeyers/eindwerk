@@ -108,7 +108,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $isVerified = false;
 
     /**
-     * @ORM\OneToMany(targetEntity=Contact::class, mappedBy="cntUser")
+     * @ORM\OneToMany(targetEntity=Contact::class, mappedBy="cntUser", orphanRemoval="true")
      */
     private $contacts;
 

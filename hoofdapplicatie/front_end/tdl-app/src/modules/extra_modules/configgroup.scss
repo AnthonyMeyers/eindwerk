@@ -1,0 +1,59 @@
+.configgroup{
+    display: flex;
+    flex-wrap:wrap;
+    gap: 20px;
+
+    &__block{
+        display: block;
+        padding: 10px;
+        color: gray;
+        font-family: "icomoon";
+        font-size: 22px;
+        &:hover {
+            color: black;
+            cursor:pointer;
+        }
+        &__text {
+            position: absolute;
+            left: -10000px;
+        }
+    }
+    &__contacts{
+        
+        &:after {
+            content: "\e958";
+          }
+
+
+      }
+    &__logout{
+        
+        &:after {
+            content: "\ea14";
+          }
+
+    }
+    &__config {
+        &:after {
+            content: "\e995";
+          }
+
+    }
+    &__todos {
+        &:after {
+            content: "\e9ba";
+          }
+
+    }
+    &__appointments {
+        &:after {
+            content: "\e900";
+          }
+
+    }
+  }
+
+  
+ .activelink{
+    color: red;
+  }

@@ -19,6 +19,7 @@ security:
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
+
         api :
             pattern : ^/api
             stateless : true
@@ -32,14 +33,14 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-
+            logout:
+                path: app_logout
             json_login:
-                check_path: app_json_login
+                check_path : app_json_login
                 username_path: username
                 password_path: password
 
-            logout:
-                path: app_logout
+
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

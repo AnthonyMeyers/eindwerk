@@ -1,15 +1,21 @@
 import { NavLink, Routes, Route } from "react-router-dom";
 import {useState, useEffect} from "react";
 import { useAddOnetodoMutation } from "../../data/todoApi";
+import axios from "axios";
+import { useNavigate } from "react-router";
+import Configgroup from "../extra_modules/configgroup";
 
 const AppHeaderTodos = () => {
   //Set states
   const [todo, setTodo] = useState("");
   const [addOneTodo] = useAddOnetodoMutation();
 
-  //Get user id from localstorage
+  //set Navigation
+  const nav = useNavigate();
+
+  ////Get user id
   const userId = localStorage.getItem("userId");
-  console.log(userId)
+
   //Add a todo
 function handleAddtodoSubmit(e)
 {
@@ -18,31 +24,31 @@ function handleAddtodoSubmit(e)
     setTodo("");
 }
 
+async function handleLogoutClick(e)
+{
+  e.preventDefault();
+  try{
+  const response = await axios(`https://wdev2.be/fs_anthonym/eindwerk/logout`);
+  console.log(response);}
+  catch(error){console.log(error)}
+  localStorage.clear();
+  nav("/login");
+}
+
   return (
     <>
       <header className="header">
         <div className="header__panel">
           <h1 className="header__panel__title">To Do List</h1>
-          <NavLink to="/phonebook" className="header__panel__config">
-            <button className="header__panel__config__sublink">
-              <span className="header__panel__config__sublink__text">
-                configuration
-              </span>
-            </button>
-          </NavLink>
-          <NavLink to="/settings" className="header__panel__config">
-            <button className="header__panel__config__sublink">
-              <span className="header__panel__config__sublink__text">
-                configuration
-              </span>
-            </button>
-          </NavLink>
+          <div className="header__panel__configgroup configgroup">
+          <Configgroup/>
+          </div>
         </div>
         <form className="header__todoform" onSubmit={handleAddtodoSubmit}>
-          <label for="input-todo" className="header__todoform__label">
+          <label htmlFor="input-todo" className="header__todoform__label">
             Add a todo
             <input
-              class="header__todoform__label__todoinput form-control form-control-lg"
+              className="header__todoform__label__todoinput form-control form-control-lg"
               type="text"
               id="input-todo"
               autoComplete="off"

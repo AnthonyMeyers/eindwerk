@@ -3,12 +3,15 @@ import { useEffect, useState } from "react";
 import { convertToAccurateDay } from "../../helpers/datehelpers";
 import { useAddOneAppointmentMutation } from "../../data/todoApi";
 import { useNavigate } from "react-router";
+import Configgroup from "../extra_modules/configgroup";
 
  const AppHeaderAppointments = () => {
-const userId = localStorage.getItem("userId");
+   
+   //Get user from localstorage
+  const userId = localStorage.getItem("userId");
 
    //Set usestates
-   const [appointmentTitle,setAppointmentTitle] = useState("");
+  const [appointmentTitle,setAppointmentTitle] = useState("");
   const [startDate, setStartDate] = useState(convertToAccurateDay());
   const [startTime, setStartTime] = useState(new Date().toLocaleTimeString().substr(0,5));
   const [stopDate, setStopDate] = useState(startDate);
@@ -17,13 +20,14 @@ const userId = localStorage.getItem("userId");
   //set mutations
   const [addOneAppointment] = useAddOneAppointmentMutation();
 
-useEffect(()=>{
-  const start = new Date(startDate +" " + startTime).getTime();
-  const stop = new Date(stopDate + " " + stopTime).getTime();
-  if(start > stop){
-    setStopDate(startDate);
-    setStopTime(startTime);
-}},[startDate, startTime])
+  //convert stoptime to mininum start if needed
+  useEffect(()=>{
+    const start = new Date(startDate +" " + startTime).getTime();
+    const stop = new Date(stopDate + " " + stopTime).getTime();
+    if(start > stop){
+      setStopDate(startDate);
+      setStopTime(startTime);
+  }},[startDate, startTime])
 
   //Submit the appointment to the API
   function handleSubmitappointmentClick(e)
@@ -43,26 +47,15 @@ useEffect(()=>{
     <header className="header">
       <div className="header__panel">
         <h1 className="header__panel__title">To Do List</h1>
-        <NavLink to="/phonebook" className="header__panel__config">
-            <button className="header__panel__config__sublink">
-              <span className="header__panel__config__sublink__text">
-                configuration
-              </span>
-            </button>
-          </NavLink>
-        <NavLink to="/settings" className="header__panel__config">
-          <button className="header__panel__config__sublink">
-            <span className="header__panel__config__sublink__text">
-              configuration
-            </span>
-          </button>
-        </NavLink>
+        <div className="header__panel__configgroup configgroup">
+          <Configgroup/>
+          </div>
       </div>
       <form className="header__todoform" onSubmit={handleSubmitappointmentClick}>
-        <label for="input-appointment" className="header__todoform__label">
+        <label htmlFor="input-appointment" className="header__todoform__label">
           Add an appointment
           <input
-            class="header__todoform__label__todoinput form-control form-control-lg"
+            className="header__todoform__label__todoinput form-control form-control-lg"
             type="text"
             id="input-appointment"
             autoComplete="off"
@@ -71,15 +64,14 @@ useEffect(()=>{
             onInput={(e) =>setAppointmentTitle(e.target.value)}
           />
         </label>
-        <label for="date-appointment">Set the date and time
-        <input type="date" onChange={(e)=>setStartDate(e.target.value)} value={startDate}/>
-        <input type="time" onChange={(e) =>setStartTime(e.target.value)} value={startTime}/>
+        <label className="header__todoform__label" for="date-appointment">Set the date and time
+        <input className="header__todoform__label__todoinput" type="date" onChange={(e)=>setStartDate(e.target.value)} value={startDate}/>
+        <input className="header__todoform__label__todoinput" type="time" onChange={(e) =>setStartTime(e.target.value)} value={startTime}/>
         </label>
-        <label for="date-appointment">Set the stopdate and stoptime
-        <input type="date" onChange={(e)=>setStopDate(e.target.value)} value={stopDate}/>
-        <input type="time" onChange={(e) =>setStopTime(e.target.value)} value={stopTime}/>
+        <label className="header__todoform__label" for="date-appointment">Set the stopdate and stoptime
+        <input className="header__todoform__label__todoinput" type="date" onChange={(e)=>setStopDate(e.target.value)} value={stopDate}/>
+        <input className="header__todoform__label__todoinput" type="time" onChange={(e) =>setStopTime(e.target.value)} value={stopTime}/>
         </label>
-        
         
         <button type="submit" className="header__todoform__addtodo" >
           <span className="header__todoform__addtodo__text">

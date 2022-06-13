@@ -1,0 +1,70 @@
+.appointments{
+
+    &__title{}
+    &__list{
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+        &__listitem{
+        }
+    }
+}
+
+.appointment{
+    border: 1px solid black;
+    padding: 20px;
+    border-radius: 10px;
+    &__front{
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    &__label{
+
+    }
+        &__input{
+            border: 1px solid transparent;
+            background-color: lightgray;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            &:hover{
+                border-color: black;
+            }
+        }
+        &__select{
+            border-radius: 5px;
+            &:hover{
+                border: 1px solid black;
+            }
+        }
+        &__button{}
+    }
+}
+
+.contactinfo{
+    border-top: 3px solid black;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+    position: fixed;
+    background: #ddd;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    flex-wrap: wrap;
+    opacity: 0.8;
+    bottom: 0;
+    left:0;
+    &__fiche{
+        &__info{
+            color: black;
+
+        }
+    }
+
+}
+
+
+

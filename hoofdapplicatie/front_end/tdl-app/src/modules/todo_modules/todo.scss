@@ -4,7 +4,7 @@
     flex-direction: column;
     gap: 20px;
     &__item {
-      padding: 10px;
+      overflow: hidden;
       border: 1px solid black;
       border-radius: 10px;
     }
@@ -16,12 +16,33 @@
 }
 
 .todo{
+  height: 100%;
+  width: 100%;
+  &__buttongroup{
+    &__select{
+      color: black;
+
+    }
+  }
   &__front{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 5px;
+    &__label{
+      &__checker{
+        margin-left: 15px;
+
+}
+    }
+    &__button{
+      color: black;
+    }
     &__title{
       border: none;
       outline: none;
       background: none;
-      border: 3px solid black;
+      border: 1px solid black;
       border-radius: 10px;
       &:disabled{
         border: none;
