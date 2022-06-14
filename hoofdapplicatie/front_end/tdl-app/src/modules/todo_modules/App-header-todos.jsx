@@ -4,11 +4,14 @@ import { useAddOnetodoMutation } from "../../data/todoApi";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import Configgroup from "../extra_modules/configgroup";
+import { errorhandlingtodos } from "../../helpers/errorhandling";
+import Errormessage from "../extra_modules/Errormessage";
 
 const AppHeaderTodos = () => {
   //Set states
   const [todo, setTodo] = useState("");
-  const [addOneTodo] = useAddOnetodoMutation();
+  const [addOneTodo,] = useAddOnetodoMutation();
+  const [error, setError] = useState(null);
 
   //set Navigation
   const nav = useNavigate();
@@ -20,19 +23,17 @@ const AppHeaderTodos = () => {
 function handleAddtodoSubmit(e)
 {
   e.preventDefault();
+  const hasError = errorhandlingtodos("todo-title",todo);
+
+    if(!hasError){
+      try{
+        setError(null);
     addOneTodo({id: userId,title: todo });
     setTodo("");
-}
-
-async function handleLogoutClick(e)
-{
-  e.preventDefault();
-  try{
-  const response = await axios(`https://wdev2.be/fs_anthonym/eindwerk/logout`);
-  console.log(response);}
-  catch(error){console.log(error)}
-  localStorage.clear();
-  nav("/login");
+  }   
+    catch(e){setError("An error has occured.")}
+  }else setError(hasError);
+    
 }
 
   return (
@@ -57,6 +58,7 @@ async function handleLogoutClick(e)
               onInput={(e) => setTodo(e.target.value)}
             />
           </label>
+          <Errormessage className={"error-center"}>{error}</Errormessage>
           <button type="submit" className="header__todoform__addtodo">
             <span className="header__todoform__addtodo__text">
               Add todo submit button

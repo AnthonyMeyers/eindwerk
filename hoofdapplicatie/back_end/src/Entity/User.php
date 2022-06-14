@@ -8,6 +8,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use mysql_xdevapi\Exception;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -72,7 +73,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $usrMail;
 
-
     /**
      * @ORM\OneToMany(targetEntity=Todo::class, mappedBy="tdoUsr", orphanRemoval=true)
      * @Groups({"user:read", "user:write"})
@@ -129,8 +129,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setIsVerified(bool $isVerified): self
     {
+
         $this->isVerified = $isVerified;
         return $this;
+
     }
 
 
@@ -141,6 +143,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setUsrMail(string $usrMail): self
     {
+        //Checks if the email address is valid for storing
+        $email = $usrMail;
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $emailErr = "Invalid email format";
+            throw new \Exception($emailErr);
+        }
+
         $this->usrMail = $usrMail;
 
         return $this;
@@ -177,9 +186,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setUsrHasAgreed(bool $usrHasAgreed): self
     {
-        $this->usrHasAgreed = $usrHasAgreed;
 
-        return $this;
+        //The user always has to give permission to use his/hers data before storage
+        if($usrHasAgreed === true){
+            $this->usrHasAgreed = $usrHasAgreed;
+            return $this;
+        }else throw new \Exception("The user has to agree to the users agreement");
+
     }
 
     public function getUsrUpdatedAt(): ?\DateTimeInterface
@@ -202,7 +215,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setUsername(string $username): self
     {
-        $this->username = $username;
+            $name = $username;
+            if (empty($name)) {
+                throw new Exception("Name is required");
+            } else if (!preg_match("/^[a-zA-Z-' ]*$/",$name)) {
+                    $nameErr = "Only letters and white space allowed";
+                }
+
+
+        $this->username = trim($username);
 
         return $this;
     }

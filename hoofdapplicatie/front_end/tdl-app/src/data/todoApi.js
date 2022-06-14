@@ -7,6 +7,7 @@ const api = createApi({
   }),
   tagTypes: ["TODOLIST","APPOINTMENTLIST","CONTACTLIST"],
   refetchOnReconnect: true,
+  refetchOnFocus: true,
   endpoints: (builder) => ({
       //Get alle categorieen
       getAllCategories: builder.query({
@@ -296,8 +297,8 @@ const api = createApi({
 
 export default api;
 export const {
-  useGetAppointmentContactQuery,
-  useGetContactInfoQuery,
+useGetAppointmentContactQuery,
+useGetContactInfoQuery,
 useGetAllCategoriesQuery,
 useGetAllPrioritiesQuery,
 useGetAllUserInfoQuery,
