@@ -76,6 +76,11 @@ class Priority
         $this->todos = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->ptyTitle;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

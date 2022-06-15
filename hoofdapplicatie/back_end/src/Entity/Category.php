@@ -57,6 +57,12 @@ class Category
     private $ctyTitle;
 
     /**
+     * @ORM\Column(type="boolean", length=1)
+     * @Groups({"categories:read", "categories:write","category:item:get"})
+     */
+    private $ctyIsclassavailable;
+
+    /**
      * @ORM\Column(type="string", length=100)
      * @Groups({"categories:read", "categories:write","category:item:get"})
      */
@@ -75,6 +81,11 @@ class Category
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function __toString()
+    {
+        return $this->ctyTitle;
     }
 
     public function getCtyTitle(): ?string
@@ -100,6 +111,19 @@ class Category
 
         return $this;
     }
+
+    public function getCtyIsClassAvailable(): ?string
+    {
+        return $this->ctyIsClassAvailable;
+    }
+
+    public function setCtyIsClassAvailable(string $isAvailable): self
+    {
+        $this->ctyClass = $isAvailable;
+
+        return $this;
+    }
+
 
     /**
      * @return integer

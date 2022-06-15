@@ -111,6 +111,11 @@ class Appointment
 
     }
 
+    public function __toString()
+    {
+        return $this->apmTitle;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

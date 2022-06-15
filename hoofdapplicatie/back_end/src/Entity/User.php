@@ -223,7 +223,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 }
 
 
-        $this->username = trim($username);
+        $this->username = strip_tags(trim($username));
 
         return $this;
     }
@@ -236,6 +236,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUserIdentifier(): string
     {
         return (string) $this->username;
+    }
+
+    public function __toString()
+    {
+        return $this->username;
     }
 
     /**

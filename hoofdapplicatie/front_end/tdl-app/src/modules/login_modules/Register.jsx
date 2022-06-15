@@ -64,7 +64,7 @@ const Register = () => {
           </label>
           <Errormessage className={"error-center"}>{usernameError}</Errormessage>
           <label className="register__form__label">Password
-            <input type="text" className="register__form__label__textinput form-control"
+            <input type="password" className="register__form__label__textinput form-control"
             value={password} onInput={(e) => setPassword(e.target.value)}/>
           </label>
           <Errormessage className={"error-center"}>{passwordError}</Errormessage>

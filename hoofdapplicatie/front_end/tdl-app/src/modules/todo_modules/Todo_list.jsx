@@ -18,7 +18,7 @@ const Todo_list = () => {
   const {data: allUserTodos, isLoading: isLoadingTodos,
     isError: isErrorTodos, isSuccess: isSuccessTodos}
     = useGetAllUserTodosQuery(userId);
-
+    console.log(categories);
     useEffect(()=>{
       if(!categories || categories.length === 0)
       {

@@ -105,6 +105,11 @@ class Contact
         return $this->id;
     }
 
+    public function __toString()
+    {
+        return $this->cntName;
+    }
+
     public function getCntName(): ?string
     {
         return $this->cntName;
