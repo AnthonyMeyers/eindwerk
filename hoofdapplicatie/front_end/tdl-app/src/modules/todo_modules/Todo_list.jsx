@@ -8,7 +8,7 @@ import { loadCategories,loadPriorities } from "../../data/general";
 
 const Todo_list = () => {
   const dispatch = useDispatch();
-  const {categories, priorities} = useSelector((state)=> state.generalState);
+  const {categories, priorities} = useSelector((state)=> state.persistedReducer.generalState);
   const userId = localStorage.getItem("userId");
   const [activeId, setActiveId] = useState(0);
 

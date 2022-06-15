@@ -71,7 +71,7 @@ class Category
     private $ctyIsclassavailable;
 
     /**
-     * @ORM\OneToMany(targetEntity=Todo::class, mappedBy="tdoCty")
+     * @ORM\OneToMany(targetEntity=Todo::class, mappedBy="tdoCty", cascade={"remove"})
      */
     private $todos;
 
