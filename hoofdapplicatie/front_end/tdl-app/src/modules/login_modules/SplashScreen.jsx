@@ -14,13 +14,12 @@ const SplashScreen = () => {
   const {data: categories, isLoading: isLoadingCat, isError: isErrorCat, isSuccess: isSuccessCat} = useGetAllCategoriesQuery();
   const {data: priorities, isLoading: isLoadingPty, isError: isErrorPty, isSuccess: isSuccessPty} = useGetAllPrioritiesQuery();
 
-
   //Set basic data in generalSlice
   useEffect(()=>{
     if(isSuccessCat && isSuccessPty){
       dispatch(loadCategories({categories}));
       dispatch(loadPriorities({priorities}));
-      nav("/todos");
+      setTimeout(()=>{nav("/todos");},1000)
     }
     if(isErrorCat & isErrorPty){
       setError(true);}

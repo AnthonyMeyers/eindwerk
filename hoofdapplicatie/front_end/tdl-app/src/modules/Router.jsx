@@ -10,6 +10,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Home from "./login_modules/Home";
 import Photogallery from "./login_modules/Photogallery";
 import Profile from "./profile_modules/profile";
+import Privacy from "./login_modules/privacy";
 
 export default function Routing() {
   return (
@@ -20,6 +21,7 @@ export default function Routing() {
       <Route exact path="/register" element={<Register />} />
       <Route exact path="/" element={<Home/>}/>
       <Route exact path="/photogallery" element={<Photogallery/>}/>
+      <Route exact path="/privacy" element={<Privacy/>}/>
       
       {/*Protected routes, only when user id known */}
       <Route exact path="/splashscreen" element={<ProtectedRoute><SplashScreen/></ProtectedRoute>}/>

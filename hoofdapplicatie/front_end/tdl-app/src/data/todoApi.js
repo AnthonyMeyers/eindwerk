@@ -11,7 +11,7 @@ const api = createApi({
   endpoints: (builder) => ({
       //Get alle categorieen
       getAllCategories: builder.query({
-        query: () => ({url: `/categories.json?pagination=false`,
+        query: () => ({url: `/categories?pagination=false&ctyIsclassavailable=true`,
         headers: {
           "Content-Type": "application/json",
           accept: "application/json",

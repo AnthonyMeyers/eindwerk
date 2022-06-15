@@ -3,6 +3,7 @@ import {useState, useEffect} from "react";
 import { useUpdateIsCheckedTodoMutation, useUpdateTitleTodoMutation,
   useRemoveOneTodoMutation, useUpdateCategoryTodoMutation, useUpdatePriorityTodoMutation } from "../../data/todoApi";
 import { useSelector } from "react-redux";
+import {pickFromSelection, switchNextSelection } from "../../helpers/selectionpicker";
 
 const todo = ({todo: {id, tdoTitle, tdoIsDone, tdoPty, tdoCty},activeId}) => {
   //Usestates / getstates
@@ -24,34 +25,20 @@ const todo = ({todo: {id, tdoTitle, tdoIsDone, tdoPty, tdoCty},activeId}) => {
 
   //Update todo isChecked als gebruiker checkbox aanklikt
   useEffect(()=>{updateIsCheckedTodo({id,tdoChecked: isChecked})},[isChecked]);
-  useEffect(()=>{updateCategory({id, catId: selectedCategory.id})},[selectedCategory])
-  useEffect(()=>{updatePriority({id, ptyId: selectedPriority.id})},[selectedPriority])
-
 
 useEffect(()=>{
-if(categories.length > 0 && tdoCty && "id" in tdoCty)
+  if(categories.length > 0 && tdoCty && "id" in tdoCty)
 {
-const selectCategory = categories.reduce((selected, value)=> {if(tdoCty.id === value.id)
-{
-  return value;
-} else return selected;
-},0
-)
-setSelectedCategory(selectCategory);
-}
+const newCategory = pickFromSelection(categories, tdoCty, "categories");
 
-if(priorities.length > 0 && tdoPty && "id" in tdoPty)
-{
+setSelectedCategory(newCategory);
+}},[categories])
 
-const selectPriority = priorities.reduce((selected, value)=> {if(tdoPty.id === value.id)
+useEffect(()=>{if(priorities.length > 0 && tdoPty && "id" in tdoPty)
 {
-  return value;
-} else return selected;
-},0
-)
-setSelectedPriority(selectPriority);
-}
-},[categories,priorities])
+  const newPriority = pickFromSelection(priorities, tdoPty, "priorities");
+  setSelectedPriority(newPriority);
+}},[priorities])
 
   //Update de titel
   function handleTitlechangeClick(e){
@@ -61,46 +48,27 @@ setSelectedPriority(selectPriority);
   
   function handleCategoryswitchClick(e)
   {
-    e.preventDefault();
-    const maxId = categories[categories.length-1].id;
-
-    if(selectedCategory.id < maxId)
-    {
-      const selectCat = categories.reduce((selected, value)=> {
-        let truth = true;
-        if(selectedCategory.id + 1 == value.id && truth)
-        {
-          truth = false;
-          return value;
-        } else return selected;
-        },0)
-      setSelectedCategory(selectCat)
-    }else setSelectedCategory(categories[0]);
+      e.preventDefault();
+      const categoryToSet = switchNextSelection(categories, selectedCategory, "categories");
+      setSelectedCategory(categoryToSet);
+      if(categoryToSet != null){
+      updateCategory({id, catId: categoryToSet.id});}
   }
 
   //Handle priority change
   function handlePriorityswitchClick()
   {
-    const maxId = priorities[priorities.length-1].id;
-
-    if(selectedPriority.id < maxId)
-    {
-      const selectPty = priorities.reduce((selected, value)=> {
-        let truth = true;
-        if(selectedPriority.id + 1 == value.id && truth)
-        {
-          truth = false;
-          return value;
-        } else return selected;
-        },0)
-      setSelectedPriority(selectPty)
-    }else setSelectedPriority(priorities[0]);
+    const priorityToSet = switchNextSelection(priorities, selectedPriority, "categories");
+    setSelectedPriority(priorityToSet);
+    if(priorityToSet != null){
+    updatePriority({id, ptyId: priorityToSet.id})
+  }
     
   }
 
   return (
     <>
-      <div className={`todo ${selectedCategory.ctyClass}`}>
+      <div className={selectedCategory && selectedCategory["ctyClass"] != null ?`todo ${selectedCategory.ctyClass}` : `todo standard`}>
        
          <div className="todo__buttongroup">
 
@@ -113,8 +81,11 @@ setSelectedPriority(selectPriority);
       
       <button className="todo__front__button btn btn-outline-secondary" type="submit">Update title </button>
       <button className="todo__front__button btn btn-outline-secondary" onClick={() =>removeTodo(id)}>Delete todo</button>
-        {selectedCategory && "ctyTitle" in selectedCategory && <button onClick={handleCategoryswitchClick} className="todo__front__button btn btn-outline-secondary">Category: {selectedCategory.ctyTitle}</button>}
+        {selectedCategory && selectedCategory["ctyTitle"] && <button onClick={handleCategoryswitchClick} className="todo__front__button btn btn-outline-secondary">Category: {selectedCategory.ctyTitle}</button>}
+        {selectedCategory && !selectedCategory["ctyTitle"] && <button onClick={handleCategoryswitchClick} className="todo__front__button btn btn-outline-secondary">Category: default</button>}
+        {!selectedCategory && <button onClick={handleCategoryswitchClick} className="todo__front__button btn btn-outline-secondary">Category: default</button>}
          {selectedPriority  && "ptyTitle" in selectedPriority && <button onClick={handlePriorityswitchClick} className="todo__front__button  btn btn-outline-secondary">Priority: {selectedPriority.ptyTitle}</button>}
+         {selectedPriority  &&  !selectedPriority["ptyTitle"] && <button onClick={handlePriorityswitchClick} className="todo__front__button  btn btn-outline-secondary">Priority: default</button>}
        </form>
       </div>
     </>

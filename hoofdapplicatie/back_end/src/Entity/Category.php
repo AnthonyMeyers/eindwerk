@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 
 /*
 *     "get" = {"access_control" = "is_granted('ROLE_USER')"},
@@ -35,6 +37,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     normalizationContext={"groups"={"categories:read"}},
  *     denormalizationContext={"groups"={"categories:write"}})
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
+*  @ApiFilter(BooleanFilter::class, properties={"ctyIsclassavailable"})
  */
 
 //Todo list op categories afgeblokt, dit is onnodig en kan te veel informatie meegeven.
@@ -46,7 +49,6 @@ class Category
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"categories:read","category:item:get","todo_details:read"})
-     *
      */
     private $id;
 
@@ -57,16 +59,16 @@ class Category
     private $ctyTitle;
 
     /**
-     * @ORM\Column(type="boolean", length=1)
-     * @Groups({"categories:read", "categories:write","category:item:get"})
-     */
-    private $ctyIsclassavailable;
-
-    /**
      * @ORM\Column(type="string", length=100)
      * @Groups({"categories:read", "categories:write","category:item:get"})
      */
     private $ctyClass;
+
+    /**
+     * @ORM\Column(type="boolean", length=1)
+     * @Groups({"categories:read", "categories:write","category:item:get"})
+     */
+    private $ctyIsclassavailable;
 
     /**
      * @ORM\OneToMany(targetEntity=Todo::class, mappedBy="tdoCty")
@@ -112,18 +114,18 @@ class Category
         return $this;
     }
 
-    public function getCtyIsClassAvailable(): ?string
+    public function getCtyIsClassAvailable(): ?bool
     {
-        return $this->ctyIsClassAvailable;
+        return $this->ctyIsclassavailable;
     }
 
-    public function setCtyIsClassAvailable(string $isAvailable): self
+
+    public function setCtyIsClassAvailable(bool $isAvailable): self
     {
-        $this->ctyClass = $isAvailable;
+        $this->ctyIsclassavailable = $isAvailable;
 
         return $this;
     }
-
 
     /**
      * @return integer

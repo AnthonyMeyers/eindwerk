@@ -5,8 +5,6 @@ import Status from "../standard_modules/App-Status";
 import axios from "axios";
 import { useSelector,useDispatch } from "react-redux";
 import { loadCategories,loadPriorities } from "../../data/general";
-import { useNavigate } from "react-router";
-import { useJwt } from "react-jwt";
 
 const Todo_list = () => {
   const dispatch = useDispatch();
@@ -18,17 +16,19 @@ const Todo_list = () => {
   const {data: allUserTodos, isLoading: isLoadingTodos,
     isError: isErrorTodos, isSuccess: isSuccessTodos}
     = useGetAllUserTodosQuery(userId);
-    console.log(categories);
+ 
     useEffect(()=>{
       if(!categories || categories.length === 0)
       {
         (async()=>{
-        const {data:gen_categories} = await axios('https://wdev2.be/fs_anthonym/eindwerk/api/categories.json?pagination=false');
+        const {data:gen_categories} = 
+        await axios('https://wdev2.be/fs_anthonym/eindwerk/api/categories.json?pagination=false&ctyIsclassavailable=true');
         dispatch(loadCategories({categories: gen_categories}));
       })()
       if(!priorities || priorities.length === 0) {
         (async()=>{
-          const {data:gen_priorities} = await axios('https://wdev2.be/fs_anthonym/eindwerk/api/priorities.json?pagination=false');
+          const {data:gen_priorities} = 
+          await axios('https://wdev2.be/fs_anthonym/eindwerk/api/priorities.json?pagination=false');
           dispatch(loadPriorities({priorities: gen_priorities}));
         })()
 
