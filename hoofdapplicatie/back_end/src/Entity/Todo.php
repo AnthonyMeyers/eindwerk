@@ -11,15 +11,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /*
 
- *     collectionOperations={
- *     "get" = {"access_control" = "is_granted('ROLE_USER') and object.getOwner() == user"},
- *     "post" = {"access_control" = "is_granted('ROLE_USER') and object.getOwner() == user"}},
- *
- *      itemOperations={
- *     "get" = {"access_control" = "is_granted('ROLE_USER') and object.getOwner() == user"},
- *     "patch"  = {"access_control" = "is_granted('ROLE_USER') and object.getOwner() == user"},
- *     "put" = {"access_control" = "is_granted('ROLE_USER') and object.getOwner() == user"},
- *     "delete"  = {"access_control" = "is_granted('ROLE_USER') and object.getOwner() == user"}},
+
 
 
 
@@ -28,16 +20,18 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ApiResource(
  *     collectionOperations={
- *     "get",
- *     "post"},
+ *     "get" = {"access_control" = "is_granted('ROLE_USER')"},
+ *     "post" = {"access_control" = "is_granted('ROLE_USER')"}},
  *
  *      itemOperations={
- *     "get",
- *     "patch",
- *     "put",
- *     "delete"},
+ *     "get" = {"access_control" = "is_granted('ROLE_USER')"},
+ *     "patch"  = {"access_control" = "is_granted('ROLE_USER')"},
+ *     "put" = {"access_control" = "is_granted('ROLE_USER')"},
+ *     "delete"  = {"access_control" = "is_granted('ROLE_USER')"}},
+ *
  *     normalizationContext={"groups"={"todo_details:read"}},
  *     denormalizationContext={"groups"={"todo_details:write"}})
+ *
  * @ORM\Entity(repositoryClass=TodoRepository::class)
  * @ApiFilter(SearchFilter::class, properties={"tdoUsr"})
  */

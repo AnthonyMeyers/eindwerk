@@ -12,14 +12,17 @@ security:
                 property: username
     firewalls:
         login :
-            pattern: ^/api/login_check
+            pattern: ^/api/login
             stateless: true
             json_login:
                 check_path: /api/login_check # or api_login_check as defined in config/routes.yaml
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
-
-
+            custom_authenticator: App\Security\Authenticator
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                # target: app_any_route
         api :
             pattern : ^/api
             stateless : true
@@ -31,6 +34,11 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            form_login:
+                # "login" is the name of the route created previously
+                default_target_path: app_earthgraft
+                login_path: app_login
+                check_path: app_login
             lazy: true
             provider: app_user_provider
             logout:
@@ -39,8 +47,6 @@ security:
                 check_path : app_json_login
                 username_path: username
                 password_path: password
-
-
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -51,10 +57,12 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
         - { path : '^/api/login_check', roles : IS_AUTHENTICATED_ANONYMOUSLY }
         - { path : '^/api', roles : IS_AUTHENTICATED_ANONYMOUSLY  }
+
+
 when@test:
     security:
         password_hashers:

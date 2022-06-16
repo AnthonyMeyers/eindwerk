@@ -1,41 +1,18 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import Todo from "./todo";
-import { useGetAllUserInfoQuery, useGetAllUserTodosQuery} from "../../data/todoApi";
+import {  useGetAllUserTodosQuery} from "../../data/todoApi";
 import Status from "../standard_modules/App-Status";
-import axios from "axios";
-import { useSelector,useDispatch } from "react-redux";
-import { loadCategories,loadPriorities } from "../../data/general";
+import { parseCookies } from 'nookies';
 
 const Todo_list = () => {
-  const dispatch = useDispatch();
-  const {categories, priorities} = useSelector((state)=> state.persistedReducer.generalState);
+  const {jwt_token_TDL: token} = parseCookies();
   const userId = localStorage.getItem("userId");
   const [activeId, setActiveId] = useState(0);
 
-
   const {data: allUserTodos, isLoading: isLoadingTodos,
     isError: isErrorTodos, isSuccess: isSuccessTodos}
-    = useGetAllUserTodosQuery(userId);
+    = useGetAllUserTodosQuery({userId, token});
  
-    useEffect(()=>{
-      if(!categories || categories.length === 0)
-      {
-        (async()=>{
-        const {data:gen_categories} = 
-        await axios('https://wdev2.be/fs_anthonym/eindwerk/api/categories.json?pagination=false&ctyIsclassavailable=true');
-        dispatch(loadCategories({categories: gen_categories}));
-      })()
-      if(!priorities || priorities.length === 0) {
-        (async()=>{
-          const {data:gen_priorities} = 
-          await axios('https://wdev2.be/fs_anthonym/eindwerk/api/priorities.json?pagination=false');
-          dispatch(loadPriorities({priorities: gen_priorities}));
-        })()
-
-      }
-    }
-    },[isSuccessTodos])
-
     function handleEditbuttonClick(e)
     {
       if(["id"] in e.target)

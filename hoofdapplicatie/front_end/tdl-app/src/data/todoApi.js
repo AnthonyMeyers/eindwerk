@@ -11,44 +11,64 @@ const api = createApi({
   endpoints: (builder) => ({
       //Get alle categorieen
       getAllCategories: builder.query({
-        query: () => ({url: `/categories?pagination=false&ctyIsclassavailable=true`,
+        query: (token) => ({url: `/categories?pagination=false&ctyIsclassavailable=true`,
         headers: {
+          "Authorization": "Bearer " + token,
           "Content-Type": "application/json",
-          accept: "application/json",
+          "accept": "application/json",
         }
       })
       }),
       //Get alle prioriteiten
       getAllPriorities: builder.query({
-        query: () => ({url: `/priorities.json?pagination=false`, 
+        query: (token) => ({url: `/priorities.json?pagination=false`, 
         headers: {
-          "Content-Type": "application/json",
+          "Authorization": "Bearer " + token,
+          "Content-Type": "application/jsonld",
           accept: "application/json",
         }
       }),
       }),
       //Get alle user informatie
       getAllUserInfo: builder.query({
-        query: (id) => `/users/${id}.json?pagination=false`,
-      }),
-      //Get alle user informatie
-      getContactInfo: builder.query({
-        query: (id) => `/contacts/${id}`,
-      }),
-      //Get alle contacts asc
-      getAllUserContacts: builder.query({
-        query: (id) => ({url: `/contacts?pagination=false&cntUser=${id}&order%5BcntName%5D=asc`,
+        query: ({id, token}) => ({url : `/users/${id}.json?pagination=false`,
         headers: {
+          "Authorization": "Bearer " + token,
           "Content-Type": "application/json",
           accept: "application/json",
         }
       }),
-      providesTags: ['CONTACTLIST'],
-    }),
+      }),
+      //Get alle contact  informatie
+      getContactInfo: builder.query({
+        query: ({id, token}) => (console.log(id),{url: `/contacts/${id}`,
+        headers: {
+          "Authorization": "Bearer " + token,
+          "Content-Type": "application/json",
+          accept: "application/json",
+        }
+      }),
+      providesTags: ["CONTACTLIST"],
+      }),
+      //Get alle contacts asc
+      getAllUserContacts: builder.query({
+        query: ({id, token}) => ({url: `/contacts?pagination=false&cntUser=${id}&order%5BcntName%5D=asc`,
+        headers: {
+          "Authorization": "Bearer " + token,
+          "Content-Type": "application/json",
+          accept: "application/json",
+        },
+        providesTags: (result, error, arg) =>
+        result
+          ? [...result.map(({ id }) => ({ type: 'CONTACTLIST', id })), 'CONTACTLIST']
+          : ['CONTACTLIST'],
+      }),
+      }),
       //Get alle contacts van een user order by asc, set title index
       getAllUserContactsIndexed: builder.query({
-        query: (id) => ({url: `/contacts.json?pagination=false&cntUser=${id}&order%5BcntName%5D=asc`,
+        query: ({id, token}) => ({url: `/contacts.json?pagination=false&cntUser=${id}&order%5BcntName%5D=asc`,
         headers: {
+          "Authorization": "Bearer " + token,
           "Content-Type": "application/json",
           accept: "application/json",
         }
@@ -69,12 +89,16 @@ const api = createApi({
         })
         return indexing
       },
-      providesTags: ['CONTACTLIST'],
+      providesTags: (result, error, arg) =>
+      result
+        ? [...result.map(({ id }) => ({ type: 'CONTACTLIST', id })), 'CONTACTLIST']
+        : ['CONTACTLIST'],
     }),
       //Get alle todos van een user
       getAllUserTodos: builder.query({
-        query: (id) => ({url: `/todos.json?page=1&pagination=false&tdoUsr=${id}`,
+        query: ({id, token}) => ({url: `/todos.json?page=1&pagination=false&tdoUsr=${id}`,
         headers: {
+          "Authorization": "Bearer " + token,
           "Content-Type": "application/json",
           accept: "application/json",
         }
@@ -86,8 +110,9 @@ const api = createApi({
       }),
       //Get alle appointments van een user
       getAllUserAppointments: builder.query({
-        query: (id) => ({url: `/appointments?tdoUsr=${id}.json?pagination=false`,
+        query: ({id , token}) => ({url: `/appointments?tdoUsr=${id}.json?pagination=false`,
         headers: {
+          "Authorization": "Bearer " + token,
           "Content-Type": "application/json",
           accept: "application/json",
         }
@@ -116,9 +141,10 @@ const api = createApi({
       }),
       //Post een todo
     addOnetodo: builder.mutation({
-      query: ({id, title}) => ({
+      query: ({id, title, token}) => ({
         url: `/todos.json`,
         headers: {
+          "Authorization" : "Bearer " + token,
           "Content-Type": "application/json",
           accept: "application/json",
         },
@@ -135,9 +161,10 @@ const api = createApi({
     }),
       //Post een contact
       addOneContact: builder.mutation({
-        query: ({userId, name}) => ({
+        query: ({userId, name, token}) => ({
           url: `/contacts.json`,
           headers: {
+            "Authorization": "Bearer " + token,
             "Content-Type": "application/json",
             accept: "application/json",
           },
@@ -151,9 +178,10 @@ const api = createApi({
       }),
       //Post een appointment
       addOneAppointment: builder.mutation({
-        query: ({id, title, startsAt, stopsAt}) => ({
+        query: ({id, title, startsAt, stopsAt, token}) => ({
           url: `/appointments.json`,
           headers: {
+            "Authorization": "Bearer " + token,
             "Content-Type": "application/json",
             accept: "application/json",
           },
@@ -170,9 +198,10 @@ const api = createApi({
       }),
         //Wijzig isChecked van een todo
         updateIsCheckedTodo: builder.mutation({
-          query: ({ id, tdoChecked}) => ({
+          query: ({ id, tdoChecked, token}) => ({
             url: `/todos/${id}.json`,
             headers: {
+              "Authorization": "Bearer " + token,
               "Content-Type": "application/json",
               accept: "application/json",
             },
@@ -183,9 +212,10 @@ const api = createApi({
         }),
         //Wijzig de titel van een todo
         updateTitleTodo: builder.mutation({
-          query: ({ id, todoTitle}) => ({
+          query: ({ id, todoTitle, token}) => ({
             url: `/todos/${id}.json`,
             headers: {
+              "Authorization": "Bearer " + token,
               "Content-Type": "application/json",
               accept: "application/json",
             },
@@ -196,9 +226,10 @@ const api = createApi({
         }),
         //Wijzig de category van een todo
         updateCategoryTodo: builder.mutation({
-          query: ({ id, catId}) => ({
+          query: ({ id, catId, token}) => ({
             url: `/todos/${id}.json`,
             headers: {
+              "Authorization": "Bearer " + token,
               "Content-Type": "application/json",
               accept: "application/json",
             },
@@ -209,9 +240,10 @@ const api = createApi({
         }),
         //Wijzig de prioriteit van een todo
         updatePriorityTodo: builder.mutation({
-          query: ({ id, ptyId}) => ({
+          query: ({ id, ptyId, token}) => ({
             url: `/todos/${id}.json`,
             headers: {
+              "Authorization": "Bearer " + token,
               "Content-Type": "application/json",
               accept: "application/json",
             },
@@ -222,9 +254,10 @@ const api = createApi({
         }),
         //Wijzig een appointment (PUT)
         updateAppointment: builder.mutation({
-          query: ({ appId, appTitle, appStartsAt, appStopsAt, userId,appDescription, contactId, }) => ({
+          query: ({ appId, appTitle, appStartsAt, appStopsAt, userId,appDescription, contactId, token }) => ({
             url: `/appointments/${appId}.json`,
             headers: {
+              "Authorization":"Bearer " + token,
               "Content-Type": "application/json",
               accept: "application/json",
             },
@@ -242,9 +275,10 @@ const api = createApi({
         }),
         //Wijzig een contact (PUT)
         updateOneContact: builder.mutation({
-          query: ({ conid, name, tel, street, postal,city,mail}) => ({
+          query: ({ conid, name, tel, street, postal,city,mail, token}) => ({
             url: `/contacts/${conid}.json`,
             headers: {
+              "Authorization": "Bearer " + token,
               "Content-Type": "application/json",
               accept: "application/json",
             },
@@ -255,9 +289,10 @@ const api = createApi({
         }),
       //DELETE een todo
     removeOneTodo: builder.mutation({
-      query: (id) => ({
+      query: ({id, token}) => ({
         url: `/todos/${id}.json`,
         headers: {
+          "Authorization": "Bearer " + token,
           "Content-Type": "application/json",
           accept: "application/json",
         },
@@ -268,29 +303,31 @@ const api = createApi({
     }),
     //DELETE een contact
     removeOneContact: builder.mutation({
-      query: (id) => ({
+      query: ({id, token}) => ({
         url: `/contacts/${id}.json`,
         headers: {
+          "Authorization": "Bearer " + token,
           "Content-Type": "application/json",
           accept: "application/json",
         },
         method: "DELETE",
         body: { id },
       }),
-      invalidatesTags: ["CONTACTLIST"],
+      invalidatesTags: (result, error, arg) => [{ type: 'CONTACTLIST', id: arg.id }],
     }),
       //DELETE een appointment
     removeOneAppointment: builder.mutation({
-      query: (id) => ({
+      query: ({id, token}) => ({
         url: `/appointments/${id}.json`,
         headers: {
+          "Authorization":"Bearer " + token,
           "Content-Type": "application/json",
           accept: "application/json",
         },
         method: "DELETE",
         body: { id },
       }),
-      invalidatesTags: ["APPOINTMENTLIST"],
+      invalidatesTags: (result, error, arg) => [{ type: 'APPOINTMENTLIST', id: arg.id }],
     }),
   })
 });

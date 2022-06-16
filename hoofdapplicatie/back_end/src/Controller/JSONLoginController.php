@@ -12,7 +12,7 @@ class JSONLoginController extends AbstractController
 {
 
     /**
-     * @Route("/login", name="app_json_login", methods={"POST"})
+     * @Route("/api/login", name="app_json_login", methods={"POST"})
      */
     public function login(IriConverterInterface $iriConverter)
     {
@@ -28,7 +28,7 @@ class JSONLoginController extends AbstractController
     }
 
     /**
-     * @Route("/logout", name="app_logout")
+     * @Route("/api/logout", name="app_json_logout")
      */
     public function logout()
     {

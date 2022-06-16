@@ -1,12 +1,14 @@
 import { useRemoveOneAppointmentMutation } from "../../data/todoApi";
+import { parseCookies } from 'nookies';
 
 const ToastDeleteApm = ({id, title}) => {
+  const {jwt_token_TDL: token} = parseCookies();
   //Remove appointment mutation
   const [removeOneAppointment] = useRemoveOneAppointmentMutation();
 
   //Remove appointment on click
   function handledeleteAppointmentClick(){
-      removeOneAppointment(id);
+      removeOneAppointment({id, token});
   }
 
   return (

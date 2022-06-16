@@ -4,17 +4,24 @@ import admin from "./admin";
 import general from "./general";
 import storage from "redux-persist/lib/storage";
 import {persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER} from "redux-persist";
+import generalSlice from "./general";
 
 const persistConfig = {
   key: "general",
   storage
 }
 
+const reducers = combineReducers({[generalSlice.name]: generalSlice.reducer})
+
+const persistedReducer = persistReducer(persistConfig, reducers);
+
 const store = configureStore({
   reducer: combineReducers({
     [todoApi.reducerPath]: todoApi.reducer,
     [admin.name]: admin.reducer,
-    [general.name]: general.reducer,
+
+    //Redux Slices
+    persistedReducer,
   }),
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({serializableCheck:{

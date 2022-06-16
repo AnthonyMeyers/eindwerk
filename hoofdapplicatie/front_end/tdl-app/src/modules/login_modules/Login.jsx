@@ -8,7 +8,7 @@ import { saveJWTinCookie } from "../../helpers/jwttokens";
 import { errorhandlinglogin } from "../../helpers/errorhandling";
 
 const Login = () => {
-
+  saveJWTinCookie({jwt_token_TDL: ""});
   //Define useStates
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -35,8 +35,12 @@ const Login = () => {
       accept: "application/json",
     }}
     )
+    let a = false;
+    let b = false;
+    let c = false;
     if("token" in data)
     {
+
       saveJWTinCookie(data.token);
     }
     
@@ -50,10 +54,10 @@ const Login = () => {
     if("roles" in data.userdata){
       localStorage.setItem("roles",JSON.stringify(data.userdata.roles)) 
     }
-
   //Navigeer door naar de app
-    nav("/splashscreen");
-    }
+  nav("/splashscreen");
+}
+
   }catch(error){
     console.log(error);
     setError(errorhandlinglogin(error.response.status));

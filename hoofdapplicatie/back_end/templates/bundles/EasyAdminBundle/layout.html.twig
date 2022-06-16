@@ -1,4 +1,18 @@
 {% extends '@!EasyAdmin/layout.html.twig' %}
-{% block content_footer %}
-    The TDL Application &#169
+{% block stylesheets %}
+    <link href="{{ asset('css/main.css') }}" type="text/css" rel="stylesheet" />
 {% endblock %}
+
+{% set page_title_block_output %}{% block page_title %}TDL App admin{% endblock %}{% endset %}
+
+{% block head_favicon %}
+    <link rel="shortcut icon" href="{{ asset("assets/tdl-logo.jpg") }}">
+{% endblock %}
+
+
+
+{% block content_footer %}
+    The TDL Application admin panel
+{% endblock %}
+
+

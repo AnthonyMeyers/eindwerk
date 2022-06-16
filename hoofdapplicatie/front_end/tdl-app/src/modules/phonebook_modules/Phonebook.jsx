@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useGetAllUserContactsIndexedQuery } from '../../data/todoApi';
 import PhonebookDetails from './PhonebookDetails';
+import { parseCookies } from 'nookies';
 
 const Phonebook = () => {
+  const {jwt_token_TDL: token} = parseCookies();
   //Get user id
   const userId = localStorage.getItem("userId");
 
-  const {data: contacts,isLoading, isError, isSuccess} = useGetAllUserContactsIndexedQuery(userId);
+  const {data: contacts,isLoading, isError, isSuccess} = useGetAllUserContactsIndexedQuery({userId, token});
   const [reset, doReset] = useState(false);
 
   function handleResetcomponentsClick(e)

@@ -1,8 +1,11 @@
 import { useGetContactInfoQuery } from '../../data/todoApi';
+import { parseCookies } from "nookies";
 
 const AppointmentContact = ({contactInfo}) => {
+  const {jwt_token_TDL: token} = parseCookies();
+
   //Get contact information
-  const {data, isLoading, isSuccess, isError} = useGetContactInfoQuery(contactInfo);
+  const {data, isLoading, isSuccess, isError} = useGetContactInfoQuery({id: contactInfo, token});
   return (
         <>
           <div className="contactinfo">

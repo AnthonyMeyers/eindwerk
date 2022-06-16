@@ -1,12 +1,14 @@
-import { useEffect } from "react";
 import { useRemoveOneContactMutation } from "../../data/todoApi";
+import { parseCookies } from 'nookies';
 
 const ToastDeleteContact = ({id, title}) => { 
+  const {jwt_token_TDL: token} = parseCookies();
+
   //Remove contact mutation
   const [removeOneContact] = useRemoveOneContactMutation();
 
   function handledeleteAppointmentClick(){
-      removeOneContact(id);
+      removeOneContact({id, token});
   }
 
   //Modal from bootstrap, adapted to situation

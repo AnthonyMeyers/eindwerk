@@ -4,9 +4,10 @@ import { convertToAccurateDay } from "../../helpers/datehelpers";
 import { useAddOneAppointmentMutation } from "../../data/todoApi";
 import { useNavigate } from "react-router";
 import Configgroup from "../extra_modules/configgroup";
+import { parseCookies } from 'nookies';
 
  const AppHeaderAppointments = () => {
-   
+  const {jwt_token_TDL: token} = parseCookies();
    //Get user from localstorage
   const userId = localStorage.getItem("userId");
 
@@ -37,7 +38,7 @@ import Configgroup from "../extra_modules/configgroup";
     const stop = new Date(stopDate + " " + stopTime).getTime();
     if(start <= stop && appointmentTitle.length >= 4){
 
-      addOneAppointment({id: userId, title: appointmentTitle, startsAt: startDate +  " " + startTime, stopsAt: stopDate + " " + stopTime})
+      addOneAppointment({id: userId, title: appointmentTitle, startsAt: startDate +  " " + startTime, stopsAt: stopDate + " " + stopTime, token})
     }
     setAppointmentTitle("");
   }

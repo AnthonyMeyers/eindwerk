@@ -11,33 +11,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 
-/*
-*     "get" = {"access_control" = "is_granted('ROLE_USER')"},
- *     "post" = {"access_control" = "is_granted('ROLE_ADMIN')"}},
- *
- *      itemOperations={
-    *     "get" = {"access_control" = "is_granted('ROLE_USER')"},
- *     "delete"  = {"access_control" = "is_granted('ROLE_ADMIN')"}},
-*/
-
-
-
 /**
  * @ApiResource(
  *     collectionOperations={
- *     "get",
- *     "post"},
+ *     "get" = {"access_control" = "is_granted('ROLE_USER')"}},
  *
- *      itemOperations={
- *     "get",
- *     "delete"},
- *
- *     collectionOperations={"get","post"},
- *     itemOperations={"get"={"normalization_context"={"groups"={"category:item:get"}}},"delete"},
  *     normalizationContext={"groups"={"categories:read"}},
  *     denormalizationContext={"groups"={"categories:write"}})
+ *
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
-*  @ApiFilter(BooleanFilter::class, properties={"ctyIsclassavailable"})
+ *  @ApiFilter(BooleanFilter::class, properties={"ctyIsclassavailable"})
  */
 
 //Todo list op categories afgeblokt, dit is onnodig en kan te veel informatie meegeven.

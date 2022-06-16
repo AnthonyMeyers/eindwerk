@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react"
 import ToastDeleteContact from "./ToastDeleteContact";
 import { useUpdateOneContactMutation } from "../../data/todoApi";
+import { parseCookies } from "nookies";
 
 const PhonebookDetails = ({contact: {cntCity, cntName, cntPostal, cntStreet, cntTel, id,cntMail, cntUser, index},reset}) => {
+  const {jwt_token_TDL: token} = parseCookies();
   //set up updatecontactmutation
   const [updateContact] = useUpdateOneContactMutation();
 
@@ -28,7 +30,7 @@ const PhonebookDetails = ({contact: {cntCity, cntName, cntPostal, cntStreet, cnt
   //save the contact to the api
   function handleContactChangeSubmit(e){
       e.preventDefault()
-      updateContact({ conid: id, name, tel, street, postal,city,mail,})
+      updateContact({ conid: id, name, tel, street, postal,city,mail,token})
   }
 
 

@@ -20,8 +20,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ApiResource(
  *     normalizationContext={"groups"={"user:read"}},
- *     denormalizationContext={"groups"={"user:write"}}
- * )
+ *     denormalizationContext={"groups"={"user:write"}})
+ *
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(fields={"usrMail"})
  */
@@ -60,12 +60,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $plainPassword;
 
     /**
-     * @ORM\OneToMany(targetEntity=Appointment::class, mappedBy="apmUsr", orphanRemoval=true)
-     *
-     */
-    private $appointments;
-
-    /**
      * @ORM\Column(type="string", length=255, unique=true)
      * @Groups({"user:read", "user:write"})
      * @Assert\NotBlank
@@ -95,6 +89,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"user:read","user:write"})
      */
     private $usrPicture;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Appointment::class, mappedBy="apmUsr", orphanRemoval=true)
+     *
+     */
+    private $appointments;
 
     /**
      * @ORM\Column(type="boolean")
@@ -184,7 +184,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->usrHasAgreed;
     }
 
-    public function setUsrHasAgreed(bool $usrHasAgreed): self
+    public function setUsrHasAgreed(bool $usrHasAgreed = false): self
     {
 
         //The user always has to give permission to use his/hers data before storage
@@ -417,6 +417,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
     }
 
 }

@@ -6,8 +6,10 @@ import { useNavigate } from "react-router";
 import Configgroup from "../extra_modules/configgroup";
 import { errorhandlingtodos } from "../../helpers/errorhandling";
 import Errormessage from "../extra_modules/Errormessage";
+import { parseCookies } from 'nookies';
 
 const AppHeaderTodos = () => {
+  const {jwt_token_TDL: token} = parseCookies();
   //Set states
   const [todo, setTodo] = useState("");
   const [addOneTodo,] = useAddOnetodoMutation();
@@ -28,7 +30,7 @@ function handleAddtodoSubmit(e)
     if(!hasError){
       try{
         setError(null);
-    addOneTodo({id: userId,title: todo });
+    addOneTodo({id: userId,title: todo, token });
     setTodo("");
   }   
     catch(e){setError("An error has occured.")}

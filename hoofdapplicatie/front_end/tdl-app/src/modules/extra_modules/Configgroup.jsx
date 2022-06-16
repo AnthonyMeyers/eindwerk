@@ -2,6 +2,7 @@ import { useNavigate} from "react-router";
 import { NavLink, useLocation  } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import {destroyJWTCookie} from "../../helpers/jwttokens";
 
 const Configgroup = () => {
   
@@ -18,7 +19,8 @@ const Configgroup = () => {
   {
     e.preventDefault();
     try{
-    const response = await axios(`https://wdev2.be/fs_anthonym/eindwerk/logout`);
+    destroyJWTCookie()
+    const response = await axios(`https://wdev2.be/fs_anthonym/eindwerk/api/logout`);
   }
     catch(error){console.log(error)}
     localStorage.clear();

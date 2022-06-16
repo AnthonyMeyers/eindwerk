@@ -1,9 +1,10 @@
 import {useState, useEffect} from "react";
 import { useAddOneContactMutation } from "../../data/todoApi";
 import Configgroup from "../extra_modules/configgroup";
+import { parseCookies } from 'nookies';
 
 const PhonebookHeader = () => {
-
+  const {jwt_token_TDL: token} = parseCookies();
   //Get user id
   const userId = localStorage.getItem("userId");
 
@@ -15,7 +16,7 @@ const PhonebookHeader = () => {
   function handleAddcontactSubmit(e)
   {
       e.preventDefault();
-      addOneContact({userId,name: contact });
+      addOneContact({userId,name: contact, token});
       setContact("");
   }
 

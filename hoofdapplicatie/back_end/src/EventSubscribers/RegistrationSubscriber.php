@@ -27,9 +27,9 @@ class RegistrationSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::VIEW => [['sendRegistrationMail', EventPriorities::POST_WRITE],
+            KernelEvents::VIEW => [
+                ['sendRegistrationMail', EventPriorities::POST_WRITE],
                 ['sendRemoveAccountMail', EventPriorities::PRE_WRITE]]
-
         ];
     }
 

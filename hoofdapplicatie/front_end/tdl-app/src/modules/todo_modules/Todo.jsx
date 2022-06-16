@@ -4,8 +4,10 @@ import { useUpdateIsCheckedTodoMutation, useUpdateTitleTodoMutation,
   useRemoveOneTodoMutation, useUpdateCategoryTodoMutation, useUpdatePriorityTodoMutation } from "../../data/todoApi";
 import { useSelector } from "react-redux";
 import {pickFromSelection, switchNextSelection } from "../../helpers/selectionpicker";
+import {parseCookies} from "nookies";
 
 const todo = ({todo: {id, tdoTitle, tdoIsDone, tdoPty, tdoCty},activeId}) => {
+  const {jwt_token_TDL: token} = parseCookies();
   //Usestates / getstates
   const [isChecked, setIsChecked] = useState(tdoIsDone);
   const [todoTitle, setTodoTitle] = useState(tdoTitle);
@@ -13,7 +15,7 @@ const todo = ({todo: {id, tdoTitle, tdoIsDone, tdoPty, tdoCty},activeId}) => {
   const [selectedPriority, setSelectedPriority] = useState({});
 
   //states directly used in return value
-  const {categories, priorities} = useSelector((state)=> state.generalState);
+  const {categories, priorities} = useSelector((state)=> state.persistedReducer.generalState);
 
 
   //Mutations
@@ -24,7 +26,7 @@ const todo = ({todo: {id, tdoTitle, tdoIsDone, tdoPty, tdoCty},activeId}) => {
   const [updatePriority] = useUpdatePriorityTodoMutation();
 
   //Update todo isChecked als gebruiker checkbox aanklikt
-  useEffect(()=>{updateIsCheckedTodo({id,tdoChecked: isChecked})},[isChecked]);
+  useEffect(()=>{updateIsCheckedTodo({id,tdoChecked: isChecked, token})},[isChecked]);
 
 useEffect(()=>{
   if(categories.length > 0 && tdoCty && "id" in tdoCty)
@@ -43,7 +45,7 @@ useEffect(()=>{if(priorities.length > 0 && tdoPty && "id" in tdoPty)
   //Update de titel
   function handleTitlechangeClick(e){
     e.preventDefault()
-    updateTitleTodo({id, todoTitle})
+    updateTitleTodo({id, todoTitle, token})
   }
   
   function handleCategoryswitchClick(e)
@@ -52,7 +54,7 @@ useEffect(()=>{if(priorities.length > 0 && tdoPty && "id" in tdoPty)
       const categoryToSet = switchNextSelection(categories, selectedCategory, "categories");
       setSelectedCategory(categoryToSet);
       if(categoryToSet != null){
-      updateCategory({id, catId: categoryToSet.id});}
+      updateCategory({id, catId: categoryToSet.id, token});}
   }
 
   //Handle priority change
@@ -61,7 +63,7 @@ useEffect(()=>{if(priorities.length > 0 && tdoPty && "id" in tdoPty)
     const priorityToSet = switchNextSelection(priorities, selectedPriority, "categories");
     setSelectedPriority(priorityToSet);
     if(priorityToSet != null){
-    updatePriority({id, ptyId: priorityToSet.id})
+    updatePriority({id, ptyId: priorityToSet.id, token})
   }
     
   }
@@ -80,7 +82,7 @@ useEffect(()=>{if(priorities.length > 0 && tdoPty && "id" in tdoPty)
           onInput={(e) => setTodoTitle(e.target.value)} value={todoTitle}/>
       
       <button className="todo__front__button btn btn-outline-secondary" type="submit">Update title </button>
-      <button className="todo__front__button btn btn-outline-secondary" onClick={() =>removeTodo(id)}>Delete todo</button>
+      <button className="todo__front__button btn btn-outline-secondary" onClick={() =>removeTodo({id, token})}>Delete todo</button>
         {selectedCategory && selectedCategory["ctyTitle"] && <button onClick={handleCategoryswitchClick} className="todo__front__button btn btn-outline-secondary">Category: {selectedCategory.ctyTitle}</button>}
         {selectedCategory && !selectedCategory["ctyTitle"] && <button onClick={handleCategoryswitchClick} className="todo__front__button btn btn-outline-secondary">Category: default</button>}
         {!selectedCategory && <button onClick={handleCategoryswitchClick} className="todo__front__button btn btn-outline-secondary">Category: default</button>}

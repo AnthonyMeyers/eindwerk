@@ -1,9 +1,13 @@
-import { parseCookies, setCookie, destroyCookie } from 'nookies'
+import nookies, { parseCookies, setCookie, destroyCookie } from 'nookies'
 
 
 export function saveJWTinCookie(token)
 {
-  const cookies = parseCookies();
+  setCookie(null, 'jwt_token_TDL',token)
+  
+}
 
-  setCookie(null, 'jwt_token', token)
+export function destroyJWTCookie()
+{
+  destroyCookie(null, 'jwt_token_TDL');
 }

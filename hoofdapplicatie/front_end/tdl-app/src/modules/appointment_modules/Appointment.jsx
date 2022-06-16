@@ -3,9 +3,10 @@ import { convertToAccurateDay } from '../../helpers/datehelpers';
 import { useUpdateAppointmentMutation } from '../../data/todoApi';
 import ToastDeleteApm from './ToastDeleteApm';
 import AppointmentContact from './AppointmentContact';
+import { parseCookies } from 'nookies';
 
 const Appointment = ({appointment,contacts, activeItem}) => {
-
+  const {jwt_token_TDL: token} = parseCookies();
   //Make appointment variables available cleanly
   const {id,apmTitle, apmDescription, apmStartsAt, apmStopsAt, apmUsr, apmCnt} = appointment;
 
@@ -61,7 +62,7 @@ const Appointment = ({appointment,contacts, activeItem}) => {
     const stop = new Date(dateStops + " " + timeStops).getTime();
     if(start <= stop && title.length >= 4){
       updateAppointment({appId: id, appTitle: title, appStartsAt: dateStarts +" " + timeStarts,
-      appStopsAt: dateStops + " " + timeStops, userId: apmUsr.id,appDescription: description,contactId: contactPerson > 0 ? contactPerson : null})
+      appStopsAt: dateStops + " " + timeStops, userId: apmUsr.id,appDescription: description,contactId: contactPerson > 0 ? contactPerson : null, token})
     }
   } 
   return (
