@@ -9,5 +9,5 @@ export function saveJWTinCookie(token)
 
 export function destroyJWTCookie()
 {
-  destroyCookie(null, 'jwt_token_TDL');
+  destroyCookie({}, 'jwt_token_TDL');
 }

@@ -26,8 +26,9 @@ class UserCrudController extends AbstractCrudController
             TextField::new('usrMail'),
             TextField::new('usrPicture'),
             BooleanField::new('UsrHasAgreed'),
-            DateTimeField::new('tdoUpdatedAt')->hideOnForm(),
-            BooleanField::new('isVerified'),
+            DateTimeField::new('UsrCreatedAt')->hideOnForm(),
+            DateTimeField::new('usrUpdatedAt')->hideOnForm(),
+
         ];
     }
 }

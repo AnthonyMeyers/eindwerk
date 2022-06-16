@@ -36,7 +36,7 @@ security:
         main:
             form_login:
                 # "login" is the name of the route created previously
-                default_target_path: app_earthgraft
+                default_target_path: app_admin_page
                 login_path: app_login
                 check_path: app_login
             lazy: true
@@ -60,7 +60,7 @@ security:
         - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
         - { path : '^/api/login_check', roles : IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path : '^/api', roles : IS_AUTHENTICATED_ANONYMOUSLY  }
+        # { path : '^/api', roles : IS_AUTHENTICATED_FULLY  }
 
 
 when@test:

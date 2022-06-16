@@ -8,7 +8,6 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use mysql_xdevapi\Exception;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -18,12 +17,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ApiResource(
- *     normalizationContext={"groups"={"user:read"}},
- *     denormalizationContext={"groups"={"user:write"}})
- *
- * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity(fields={"usrMail"})
+     * @ApiResource(
+     *     normalizationContext={"groups"={"user:read"}},
+     *     denormalizationContext={"groups"={"user:write"}})
+     *
+     * @ORM\Entity(repositoryClass=UserRepository::class)
+     * @UniqueEntity(fields={"usrMail, username"})
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -56,6 +55,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @groups({"user:write"})
      * @SerializedName("password")
+     * @Assert\NotBlank()
      */
     private $plainPassword;
 
@@ -69,7 +69,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Todo::class, mappedBy="tdoUsr", orphanRemoval=true)
-     * @Groups({"user:read", "user:write"})
      */
     private $todos;
 
@@ -103,11 +102,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $usrHasAgreed;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isVerified = false;
-
-    /**
      * @ORM\OneToMany(targetEntity=Contact::class, mappedBy="cntUser", orphanRemoval="true")
      */
     private $contacts;
@@ -121,20 +115,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->contacts = new ArrayCollection();
 
     }
-
-    public function getIsVerified(): ?bool
-    {
-        return $this->isVerified;
-    }
-
-    public function setIsVerified(bool $isVerified): self
-    {
-
-        $this->isVerified = $isVerified;
-        return $this;
-
-    }
-
 
     public function getUsrMail(): ?string
     {
@@ -299,7 +279,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @Groups({"user:read", "user:write"})
      * @return Collection<int, Appointment>
      */
     public function getAppointments(): Collection
@@ -390,7 +369,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @return Collection<int, Contact>
-     * @Groups({"user:read", "user:write"})
      */
     public function getContacts(): Collection
     {
@@ -419,9 +397,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isVerified(): bool
-    {
-        return $this->isVerified;
-    }
 
 }

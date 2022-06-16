@@ -29,7 +29,6 @@ class ContactCrudController extends AbstractCrudController
             TextField::new('cntCity'),
             TextField::new('cntMail'),
             AssociationField::new('cntUser'),
-            AssociationField::new('appointments'),
         ];
     }
 

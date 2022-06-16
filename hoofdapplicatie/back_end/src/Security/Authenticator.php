@@ -60,7 +60,7 @@ class Authenticator extends AbstractLoginFormAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
-        return new RedirectResponse($this->router->generate('app_earthgraft'));
+        return new RedirectResponse($this->router->generate('app_admin_page'));
         // For example:
 
     }

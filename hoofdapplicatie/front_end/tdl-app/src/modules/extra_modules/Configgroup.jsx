@@ -16,17 +16,10 @@ const Configgroup = () => {
 
   //Logout on door click
   async function handleLogoutClick(e){
-  {
-    e.preventDefault();
-    try{
     destroyJWTCookie()
-    const response = await axios(`https://wdev2.be/fs_anthonym/eindwerk/api/logout`);
-  }
-    catch(error){console.log(error)}
     localStorage.clear();
     nav("/login");
   }
-}
   return (
       <> 
     {active != "/phonebook" && 

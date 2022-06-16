@@ -25,22 +25,22 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 */
 
 /**
- * @ApiResource(
- *     collectionOperations={
- *     "get" = {"access_control" = "is_granted('ROLE_USER')"},
- *     "post" = {"access_control" = "is_granted('ROLE_USER')"}},
- *
- *      itemOperations={
- *     "get" = {"access_control" = "is_granted('ROLE_USER')"},
- *     "patch"  = {"access_control" = "is_granted('ROLE_USER')"},
- *     "put" = {"access_control" = "is_granted('ROLE_USER')"},
- *     "delete"  = {"access_control" = "is_granted('ROLE_USER')"}},
- *
- *      normalizationContext={"groups"={"appointments:read"}},
- *      denormalizationContext={"groups"={"appointments:write"}})
- *      @ORM\Entity(repositoryClass=AppointmentRepository::class)
- *      @ApiFilter(SearchFilter::class, properties={"cntUser"})
- *      @ApiFilter(OrderFilter::class, properties={"apmStartsAt"})
+    * @ApiResource(
+    *     collectionOperations={
+    *     "get" = {"access_control" = "is_granted('ROLE_USER')"},
+    *     "post" = {"access_control" = "is_granted('ROLE_USER')"}},
+    *
+    *      itemOperations={
+    *     "get" = {"access_control" = "is_granted('ROLE_USER')"},
+    *     "patch"  = {"access_control" = "is_granted('ROLE_USER')"},
+    *     "put" = {"access_control" = "is_granted('ROLE_USER')"},
+    *     "delete"  = {"access_control" = "is_granted('ROLE_USER')"}},
+    *
+    *   normalizationContext={"groups"={"appointments:read"}},
+    *   denormalizationContext={"groups"={"appointments:write"}})
+    *   @ORM\Entity(repositoryClass=AppointmentRepository::class)
+    *   @ApiFilter(SearchFilter::class, properties={"cntUser"})
+    *   @ApiFilter(OrderFilter::class, properties={"apmStartsAt"})
  */
 class Appointment
 {
@@ -59,12 +59,6 @@ class Appointment
      * @Groups({"appointments:read", "appointments:write","user:read"})
      */
     private $apmTitle;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"appointments:read", "appointments:write"})
-     */
-    private $apmDescription;
 
     /**
      * @ORM\Column(type="datetime_immutable")
@@ -131,19 +125,6 @@ class Appointment
         $this->setApmUpdatedAtPatch();
         $this->setApmUpdatedAtPut();
 
-        return $this;
-    }
-
-    public function getApmDescription(): ?string
-    {
-        return $this->apmDescription;
-    }
-
-    public function setApmDescription(?string $apmDescription): self
-    {
-
-        $this->apmDescription = $apmDescription;
-        $this->setApmUpdatedAtPatch();
         return $this;
     }
 

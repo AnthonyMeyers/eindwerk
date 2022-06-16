@@ -18,22 +18,22 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 
 /**
- * @ApiResource(
- *     collectionOperations={
- *     "get" = {"access_control" = "is_granted('ROLE_USER')"},
- *     "post" = {"access_control" = "is_granted('ROLE_USER')"}},
- *
- *      itemOperations={
- *     "get" = {"access_control" = "is_granted('ROLE_USER')"},
- *     "patch"  = {"access_control" = "is_granted('ROLE_USER')"},
- *     "put" = {"access_control" = "is_granted('ROLE_USER')"},
- *     "delete"  = {"access_control" = "is_granted('ROLE_USER')"}},
- *
- *     normalizationContext={"groups"={"todo_details:read"}},
- *     denormalizationContext={"groups"={"todo_details:write"}})
- *
- * @ORM\Entity(repositoryClass=TodoRepository::class)
- * @ApiFilter(SearchFilter::class, properties={"tdoUsr"})
+     * @ApiResource(
+     *     collectionOperations={
+     *     "get" = {"access_control" = "is_granted('ROLE_USER')"},
+     *     "post" = {"access_control" = "is_granted('ROLE_USER')"}},
+     *
+     *      itemOperations={
+     *     "get" = {"access_control" = "is_granted('ROLE_USER')"},
+     *     "patch"  = {"access_control" = "is_granted('ROLE_USER')"},
+     *     "put" = {"access_control" = "is_granted('ROLE_USER')"},
+     *     "delete"  = {"access_control" = "is_granted('ROLE_USER')"}},
+     *
+     *     normalizationContext={"groups"={"todo_details:read"}},
+     *     denormalizationContext={"groups"={"todo_details:write"}})
+     *
+     * @ORM\Entity(repositoryClass=TodoRepository::class)
+     * @ApiFilter(SearchFilter::class, properties={"tdoUsr"})
  */
 class Todo
 {
@@ -51,12 +51,6 @@ class Todo
      * @Groups({"todo_details:read", "todo_details:write","user:read"})
      */
     private $tdoTitle;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"todo_details:read", "todo_details:write"})
-     */
-    private $tdoDescription;
 
     /**
      * @ORM\Column(type="boolean")
@@ -115,18 +109,6 @@ class Todo
     public function setTdoTitle(string $tdoTitle): self
     {
         $this->tdoTitle = $tdoTitle;
-
-        return $this;
-    }
-
-    public function getTdoDescription(): ?string
-    {
-        return $this->tdoDescription;
-    }
-
-    public function setTdoDescription(?string $tdoDescription = null): self
-    {
-        $this->tdoDescription = $tdoDescription;
 
         return $this;
     }

@@ -12,16 +12,16 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 
 /**
- * @ApiResource(
- *     collectionOperations={
- *     "get" = {"access_control" = "is_granted('ROLE_USER')"}},
- *
- *     normalizationContext={"groups"={"categories:read"}},
- *     denormalizationContext={"groups"={"categories:write"}})
- *
- * @ORM\Entity(repositoryClass=CategoryRepository::class)
- *  @ApiFilter(BooleanFilter::class, properties={"ctyIsclassavailable"})
- */
+    * @ApiResource(
+    *     collectionOperations={
+    *     "get" = {"access_control" = "is_granted('ROLE_USER')"}},
+    *
+    *   itemOperations={"get" = {"access_control" = "is_granted('ROLE_USER')"}},
+    *   normalizationContext={"groups"={"categories:read"}})
+    *
+    *  @ORM\Entity(repositoryClass=CategoryRepository::class)
+    *  @ApiFilter(BooleanFilter::class, properties={"ctyIsclassavailable"})
+*/
 
 //Todo list op categories afgeblokt, dit is onnodig en kan te veel informatie meegeven.
 
@@ -31,25 +31,25 @@ class Category
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"categories:read","category:item:get","todo_details:read"})
+     * @Groups({"categories:read","todo_details:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"categories:read", "categories:write","category:item:get"})
+     * @Groups({"categories:read"})
      */
     private $ctyTitle;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"categories:read", "categories:write","category:item:get"})
+     * @Groups({"categories:read"})
      */
     private $ctyClass;
 
     /**
      * @ORM\Column(type="boolean", length=1)
-     * @Groups({"categories:read", "categories:write","category:item:get"})
+     * @Groups({"categories:read"})
      */
     private $ctyIsclassavailable;
 
@@ -112,7 +112,6 @@ class Category
 
     /**
      * @return integer
-     * @Groups({"category:item:get"})
      * Counts the total todos with this category, this for admin dashboard overall view
      */
     public function getCountTodosByCategory(): int

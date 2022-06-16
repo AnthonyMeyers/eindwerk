@@ -10,14 +10,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource(
- *     collectionOperations={
- *     "get" = {"access_control" = "is_granted('ROLE_USER')"}},
- *
- *     normalizationContext={"groups"={"priorities:read"}},
- *     denormalizationContext={"groups"={"priorities:write"}}))
- *
- * @ORM\Entity(repositoryClass=PriorityRepository::class)
+     * @ApiResource(
+     *      collectionOperations={
+     *      "get" = {"access_control" = "is_granted('ROLE_USER')"}},
+     *
+     *   itemOperations={"get" = {"access_control" = "is_granted('ROLE_USER')"}},
+     *
+     *  normalizationContext={"groups"={"priorities:read"}},
+     *  denormalizationContext={"groups"={"priorities:write"}}))
+     *
+     * @ORM\Entity(repositoryClass=PriorityRepository::class)
  */
 
 //Todo list op priority afgeblokt, dit is onnodig en kan te veel informatie meegeven.
@@ -28,20 +30,20 @@ class Priority
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"priorities:read", "priority:item:get","todo_details:read"})
+     * @Groups({"priorities:read","todo_details:read"})
      *
      */
     private $id;
 
     /**
      * @ORM\Column(type="smallint")
-     * @Groups({"priorities:read", "priorities:write","priority:item:get"})
+     * @Groups({"priorities:read", "priorities:write"})
      */
     private $ptyRating;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"priorities:read", "priorities:write","priority:item:get"})
+     * @Groups({"priorities:read", "priorities:write"})
      */
     private $ptyTitle;
 

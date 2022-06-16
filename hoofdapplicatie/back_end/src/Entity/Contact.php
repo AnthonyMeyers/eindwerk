@@ -13,22 +13,22 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 /**
- * @ApiResource(
- *     collectionOperations={
- *     "get" = {"access_control" = "is_granted('ROLE_USER')"},
- *     "post" = {"access_control" = "is_granted('ROLE_USER')"}},
- *
- *      itemOperations={
- *     "get" = {"access_control" = "is_granted('ROLE_USER')"},
- *     "patch"  = {"access_control" = "is_granted('ROLE_USER')"},
- *     "put" = {"access_control" = "is_granted('ROLE_USER')"},
- *     "delete"  = {"access_control" = "is_granted('ROLE_USER')"}},
- *
- *     normalizationContext={"groups"={"contacts:read"}},
- *     denormalizationContext={"groups"={"contacts:write"}}))
- *
- * @ORM\Entity(repositoryClass=ContactRepository::class)
- */
+    *  @ApiResource(
+    *   collectionOperations={
+    *     "get" = {"access_control" = "is_granted('ROLE_USER')"},
+    *     "post" = {"access_control" = "is_granted('ROLE_USER')"}},
+    *
+    *  itemOperations={
+    *     "get" = {"access_control" = "is_granted('ROLE_USER')"},
+    *     "patch"  = {"access_control" = "is_granted('ROLE_USER')"},
+    *     "put" = {"access_control" = "is_granted('ROLE_USER')"},
+    *     "delete"  = {"access_control" = "is_granted('ROLE_USER')"}},
+    *
+    *   normalizationContext={"groups"={"contacts:read"}},
+    *   denormalizationContext={"groups"={"contacts:write"}}))
+    *
+    *      @ORM\Entity(repositoryClass=ContactRepository::class)
+*/
 class Contact
 {
     /**
