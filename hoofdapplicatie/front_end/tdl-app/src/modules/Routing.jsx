@@ -9,8 +9,8 @@ import Phonebook from "./phonebook_modules/Phonebook";
 import ProtectedRoute from "./ProtectedRoute";
 import Home from "./login_modules/Home";
 import Photogallery from "./login_modules/Photogallery";
-import Profile from "./profile_modules/profile";
-import Privacy from "./login_modules/privacy";
+import Profile from "./profile_modules/Profile";
+import Privacy from "./login_modules/Privacy";
 
 export default function Routing() {
   return (

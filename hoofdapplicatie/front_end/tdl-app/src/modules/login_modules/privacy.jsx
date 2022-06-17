@@ -1,9 +1,7 @@
-import React from 'react'
-
-const privacy = () => {
+const Privacy = () => {
   return (
     test
   )
 }
 
-export default privacy
+export default Privacy
