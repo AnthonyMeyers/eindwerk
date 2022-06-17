@@ -1,6 +1,6 @@
 const Privacy = () => {
   return (
-    test
+    <div>test</div>
   )
 }
 
