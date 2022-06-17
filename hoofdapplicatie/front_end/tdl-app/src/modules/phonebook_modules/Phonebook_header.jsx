@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
 import { useAddOneContactMutation } from "../../data/todoApi";
-import Configgroup from "../extra_modules/configgroup";
+import Configgroup from "../extra_modules/Configgroup";
 import { parseCookies } from 'nookies';
 
 const PhonebookHeader = () => {

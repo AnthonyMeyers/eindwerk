@@ -3,7 +3,7 @@ import {useState, useEffect} from "react";
 import { useAddOnetodoMutation } from "../../data/todoApi";
 import axios from "axios";
 import { useNavigate } from "react-router";
-import Configgroup from "../extra_modules/configgroup";
+import Configgroup from "../extra_modules/Configgroup";
 import { errorhandlingtodos } from "../../helpers/errorhandling";
 import Errormessage from "../extra_modules/Errormessage";
 import { parseCookies } from 'nookies';
