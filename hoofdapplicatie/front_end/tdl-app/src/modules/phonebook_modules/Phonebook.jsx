@@ -19,9 +19,9 @@ const Phonebook = () => {
   return (
     <section className="phonebook container" onClick={handleResetcomponentsClick}>
       <h2 className="phonebook__title">Contacts:</h2>
-      {contacts && contacts.length >0 && <div className={"phonebook__list"}>{contacts.map((contact) =>
+      {contacts && contacts.length > 0 && <div className={"phonebook__list"}>{contacts.map((contact,i) =>
         <>
-          <PhonebookDetails contact={contact} key={contact.id} reset={reset}/>
+          <PhonebookDetails key={contact?.id} contact={contact} reset={reset}/>
         </>
       )}
       </div>}

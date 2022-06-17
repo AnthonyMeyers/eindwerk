@@ -2,8 +2,12 @@
 &__todolist {
     display: flex;
     flex-direction: column;
+    align-items:center;
     gap: 20px;
+    width: 100%;
     &__item {
+      max-width: 850px;
+      width: 100%;
       overflow: hidden;
       border: 1px solid black;
       border-radius: 10px;
@@ -16,37 +20,92 @@
 }
 
 .todo{
+  padding: 10px;
   height: 100%;
   width: 100%;
-  &__buttongroup{
-    &__select{
-      color: black;
-
-    }
-  }
   &__front{
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    gap: 5px;
-    &__label{
-      &__checker{
-        margin-left: 15px;
-
-}
+    gap: 10px;
+    &__display{
+      display: flex;
+      gap: 10px;
+    flex-wrap: wrap;
     }
-    &__button{
-      color: black;
-    }
+    &__left{
     &__title{
+      resize: none;
       border: none;
       outline: none;
       background: none;
       border: 1px solid black;
       border-radius: 10px;
+      background-color: lightgrey;
       &:disabled{
         border: none;
       }
     }
+    &__label{
+      background: black;
+      &__checker{
+        display: block;
+        height: 40px;
+        padding: 0;
+        width: 40px;
+        cursor: pointer;
+      }
+      &__span{
+        position: absolute;
+        left: -1000px;
+      }
+    }
   }
+    &__right{
+    &__button{
+      color: black;
+      &__innertext
+      {
+        position: absolute;
+        left: -1000px;
+      }
+      &:after{
+        font-family: "icomoon"
+      }
+      &-delete{
+          &:after{
+            content: "\e9ad";
+          }
+          }
+          &-confirm{
+            &:after{
+              content:"\ea10";
+            }
+
+        
+      }
+    }
+  }
+
+  }
+}
+
+@media screen and(min-width: 725px)
+{
+.todo{
+  &__front{
+   flex-direction: row;
+    gap: 50px;
+  }
+}
+}
+
+@media screen and(min-width: 900px)
+{
+.todo{
+  &__front{
+    gap: 150px;
+
+  }
+}
 }

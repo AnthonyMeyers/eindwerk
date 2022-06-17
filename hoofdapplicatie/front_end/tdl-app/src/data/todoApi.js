@@ -110,7 +110,7 @@ const api = createApi({
       }),
       //Get alle appointments van een user
       getAllUserAppointments: builder.query({
-        query: ({id , token}) => ({url: `/appointments?tdoUsr=${id}.json?pagination=false`,
+        query: ({id , token}) => ({url: `/appointments?tdoUsr=${id}.json?pagination=false&order%5BapmStartsAt%5D=asc`,
         headers: {
           "Authorization": "Bearer " + token,
           "Content-Type": "application/json",

@@ -51,6 +51,7 @@ function handleAddtodoSubmit(e)
           <label htmlFor="input-todo" className="header__todoform__label">
             Add a todo
             <input
+              maxLength="30"
               className="header__todoform__label__todoinput form-control form-control-lg"
               type="text"
               id="input-todo"

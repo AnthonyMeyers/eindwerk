@@ -72,7 +72,7 @@ export function errorhandlingtodos(context, variable)
     const regExp = /^[A-Za-z0-9\s]*$/;
 
     if(context === "todo-title")
-    {   console.log(variable);
+    {   
         if(variable.length <= 2)
         {
             return "To short to add.";

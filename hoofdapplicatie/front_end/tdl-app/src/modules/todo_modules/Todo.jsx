@@ -5,6 +5,8 @@ import { useUpdateIsCheckedTodoMutation, useUpdateTitleTodoMutation,
 import { useSelector } from "react-redux";
 import {pickFromSelection, switchNextSelection } from "../../helpers/selectionpicker";
 import {parseCookies} from "nookies";
+import { errorhandlingtodos } from "../../helpers/errorhandling";
+import Errormessage from "../extra_modules/Errormessage";
 
 const todo = ({todo: {id, tdoTitle, tdoIsDone, tdoPty, tdoCty},activeId}) => {
   const {jwt_token_TDL: token} = parseCookies();
@@ -24,6 +26,7 @@ const todo = ({todo: {id, tdoTitle, tdoIsDone, tdoPty, tdoCty},activeId}) => {
   const [removeTodo] = useRemoveOneTodoMutation();
   const [updateCategory] = useUpdateCategoryTodoMutation();
   const [updatePriority] = useUpdatePriorityTodoMutation();
+  const [errorTitle, setErrorTitle] = useState(null)
 
   //Update todo isChecked als gebruiker checkbox aanklikt
   useEffect(()=>{updateIsCheckedTodo({id,tdoChecked: isChecked, token})},[isChecked]);
@@ -45,7 +48,11 @@ useEffect(()=>{if(priorities.length > 0 && tdoPty && "id" in tdoPty)
   //Update de titel
   function handleTitlechangeClick(e){
     e.preventDefault()
+    const errortodo = errorhandlingtodos("todo-title", todoTitle );
+    setErrorTitle(errortodo)
+    if(!errorTitle){
     updateTitleTodo({id, todoTitle, token})
+  }
   }
   
   function handleCategoryswitchClick(e)
@@ -69,26 +76,27 @@ useEffect(()=>{if(priorities.length > 0 && tdoPty && "id" in tdoPty)
   }
 
   return (
+
     <>
       <div className={selectedCategory && selectedCategory["ctyClass"] != null ?`todo ${selectedCategory.ctyClass}` : `todo standard`}>
-       
-         <div className="todo__buttongroup">
-
-         </div>
          <form className="todo__front" onSubmit={handleTitlechangeClick} id={`formtodo-${id}`}>
-      <label className="todo__front__label">Checked 
-      <input type="checkbox" className="todo__front__label__checker form-check-input" checked={tdoIsDone ? "checked" : ""} onChange={() =>setIsChecked(!isChecked)}/> </label>
-      <input type="text"  className={tdoIsDone ? "todo__front__title checked" : "todo__front__title"}
+           <div className="todo__front__display todo__front__left">
+         <label className="todo__front__left__label"><span className="todo__front__left__label__span">Checked </span>
+      <input type="checkbox" spellCheck="false" className="todo__front__left__label__checker" checked={tdoIsDone ? "checked" : ""} onChange={() =>setIsChecked(!isChecked)}/></label>
+      <textarea maxLength="30" type="text"  className={tdoIsDone ? "todo__front__left__title checked" : "todo__front__left__title"}
           onInput={(e) => setTodoTitle(e.target.value)} value={todoTitle}/>
-      
-      <button className="todo__front__button btn btn-outline-secondary" type="submit">Update title </button>
-      <button className="todo__front__button btn btn-outline-secondary" onClick={() =>removeTodo({id, token})}>Delete todo</button>
-        {selectedCategory && selectedCategory["ctyTitle"] && <button onClick={handleCategoryswitchClick} className="todo__front__button btn btn-outline-secondary">Category: {selectedCategory.ctyTitle}</button>}
-        {selectedCategory && !selectedCategory["ctyTitle"] && <button onClick={handleCategoryswitchClick} className="todo__front__button btn btn-outline-secondary">Category: default</button>}
-        {!selectedCategory && <button onClick={handleCategoryswitchClick} className="todo__front__button btn btn-outline-secondary">Category: default</button>}
-         {selectedPriority  && "ptyTitle" in selectedPriority && <button onClick={handlePriorityswitchClick} className="todo__front__button  btn btn-outline-secondary">Priority: {selectedPriority.ptyTitle}</button>}
-         {selectedPriority  &&  !selectedPriority["ptyTitle"] && <button onClick={handlePriorityswitchClick} className="todo__front__button  btn btn-outline-secondary">Priority: default</button>}
+          </div>
+      <div className="todo__front__display todo__front__right">
+      <button className="todo__front__right__button todo__front__right__button-confirm btn btn-outline-secondary" type="submit"><span className="todo__front__right__button__innertext">Update title </span></button>
+      <button className="todo__front__right__button todo__front__right__button-delete btn btn-outline-secondary" onClick={() =>removeTodo({id, token})}><span className="todo__front__right__button__innertext">Delete todo</span></button>
+        {selectedCategory && selectedCategory["ctyTitle"] && <button onClick={handleCategoryswitchClick} className="todo__front__right__button btn btn-outline-secondary">{selectedCategory.ctyTitle}</button>}
+        {selectedCategory && !selectedCategory["ctyTitle"] && <button onClick={handleCategoryswitchClick} className="todo__front__right__button btn btn-outline-secondary">default</button>}
+        {!selectedCategory && <button onClick={handleCategoryswitchClick} className="todo__front__right__button btn btn-outline-secondary">default</button>}
+         {selectedPriority  && "ptyTitle" in selectedPriority && <button onClick={handlePriorityswitchClick} className="todo__front__right__button  btn btn-outline-secondary">Priority: {selectedPriority.ptyTitle}</button>}
+         {selectedPriority  &&  !selectedPriority["ptyTitle"] && <button onClick={handlePriorityswitchClick} className="todo__front__right__button  btn btn-outline-secondary">Priority: default</button>}
+       </div>
        </form>
+       <Errormessage className="error-center">{errorTitle}</Errormessage>
       </div>
     </>
   );

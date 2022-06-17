@@ -1,5 +1,4 @@
 .appointments{
-
     &__title{}
     &__list{
         display: flex;
@@ -14,10 +13,9 @@
 .appointment{
     border: 1px solid black;
     padding: 20px;
+    width: 100%;
     border-radius: 10px;
     &__front{
-        height: 100%;
-        width: 100%;
         display: flex;
         flex-direction: column;
         gap: 20px;
@@ -29,6 +27,7 @@
             background-color: lightgray;
             border: 1px solid transparent;
             border-radius: 5px;
+
             &:hover{
                 border-color: black;
             }

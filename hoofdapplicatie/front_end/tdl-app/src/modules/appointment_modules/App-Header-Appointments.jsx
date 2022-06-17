@@ -53,7 +53,7 @@ import { parseCookies } from 'nookies';
           </div>
       </div>
       <form className="header__todoform" onSubmit={handleSubmitappointmentClick}>
-        <label htmlFor="input-appointment" className="header__todoform__label">
+        <label className="header__todoform__label">
           Add an appointment
           <input
             className="header__todoform__label__todoinput form-control form-control-lg"
@@ -65,11 +65,11 @@ import { parseCookies } from 'nookies';
             onInput={(e) =>setAppointmentTitle(e.target.value)}
           />
         </label>
-        <label className="header__todoform__label" for="date-appointment">Set the date and time
+        <label className="header__todoform__label">Set the date and time
         <input className="header__todoform__label__todoinput" type="date" onChange={(e)=>setStartDate(e.target.value)} value={startDate}/>
         <input className="header__todoform__label__todoinput" type="time" onChange={(e) =>setStartTime(e.target.value)} value={startTime}/>
         </label>
-        <label className="header__todoform__label" for="date-appointment">Set the stopdate and stoptime
+        <label className="header__todoform__label">Set the stopdate and stoptime
         <input className="header__todoform__label__todoinput" type="date" onChange={(e)=>setStopDate(e.target.value)} value={stopDate}/>
         <input className="header__todoform__label__todoinput" type="time" onChange={(e) =>setStopTime(e.target.value)} value={stopTime}/>
         </label>

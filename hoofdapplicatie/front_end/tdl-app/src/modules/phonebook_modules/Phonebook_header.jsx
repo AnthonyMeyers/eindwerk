@@ -30,10 +30,10 @@ const PhonebookHeader = () => {
           </div>
         </div>
         <form className="header__todoform" onSubmit={handleAddcontactSubmit}>
-          <label for="input-todo" className="header__todoform__label">
+          <label htmlFor="input-todo" className="header__todoform__label">
            Contact name
             <input
-              class="header__todoform__label__todoinput form-control form-control-lg"
+              className="header__todoform__label__todoinput form-control form-control-lg"
               type="text"
               id="input-todo"
               autoComplete="off"

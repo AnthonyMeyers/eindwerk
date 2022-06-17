@@ -68,25 +68,26 @@ const Appointment = ({appointment,contacts, activeItem}) => {
   return (
     <div className="appointment">
     <form className="appointment__front" id={`appointment-${formId}`} onSubmit={handleUpdateappointmentSubmit}>
+    <label htmlFor={`startdate-${id}`}  className="appointment__front__label">Title:</label>
       <input type="text" className="appointment__front__input"value={title}
       onChange={(e)=>setTitle(e.target.value)} disabled={disabled}/>
       
-      <label for={`startdate-${id}`}  className="appointment__front__label">Start date</label><input id={`startdate-${id}`}type="date"
+      <label htmlFor={`startdate-${id}`}  className="appointment__front__label">Start date</label><input id={`startdate-${id}`}type="date"
       className="appointment__front__input" value={dateStarts} onChange={(e) => setDateStarts(e.target.value)} disabled={disabled}/>
 
-      <label for={`starttime-${id}`} className="appointment__front__label">Start time</label><input id={`starttime-${id}`} type="time" 
+      <label htmlFor={`starttime-${id}`} className="appointment__front__label">Start time</label><input id={`starttime-${id}`} type="time" 
       className="appointment__front__input" value={timeStarts} onChange={(e) => setTimeStarts(e.target.value)} disabled={disabled}/>
 
-      <label for={`enddate-${id}`} className="appointment__front__label">End date</label><input id={`enddate-${id}`} type="date" 
+      <label htmlFor={`enddate-${id}`} className="appointment__front__label">End date</label><input id={`enddate-${id}`} type="date" 
       className="appointment__front__input" value={dateStops} onChange={(e) => setDateStops(e.target.value)} disabled={disabled}/>
 
-      <label for={`endtime-${id}`} className="appointment__front__label">End time</label><input id={`endtime-${id}`} type="time" 
+      <label htmlFor={`endtime-${id}`} className="appointment__front__label">End time</label><input id={`endtime-${id}`} type="time" 
       className="appointment__front__input" value={timeStops} onChange={(e) => setTimeStops(e.target.value)} disabled={disabled}/>
 
-      <label for={`select-${id}`} className="appointment__front__label">Contact: </label>
+      <label htmlFor={`select-${id}`} className="appointment__front__label">Contact: </label>
       {contacts && contacts.length > 0 &&  <select id={`select-${id}`} disabled={disabled} className="appointment__front__select"
       value={contactPerson} onChange={(e) => setContactPerson(e.target.value)}><option value="0"></option>
-      {contacts.map(contact => <option value={contact.id}>{contact.cntName}</option>)}</select>}
+      {contacts.map(contact => <option key={contact.id} value={contact.id}>{contact.cntName}</option>)}</select>}
     
       <button type="submit" className="appointment__front__button btn btn-outline-secondary">Save appointment</button>
       <button className="appointment__front__button btn btn-outline-secondary" onClick={() => setShowDelete(!showDelete)}> Delete appointment</button>
