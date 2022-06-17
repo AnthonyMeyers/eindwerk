@@ -1,4 +1,4 @@
-import Configgroup from "../extra_modules/configgroup";
+import Configgroup from "../extra_modules/Configgroup";
 
 const ProfileHeader = () => {
   return (
