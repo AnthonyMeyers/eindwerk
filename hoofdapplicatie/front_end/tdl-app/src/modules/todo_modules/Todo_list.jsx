@@ -1,5 +1,5 @@
 import {  useState } from "react";
-import Todo from "./todo";
+import Todo from "./Todo";
 import {  useGetAllUserTodosQuery} from "../../data/todoApi";
 import Status from "../standard_modules/App-Status";
 import { parseCookies } from 'nookies';
