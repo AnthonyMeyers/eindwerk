@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { convertToAccurateDay } from "../../helpers/datehelpers";
 import { useAddOneAppointmentMutation } from "../../data/todoApi";
 import { useNavigate } from "react-router";
-import Configgroup from "../extra_modules/configgroup";
 import { parseCookies } from 'nookies';
+import Configgroup from "../extra_modules/Configgroup";
 
  const AppHeaderAppointments = () => {
   const {jwt_token_TDL: token} = parseCookies();

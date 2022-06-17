@@ -14,7 +14,6 @@ import Profile from "./profile_modules/Profile";
 export default function Routing() {
   return (
     <Routes>
-      
       {/*Open routes */}
       <Route exact path="/login" element={<Login />} />
       <Route exact path="/register" element={<Register />} />
