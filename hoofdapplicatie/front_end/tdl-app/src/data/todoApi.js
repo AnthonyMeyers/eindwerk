@@ -110,7 +110,7 @@ const api = createApi({
       }),
       //Get alle appointments van een user
       getAllUserAppointments: builder.query({
-        query: ({id , token}) => ({url: `/appointments?tdoUsr=${id}.json?pagination=false&order%5BapmStartsAt%5D=asc`,
+        query: ({id , token}) => ({url: `/appointments?tdoUsr=${id}.json?pagination=false&order%5BapmStartsat%5D=asc`,
         headers: {
           "Authorization": "Bearer " + token,
           "Content-Type": "application/json",
@@ -124,7 +124,7 @@ const api = createApi({
       }),
       //Register user
       registerUser: builder.mutation({
-        query: ({username, password, email, hasAgreed}) => ({
+        query: ({username, password, email, hasAgreed}) => (console.log(hasAgreed),{
           url: `/users.json`,
           headers: {
             "Content-Type": "application/json",
@@ -135,7 +135,7 @@ const api = createApi({
             username,
             password,
             usrMail: email,
-            usrHasAgreed: hasAgreed
+            usrHasagreed: hasAgreed
           },
         }),
       }),
@@ -151,7 +151,7 @@ const api = createApi({
         method: "POST",
         body: {
           tdoTitle: title,
-          tdoIsDone: false,
+          tdoIsdone: false,
           tdoUsr: id,
           tdoPty: 1,
           tdoCty:1
@@ -189,8 +189,8 @@ const api = createApi({
           body: {
             apmTitle: title,
             apmDescription: "description",
-            apmStartsAt: startsAt,
-            apmStopsAt: stopsAt,
+            apmStartsat: startsAt,
+            apmStopsat: stopsAt,
             apmUsr: id
           },
         }),
@@ -206,7 +206,7 @@ const api = createApi({
               accept: "application/json",
             },
             method: "PUT",
-            body: { id, tdoIsDone: tdoChecked},
+            body: { id, tdoIsdone: tdoChecked},
           }),
           invalidatesTags: (result, error, arg) => [{ type: 'TODOLIST', id: arg.id }],
         }),
@@ -264,8 +264,8 @@ const api = createApi({
             method: "PUT",
             body: {
               apmTitle: appTitle,
-              apmStartsAt: appStartsAt,
-              apmStopsAt: appStopsAt,
+              apmStartsat: appStartsAt,
+              apmStopsat: appStopsAt,
               apmUsr: userId,
               apmDescription: appDescription,
               apmCnt: contactId

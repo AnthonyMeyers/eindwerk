@@ -22,7 +22,7 @@ use Doctrine\Common\Collections\ArrayCollection;
      *     denormalizationContext={"groups"={"user:write"}})
      *
      * @ORM\Entity(repositoryClass=UserRepository::class)
-     * @UniqueEntity(fields={"usrMail, username"})
+     * @UniqueEntity(fields={"usrMail", "username"})
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -75,13 +75,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    private $usrCreatedAt;
+    private $usrCreatedat;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Groups({"user:read"})
      */
-    private $usrUpdatedAt;
+    private $usrUpdatedat;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -99,7 +99,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="boolean")
      * @Groups({"user:read","user:write"})
      */
-    private $usrHasAgreed;
+    private $usrHasagreed;
 
     /**
      * @ORM\OneToMany(targetEntity=Contact::class, mappedBy="cntUser", orphanRemoval="true")
@@ -111,7 +111,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         $this->appointments = new ArrayCollection();
         $this->todos = new ArrayCollection();
-        $this->usrCreatedAt = new \DateTimeImmutable();
+        $this->usrCreatedat = new \DateTimeImmutable();
         $this->contacts = new ArrayCollection();
 
     }
@@ -135,14 +135,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getUsrCreatedAt(): ?\DateTimeImmutable
+    public function getUsrCreatedat(): ?\DateTimeImmutable
     {
-        return $this->usrCreatedAt;
+        return $this->usrCreatedat;
     }
 
-    public function setUsrUpdatedAt(?\DateTimeInterface $usrUpdatedAt): self
+    public function setUsrUpdatedat(?\DateTimeInterface $usrUpdatedat): self
     {
-        $this->usrUpdatedAt = $usrUpdatedAt;
+        $this->usrUpdatedat = $usrUpdatedat;
 
         return $this;
     }
@@ -159,25 +159,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isUsrHasAgreed(): ?bool
+    public function isusrHasagreed(): ?bool
     {
-        return $this->usrHasAgreed;
+        return $this->usrHasagreed;
     }
 
-    public function setUsrHasAgreed(bool $usrHasAgreed = false): self
+    public function setusrHasagreed(bool $usrHasagreed = false): self
     {
 
         //The user always has to give permission to use his/hers data before storage
-        if($usrHasAgreed === true){
-            $this->usrHasAgreed = $usrHasAgreed;
+        if($usrHasagreed === true){
+            $this->usrHasagreed = $usrHasagreed;
             return $this;
         }else throw new \Exception("The user has to agree to the users agreement");
 
     }
 
-    public function getUsrUpdatedAt(): ?\DateTimeInterface
+    public function getUsrUpdatedat(): ?\DateTimeInterface
     {
-        return $this->usrUpdatedAt;
+        return $this->usrUpdatedat;
     }
 
     public function getId(): ?int

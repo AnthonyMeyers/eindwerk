@@ -9,14 +9,6 @@ use App\Repository\TodoRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/*
-
-
-
-
-
- */
-
 /**
      * @ApiResource(
      *     collectionOperations={
@@ -56,17 +48,17 @@ class Todo
      * @ORM\Column(type="boolean")
      * @Groups({"todo_details:read", "todo_details:write"})
      */
-    private $tdoIsDone;
+    private $tdoIsdone;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    private $tdoCreatedAt;
+    private $tdoCreatedat;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $tdoUpdatedAt;
+    private $tdoUpdatedat;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="todos")
@@ -92,7 +84,7 @@ class Todo
     public function __construct()
     {
 
-        $this->tdoCreatedAt = new \DateTimeImmutable();
+        $this->tdoCreatedat = new \DateTimeImmutable();
 
     }
 
@@ -113,31 +105,31 @@ class Todo
         return $this;
     }
 
-    public function isTdoIsDone(): ?bool
+    public function istdoIsdone(): ?bool
     {
-        return $this->tdoIsDone;
+        return $this->tdoIsdone;
     }
 
-    public function setTdoIsDone(string $tdoIsDone): self
+    public function settdoIsdone(string $tdoIsdone): self
     {
-        $this->tdoIsDone = $tdoIsDone;
+        $this->tdoIsdone = $tdoIsdone;
 
         return $this;
     }
 
-    public function getTdoCreatedAt(): ?\DateTimeImmutable
+    public function getTdoCreatedat(): ?\DateTimeImmutable
     {
-        return $this->tdoCreatedAt;
+        return $this->tdoCreatedat;
     }
 
-    public function getTdoUpdatedAt(): ?\DateTimeInterface
+    public function getTdoUpdatedat(): ?\DateTimeInterface
     {
-        return $this->tdoUpdatedAt;
+        return $this->tdoUpdatedat;
     }
 
-    public function setTdoUpdatedAt(?\DateTimeInterface $tdoUpdatedAt = null): self
+    public function setTdoUpdatedat(?\DateTimeInterface $tdoUpdatedat = null): self
     {
-        $this->tdoUpdatedAt = $tdoUpdatedAt;
+        $this->tdoUpdatedat = $tdoUpdatedat;
 
         return $this;
     }

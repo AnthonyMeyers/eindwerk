@@ -11,18 +11,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
-/*
-*     collectionOperations={
-    *     "get",
- *     "post"},
- *
- *      itemOperations={
-    *     "get",
- *     "patch",
- *     "put",
- *     "delete"},
- *     "get" = {"access_control" = "is_granted('ROLE_USER') and object.getOwner() == user"},
-*/
 
 /**
     * @ApiResource(
@@ -40,7 +28,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
     *   denormalizationContext={"groups"={"appointments:write"}})
     *   @ORM\Entity(repositoryClass=AppointmentRepository::class)
     *   @ApiFilter(SearchFilter::class, properties={"cntUser"})
-    *   @ApiFilter(OrderFilter::class, properties={"apmStartsAt"})
+    *   @ApiFilter(OrderFilter::class, properties={"apmStartsat"})
  */
 class Appointment
 {
@@ -64,25 +52,25 @@ class Appointment
      * @ORM\Column(type="datetime_immutable")
      * @Groups({"appointments:read"})
      */
-    private $apmCreatedAt;
+    private $apmCreatedat;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Groups({"appointments:read"})
      */
-    private $apmUpdatedAt;
+    private $apmUpdatedat;
 
     /**
      * @ORM\Column(type="datetime")
      * @Groups({"appointments:read", "appointments:write"})
      */
-    private $apmStartsAt;
+    private $apmStartsat;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Groups({"appointments:read", "appointments:write"})
      */
-    private $apmStopsAt;
+    private $apmStopsat;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="appointments")
@@ -99,7 +87,7 @@ class Appointment
 
     public function __construct()
     {
-        $this->apmCreatedAt = new \DateTimeImmutable();
+        $this->apmCreatedat = new \DateTimeImmutable();
         $this->apmContact = new ArrayCollection();
 
     }
@@ -122,44 +110,44 @@ class Appointment
     public function setApmTitle(string $apmTitle): self
     {
         $this->apmTitle = $apmTitle;
-        $this->setApmUpdatedAtPatch();
-        $this->setApmUpdatedAtPut();
+        $this->setApmUpdatedatPatch();
+        $this->setApmUpdatedatPut();
 
         return $this;
     }
 
-    public function getApmCreatedAt(): ?\DateTimeImmutable
+    public function getApmCreatedat(): ?\DateTimeImmutable
     {
-        return $this->apmCreatedAt;
+        return $this->apmCreatedat;
     }
 
-    public function getApmUpdatedAt(): ?\DateTimeInterface
+    public function getApmUpdatedat(): ?\DateTimeInterface
     {
-        return $this->apmUpdatedAt;
+        return $this->apmUpdatedat;
     }
 
-    public function getApmStartsAt(): ?\DateTimeInterface
+    public function getApmStartsat(): ?\DateTimeInterface
     {
-        return $this->apmStartsAt;
+        return $this->apmStartsat;
     }
 
-    public function setApmStartsAt(\DateTimeInterface $apmStartsAt): self
+    public function setApmStartsat(\DateTimeInterface $apmStartsat): self
     {
-        $this->apmStartsAt = $apmStartsAt;
-        $this->setApmUpdatedAtPatch();
+        $this->apmStartsat = $apmStartsat;
+        $this->setApmUpdatedatPatch();
 
         return $this;
     }
 
-    public function getApmStopsAt(): ?\DateTimeInterface
+    public function getApmStopsat(): ?\DateTimeInterface
     {
-        return $this->apmStopsAt;
+        return $this->apmStopsat;
     }
 
-    public function setApmStopsAt(?\DateTimeInterface $apmStopsAt): self
+    public function setApmStopsat(?\DateTimeInterface $apmStopsat): self
     {
-        $this->apmStopsAt = $apmStopsAt;
-        $this->setApmUpdatedAtPatch();
+        $this->apmStopsat = $apmStopsat;
+        $this->setApmUpdatedatPatch();
 
         return $this;
     }
@@ -176,18 +164,18 @@ class Appointment
         return $this;
     }
 
-    private function setApmUpdatedAtPatch(): self
+    private function setApmUpdatedatPatch(): self
     {
         if($_SERVER["REQUEST_METHOD"] == "PATCH"){
-            $this->apmUpdatedAt = new \DateTimeImmutable();
+            $this->apmUpdatedat = new \DateTimeImmutable();
         }
         return $this;
     }
 
-    private function setApmUpdatedAtPut(): self
+    private function setApmUpdatedatPut(): self
     {
         if($_SERVER["REQUEST_METHOD"] == "PUT"){
-            $this->apmUpdatedAt = new \DateTimeImmutable();
+            $this->apmUpdatedat = new \DateTimeImmutable();
         }
         return $this;
     }

@@ -8,15 +8,15 @@ import { parseCookies } from 'nookies';
 const Appointment = ({appointment,contacts, activeItem}) => {
   const {jwt_token_TDL: token} = parseCookies();
   //Make appointment variables available cleanly
-  const {id,apmTitle, apmDescription, apmStartsAt, apmStopsAt, apmUsr, apmCnt} = appointment;
+  const {id,apmTitle, apmDescription, apmStartsat, apmStopsat, apmUsr, apmCnt} = appointment;
 
   //Usestates directly for forms
   const [title, setTitle] = useState(apmTitle);
   const [description, setDescription] = useState(apmDescription);
-  const [dateStarts, setDateStarts] = useState(convertToAccurateDay(apmStartsAt));
-  const [timeStarts, setTimeStarts] = useState(new Date(apmStartsAt).toLocaleTimeString().substr(0,5));
-  const [dateStops, setDateStops] = useState(convertToAccurateDay(apmStopsAt));
-  const [timeStops, setTimeStops] = useState(new Date(apmStopsAt).toLocaleTimeString().substr(0,5));
+  const [dateStarts, setDateStarts] = useState(convertToAccurateDay(apmStartsat));
+  const [timeStarts, setTimeStarts] = useState(new Date(apmStartsat).toLocaleTimeString().substr(0,5));
+  const [dateStops, setDateStops] = useState(convertToAccurateDay(apmStopsat));
+  const [timeStops, setTimeStops] = useState(new Date(apmStopsat).toLocaleTimeString().substr(0,5));
   const [contactPerson, setContactPerson] = useState(apmCnt?.id || 0);
 
   //Functional usestates
