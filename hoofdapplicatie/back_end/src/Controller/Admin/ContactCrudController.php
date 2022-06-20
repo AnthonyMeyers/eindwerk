@@ -23,12 +23,14 @@ class ContactCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('cntName', 'Name'),
-            TelephoneField::new('cntTel', 'Tel. number'),
-            TextField::new('cntstreet', 'Street'),
-            TextField::new('cntPostal', 'Postal'),
-            TextField::new('cntCity', 'City'),
+            TextField::new('cntstreet', 'Street')->hideOnIndex(),
+            TextField::new('cntPostal', 'Postal')->hideOnIndex(),
+            TextField::new('cntCity', 'City')->hideOnIndex(),
+            TelephoneField::new('cntTel', 'Tel. number')->hideOnIndex(),
             TextField::new('cntMail', 'Mail'),
             AssociationField::new('cntUsr','Contact'),
+            DateTimeField::new('cntCreatedat', 'Created')->hideOnForm(),
+            DateTimeField::new('cntUpdatedat','Last updated by user')->hideOnForm(),
         ];
     }
 

@@ -110,9 +110,7 @@ class Appointment
     public function setApmTitle(string $apmTitle): self
     {
         $this->apmTitle = $apmTitle;
-        $this->setApmUpdatedatPatch();
-        $this->setApmUpdatedatPut();
-
+        $this->setApmUpdatedat();
         return $this;
     }
 
@@ -134,8 +132,7 @@ class Appointment
     public function setApmStartsat(\DateTimeInterface $apmStartsat): self
     {
         $this->apmStartsat = $apmStartsat;
-        $this->setApmUpdatedatPatch();
-
+        $this->setApmUpdatedat();
         return $this;
     }
 
@@ -147,8 +144,7 @@ class Appointment
     public function setApmStopsat(?\DateTimeInterface $apmStopsat): self
     {
         $this->apmStopsat = $apmStopsat;
-        $this->setApmUpdatedatPatch();
-
+        $this->setApmUpdatedat();
         return $this;
     }
 
@@ -160,22 +156,13 @@ class Appointment
     public function setApmUsr(?User $apmUsr): self
     {
         $this->apmUsr = $apmUsr;
-
+        $this->setApmUpdatedat();
         return $this;
     }
 
-    private function setApmUpdatedatPatch(): self
+    private function setApmUpdatedat(): self
     {
-        if($_SERVER["REQUEST_METHOD"] == "PATCH"){
-            $this->apmUpdatedat = new \DateTimeImmutable();
-        }
-        return $this;
-    }
-
-
-    private function setApmUpdatedatPut(): self
-    {
-        if($_SERVER["REQUEST_METHOD"] == "PUT"){
+        if($_SERVER["REQUEST_METHOD"] == "PATCH" ||$_SERVER["REQUEST_METHOD"] == "PUT" ){
             $this->apmUpdatedat = new \DateTimeImmutable();
         }
         return $this;
@@ -190,7 +177,7 @@ class Appointment
     {
 
         $this->apmCnt = $apmCnt;
-
+        $this->setApmUpdatedat();
         return $this;
     }
 

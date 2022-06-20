@@ -11,6 +11,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
     *  @ApiResource(
@@ -26,8 +27,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
     *
     *   normalizationContext={"groups"={"contacts:read"}},
     *   denormalizationContext={"groups"={"contacts:write"}}))
-    *
-    *      @ORM\Entity(repositoryClass=ContactRepository::class)
+    *   @ORM\Entity(repositoryClass=ContactRepository::class)
 */
 class Contact
 {
@@ -76,7 +76,7 @@ class Contact
      * @ORM\Column(type="string", length=200, nullable=true)
      * @Groups({"contacts:read","contacts:write"})
      */
-    private $cntMail = "";
+    private $cntMail;
 
     /**
      * @return string
@@ -87,16 +87,9 @@ class Contact
     }
 
     /**
-     * @param string $cntMail
-     */
-    public function setCntMail(string $cntMail): void
-    {
-        $this->cntMail = $cntMail;
-    }
-
-    /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="contacts")
      * @Groups({"contacts:read","contacts:write"})
+     * @Assert\NotBlank()
      */
     private $cntUsr;
 
@@ -104,13 +97,13 @@ class Contact
      * @ORM\Column(type="datetime_immutable")
      * @Groups({"user:read"})
      */
-    private $ctyCreatedat;
+    private $cntCreatedat;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Groups({"user:read"})
      */
-    private $ctyUpdatedat;
+    private $cntUpdatedat;
 
     /**
      * @ORM\OneToMany(targetEntity=Appointment::class, mappedBy="apmCnt", orphanRemoval="true")
@@ -121,12 +114,12 @@ class Contact
     {
         $this->contactApm = new ArrayCollection();
         $this->appointments = new ArrayCollection();
-        $this->ctyCreatedat = new \DateTimeImmutable();
+        $this->cntCreatedat = new \DateTimeImmutable();
     }
 
-    public function getCtyCreatedat(): ?\DateTimeImmutable
+    public function getCntCreatedat(): ?\DateTimeImmutable
     {
-        return $this->ctyCreatedat;
+        return $this->cntCreatedat;
     }
 
     public function getId(): ?int
@@ -147,8 +140,7 @@ class Contact
     public function setCntName(string $cntName): self
     {
         $this->cntName = $cntName;
-        $this->setCntUpdatedatPut();
-        $this->setCntUpdatedatPatch();
+        $this->setCntUpdatedat();
 
         return $this;
     }
@@ -161,8 +153,17 @@ class Contact
     public function setCntTel(?string $cntTel): self
     {
         $this->cntTel = $cntTel;
-        $this->setCntUpdatedatPatch();
+        $this->setCntUpdatedat();
         return $this;
+    }
+
+    /**
+     * @param string $cntMail
+     */
+    public function setCntMail(string $cntMail): self
+    {
+        $this->cntMail = $cntMail;
+        $this->setCntUpdatedat();
     }
 
     public function getCntStreet(): ?string
@@ -173,7 +174,7 @@ class Contact
     public function setCntStreet(?string $cntStreet): self
     {
         $this->cntStreet = $cntStreet;
-        $this->setCntUpdatedatPatch();
+        $this->setCntUpdatedat();
         return $this;
     }
 
@@ -185,7 +186,7 @@ class Contact
     public function setCntPostal(?string $cntPostal): self
     {
         $this->cntPostal = $cntPostal;
-        $this->setCntUpdatedatPatch();
+        $this->setCntUpdatedat();
         return $this;
     }
 
@@ -197,7 +198,7 @@ class Contact
     public function setCntCity(?string $cntCity): self
     {
         $this->cntCity = $cntCity;
-        $this->setCntUpdatedatPatch();
+        $this->setCntUpdatedat();
         return $this;
     }
 
@@ -209,7 +210,7 @@ class Contact
     public function setCntUsr(?User $cntUsr): self
     {
         $this->cntUsr = $cntUsr;
-        $this->setCntUpdatedatPatch();
+        $this->setCntUpdatedat();
         return $this;
     }
 
@@ -227,7 +228,6 @@ class Contact
             $this->appointments[] = $appointment;
             $appointment->setApmCnt($this);
         }
-        $this->setCntUpdatedatPatch();
         return $this;
     }
 
@@ -239,13 +239,12 @@ class Contact
                 $appointment->setApmCnt(null);
             }
         }
-        $this->setCntUpdatedatPatch();
         return $this;
     }
 
-    private function setCntUpdatedatPatch(): self
+    private function setCntUpdatedat(): self
     {
-        if($_SERVER["REQUEST_METHOD"] == "PATCH"){
+        if($_SERVER["REQUEST_METHOD"] == "PATCH" || $_SERVER["REQUEST_METHOD"] == "PUT"){
             $this->cntUpdatedat = new \DateTimeImmutable();
         }
         return $this;
@@ -256,11 +255,4 @@ class Contact
         return $this->cntUpdatedat;
     }
 
-    private function setCntUpdatedatPut(): self
-    {
-        if($_SERVER["REQUEST_METHOD"] == "PUT"){
-            $this->cntUpdatedat = new \DateTimeImmutable();
-        }
-        return $this;
-    }
 }

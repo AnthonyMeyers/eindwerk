@@ -9,6 +9,8 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -35,8 +37,9 @@ use Doctrine\Common\Collections\ArrayCollection;
      * )
      *
      * @ORM\Entity(repositoryClass=UserRepository::class)
-     * @UniqueEntity(fields={"usrMail"})
      * @UniqueEntity(fields={"usrName"})
+     * @UniqueEntity(fields={"usrMail"})
+
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -49,9 +52,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180)
+     * @ORM\Column(type="string", length=180, unique=true)
      * @Groups({"user:read", "user:write"})
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $usrName;
 
@@ -123,7 +126,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
-
         $this->appointments = new ArrayCollection();
         $this->todos = new ArrayCollection();
         $this->usrCreatedat = new \DateTimeImmutable();
@@ -144,7 +146,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $emailErr = "Invalid email format";
             throw new \Exception($emailErr);
         }
-
+        $this->setUsrUpdatedat();
         $this->usrMail = $usrMail;
 
         return $this;
@@ -155,13 +157,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->usrCreatedat;
     }
 
-    public function setUsrUpdatedat(?\DateTimeInterface $usrUpdatedat): self
-    {
-        $this->usrUpdatedat = $usrUpdatedat;
-
-        return $this;
-    }
-
     public function getUsrPicture(): ?string
     {
         return $this->usrPicture;
@@ -170,7 +165,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUsrPicture(?string $usrPicture): self
     {
         $this->usrPicture = $usrPicture;
-
+        $this->setUsrUpdatedat();
         return $this;
     }
 
@@ -185,6 +180,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         //The user always has to give permission to use his/hers data before storage
         if($usrHasagreed === true){
             $this->usrHasagreed = $usrHasagreed;
+            $this->setUsrUpdatedat();
             return $this;
         }else throw new \Exception("The user has to agree to the users agreement");
 
@@ -209,12 +205,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->usrName;
     }
 
-    public function getUsrname(): string
+    public function getUsrName(): string
     {
         return $this->usrName;
     }
 
-    public function setusrName(string $usrName): self
+    public function setUsrName(string $usrName): self
     {
             $name = $usrName;
             if (empty($name)) {
@@ -259,7 +255,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUsrRoles(array $roles): self
     {
         $this->usrRoles = $roles;
-
+        $this->setUsrUpdatedat();
         return $this;
     }
 
@@ -273,9 +269,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setPassword(string $usrPassword): self
     {
-
         $this->usrPassword = $usrPassword;
-
+        $this->setUsrUpdatedat();
         return $this;
     }
 
@@ -379,6 +374,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             if(preg_match_all("([0-9])",$plainPassword ) >=3 &&
                 preg_match_all("([A-Za-z])", $plainPassword) >=3 )
             {
+                $this->setUsrUpdatedat();
                 $this->plainPassword = $plainPassword;
             }else throw new \Exception("The password should have at least 3 letters and 3 numbers.");
 
@@ -416,6 +412,39 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    private function setUsrUpdatedat(): self
+    {
+        if($_SERVER["REQUEST_METHOD"] == "PATCH" || $_SERVER["REQUEST_METHOD"] == "PUT"){
+            $this->usrUpdatedat = new \DateTimeImmutable();
+        }
+        return $this;
+    }
+
+    //...
+
+    /**
+     * @var string clear password for backend
+     */
+    private $clearpassword;
+
+    /**
+     * @return string
+     */
+    public function getClearpassword(): string
+    {
+        if( $this->clearpassword == null ) return "";
+        return $this->clearpassword;
+    }
+
+    /**
+     * @param string $clearpassword
+     */
+    public function setClearpassword(string $clearpassword): void
+    {
+
+        $this->setPassword($clearpassword);
     }
 
 

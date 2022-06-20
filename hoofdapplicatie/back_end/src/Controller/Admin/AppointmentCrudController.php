@@ -27,7 +27,7 @@ class AppointmentCrudController extends AbstractCrudController
             DateTimeField::new('apmStartsat','Starts at'),
             DateTimeField::new('apmStopsat', 'Stops at'),
             DateTimeField::new('apmCreatedat', 'Created')->hideOnForm(),
-            DateTimeField::new('apmUpdatedat','Last updated')->hideOnForm(),
+            DateTimeField::new('apmUpdatedat','Last updated by user')->hideOnForm(),
 
         ];
     }

@@ -29,7 +29,7 @@ class TodoCrudController extends AbstractCrudController
             AssociationField::new('tdoPty','Priority'),
             AssociationField::new('tdoCty','Category'),
             DateTimeField::new('tdoCreatedat', 'Created')->hideOnForm(),
-            DateTimeField::new('tdoUpdatedat','Last updated')->hideOnForm(),
+            DateTimeField::new('tdoUpdatedat','Last updated by user')->hideOnForm(),
         ];
     }
 

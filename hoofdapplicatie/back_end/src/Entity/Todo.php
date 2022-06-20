@@ -101,7 +101,7 @@ class Todo
     public function setTdoTitle(string $tdoTitle): self
     {
         $this->tdoTitle = $tdoTitle;
-
+        $this->setTdoUpdatedat();
         return $this;
     }
 
@@ -113,7 +113,7 @@ class Todo
     public function settdoIsdone(string $tdoIsdone): self
     {
         $this->tdoIsdone = $tdoIsdone;
-
+        $this->setTdoUpdatedat();
         return $this;
     }
 
@@ -127,13 +127,6 @@ class Todo
         return $this->tdoUpdatedat;
     }
 
-    public function setTdoUpdatedat(?\DateTimeInterface $tdoUpdatedat = null): self
-    {
-        $this->tdoUpdatedat = $tdoUpdatedat;
-
-        return $this;
-    }
-
     public function getTdoUsr(): ?User
     {
         return $this->tdoUsr;
@@ -142,7 +135,7 @@ class Todo
     public function setTdoUsr(?User $tdoUsr): self
     {
         $this->tdoUsr = $tdoUsr;
-
+        $this->setTdoUpdatedat();
         return $this;
     }
 
@@ -154,7 +147,7 @@ class Todo
     public function setTdoPty(?Priority $tdoPty): self
     {
         $this->tdoPty = $tdoPty;
-
+        $this->setTdoUpdatedat();
         return $this;
     }
 
@@ -166,7 +159,16 @@ class Todo
     public function setTdoCty(?Category $tdoCty): self
     {
         $this->tdoCty = $tdoCty;
-
+        $this->setTdoUpdatedat();
         return $this;
     }
+
+    private function setTdoUpdatedat(): self
+    {
+        if($_SERVER["REQUEST_METHOD"] == "PATCH" || $_SERVER["REQUEST_METHOD"] == "PUT"){
+            $this->tdoUpdatedat = new \DateTimeImmutable();
+        }
+        return $this;
+    }
+
 }
