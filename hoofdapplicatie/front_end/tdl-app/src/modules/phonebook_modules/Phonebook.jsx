@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useGetAllUserContactsIndexedQuery } from '../../data/todoApi';
 import PhonebookDetails from './PhonebookDetails';
 import { parseCookies } from 'nookies';
+import IndexFooter from "../standard_modules/Footer";
+import Status from '../standard_modules/App-Status';
 
 const Phonebook = () => {
   const {jwt_token_TDL: token} = parseCookies();
@@ -17,15 +19,20 @@ const Phonebook = () => {
   }
 
   return (
+    <>
     <section className="phonebook container" onClick={handleResetcomponentsClick}>
       <h2 className="phonebook__title">Contacts:</h2>
+      <Status isLoading={isLoading} isError={isError}/>
       {contacts && contacts.length > 0 && <div className={"phonebook__list"}>{contacts.map((contact,i) =>
         <>
-          <PhonebookDetails key={contact?.id} contact={contact} reset={reset}/>
+            {"index" in contact && contact.index.length > 0 && <h2 className="phonebook__list__index" key={"index-" + contact?.id}>{contact.index}</h2>}
+          <PhonebookDetails key={contact.id} contact={contact} reset={reset}/>
         </>
       )}
       </div>}
     </section>
+    <IndexFooter/>
+    </>
   )
 }
 

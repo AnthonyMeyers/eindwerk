@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+/*import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = { admin: false };
 
@@ -14,3 +14,4 @@ const adminSlice = createSlice({
 
 export default adminSlice;
 export const { changeState } = adminSlice.actions;
+*/

@@ -36,7 +36,7 @@ class Contact
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"user:read","contacts:read","contacts:write"})
-     * @ApiFilter(SearchFilter::class, properties={"cntUser"})
+     * @ApiFilter(SearchFilter::class, properties={"cntUsr"})
      * @ApiFilter(OrderFilter::class, properties={"cntName":"ASC"})
      * @Groups({"appointments:read", "appointments:write"})
      */
@@ -98,7 +98,19 @@ class Contact
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="contacts")
      * @Groups({"contacts:read","contacts:write"})
      */
-    private $cntUser;
+    private $cntUsr;
+
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     * @Groups({"user:read"})
+     */
+    private $ctyCreatedat;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"user:read"})
+     */
+    private $ctyUpdatedat;
 
     /**
      * @ORM\OneToMany(targetEntity=Appointment::class, mappedBy="apmCnt", orphanRemoval="true")
@@ -109,6 +121,12 @@ class Contact
     {
         $this->contactApm = new ArrayCollection();
         $this->appointments = new ArrayCollection();
+        $this->ctyCreatedat = new \DateTimeImmutable();
+    }
+
+    public function getCtyCreatedat(): ?\DateTimeImmutable
+    {
+        return $this->ctyCreatedat;
     }
 
     public function getId(): ?int
@@ -129,6 +147,8 @@ class Contact
     public function setCntName(string $cntName): self
     {
         $this->cntName = $cntName;
+        $this->setCntUpdatedatPut();
+        $this->setCntUpdatedatPatch();
 
         return $this;
     }
@@ -141,7 +161,7 @@ class Contact
     public function setCntTel(?string $cntTel): self
     {
         $this->cntTel = $cntTel;
-
+        $this->setCntUpdatedatPatch();
         return $this;
     }
 
@@ -153,7 +173,7 @@ class Contact
     public function setCntStreet(?string $cntStreet): self
     {
         $this->cntStreet = $cntStreet;
-
+        $this->setCntUpdatedatPatch();
         return $this;
     }
 
@@ -165,7 +185,7 @@ class Contact
     public function setCntPostal(?string $cntPostal): self
     {
         $this->cntPostal = $cntPostal;
-
+        $this->setCntUpdatedatPatch();
         return $this;
     }
 
@@ -177,19 +197,19 @@ class Contact
     public function setCntCity(?string $cntCity): self
     {
         $this->cntCity = $cntCity;
-
+        $this->setCntUpdatedatPatch();
         return $this;
     }
 
-    public function getCntUser(): ?User
+    public function getCntUsr(): ?User
     {
-        return $this->cntUser;
+        return $this->cntUsr;
     }
 
-    public function setCntUser(?User $cntUser): self
+    public function setCntUsr(?User $cntUsr): self
     {
-        $this->cntUser = $cntUser;
-
+        $this->cntUsr = $cntUsr;
+        $this->setCntUpdatedatPatch();
         return $this;
     }
 
@@ -207,7 +227,7 @@ class Contact
             $this->appointments[] = $appointment;
             $appointment->setApmCnt($this);
         }
-
+        $this->setCntUpdatedatPatch();
         return $this;
     }
 
@@ -219,7 +239,28 @@ class Contact
                 $appointment->setApmCnt(null);
             }
         }
+        $this->setCntUpdatedatPatch();
+        return $this;
+    }
 
+    private function setCntUpdatedatPatch(): self
+    {
+        if($_SERVER["REQUEST_METHOD"] == "PATCH"){
+            $this->cntUpdatedat = new \DateTimeImmutable();
+        }
+        return $this;
+    }
+
+    public function getCntUpdatedat(): ?\DateTimeInterface
+    {
+        return $this->cntUpdatedat;
+    }
+
+    private function setCntUpdatedatPut(): self
+    {
+        if($_SERVER["REQUEST_METHOD"] == "PUT"){
+            $this->cntUpdatedat = new \DateTimeImmutable();
+        }
         return $this;
     }
 }

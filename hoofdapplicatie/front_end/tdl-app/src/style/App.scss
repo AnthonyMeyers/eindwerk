@@ -9,6 +9,7 @@
 @use "../modules/extra_modules/configgroup.scss";
 @use "../modules/phonebook_modules/phonebook.scss";
 @use "../modules/appointment_modules/appointments.scss";
+@use "../modules/profile_modules/profile.scss";
 @import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins";
@@ -16,7 +17,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
 
 body {
-  font-family: "Permanent Marker", Helvetica, sans-serif;
   background-color: #86b6ee;
   font-family: "Permanent Marker", Arial, Helvetica, sans-serif;
 }
@@ -37,7 +37,7 @@ h1 {
 
 h2 {
   font-size: 20px;
-  margin-bottom: 40px;
+  margin: 20px 0 40px 0;
   color: #00638F;
 }
 
@@ -47,18 +47,54 @@ h3{
   color: #008FA0;
 }
 
+p{
+  max-width: 700px;
+  font-size: 18px;
+}
+
 .hide {
   display: none;
 }
 
 .error-center{
-  color: red;
+  margin-bottom: 20px;
   text-align: center;
+  color: red;
+  font-size: 18px;
+}
+
+.error-end{
+  margin-bottom: 20px;
+  text-align: end;
+  color: red;
+  font-size: 18px;
 }
 
 .error{
   color: red;
+  font-size: 18px;
 }
+
+.loadingholder{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  &__imgholder{
+    position: relative;
+    &__text{
+      position: absolute;
+      left: calc(50% - 33.5px);
+      bottom: 50%;
+    }
+    &__loading{
+      display: block;
+      max-width: 175px;
+      aspect-ratio: 1/1;
+    }
+  }
+}
+
 
 .navcontainer{
   display: flex;
@@ -78,14 +114,22 @@ h3{
 
 input{
   padding: 5px;
+  font-family: Arial, serif, Helvetica, sans-serif;
+  font-style: italic;
+  font-size: 18px;
 }
 
 .header {
   display: flex;
+  background-color: #008Fa0;
+  border-bottom: 5px solid #00B896;
   flex-direction: column;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
   &__panel {
     display: flex;
     flex-direction: column;
+    padding: 5px;
     &__title {
       margin: 10px;
       font-size: 25px;
@@ -100,18 +144,21 @@ input{
     align-items: center;
     gap: 20px;
     &__label {
-      text-align: center;      
+    text-align: center;      
      display: flex;
      flex-wrap: wrap;
      flex-direction: column;
      gap: 15px;
       &__todoinput {
         height: 20px;
-        width: 225px;
+        width: 240px;
         font-size: 16px;
         padding: 10px;
         border-radius: 5px;
         border: none;
+      }
+      &__text{
+        font-size: 20px;
       }
     }
     &__addtodo {
@@ -141,10 +188,13 @@ input{
 
 .messagetoast{
   position: fixed;
-  left: 0;
   bottom: 0;
+  left: 0;
+  margin-bottom: 30px;
   &__header{
       &__title{
+        display: flex;
+        flex-direction: column;
       }
       &__button{
           position: absolute;
@@ -160,6 +210,28 @@ input{
       margin: 2.5px;}
 }
 
+.toast-body{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  &__label{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    &__input{
+      border-radius: 5px;
+      border: 3px solid transparent;
+      outline: 1px solid black;
+      width: 220px;
+      &:hover{
+        border-color: black;
+
+      }
+    }
+  }
+}
+
+
 .purple{background-color: #B4869F;}
 
 .green{background-color: #69A297;}
@@ -171,3 +243,41 @@ input{
 .grey{background-color: 	#e4e1d89f};
 
 .standard{background-color: #eee;}
+
+@media screen and (min-width: 475px)
+{
+  .header {
+    &__panel {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+}
+
+@media screen and (min-width: 750px)
+{
+  .header {
+    &__panel {
+      flex-direction: column;
+    }
+    &__todoform{
+      &-appointments{
+      &__label {
+        width: 700px;
+        flex-direction: row;
+        &__todoinput{
+          height: 30px;
+        }
+        &__text{
+          display: flex;
+          width: 190px;
+          align-items: center;
+
+        }
+
+      }
+      }
+    }
+  }
+}
+

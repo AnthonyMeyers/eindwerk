@@ -21,13 +21,13 @@ class AppointmentCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('apmTitle'),
-            DateTimeField::new('apmCreatedAt')->hideOnForm(),
-            DateTimeField::new('apmUpdatedAt')->hideOnForm(),
-            DateTimeField::new('apmStartsAt'),
-            DateTimeField::new('apmStopsAt'),
-            AssociationField::new('apmUsr'),
-            AssociationField::new('apmCnt'),
+            TextField::new('apmTitle', 'Title'),
+            AssociationField::new('apmUsr', 'User'),
+            AssociationField::new('apmCnt', 'Contact'),
+            DateTimeField::new('apmStartsat','Starts at'),
+            DateTimeField::new('apmStopsat', 'Stops at'),
+            DateTimeField::new('apmCreatedat', 'Created')->hideOnForm(),
+            DateTimeField::new('apmUpdatedat','Last updated')->hideOnForm(),
 
         ];
     }

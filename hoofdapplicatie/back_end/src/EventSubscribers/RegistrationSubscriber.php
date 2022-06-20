@@ -4,7 +4,6 @@ namespace App\EventSubscribers;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\User;
-use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTCreatedEvent;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,11 +44,9 @@ class RegistrationSubscriber implements EventSubscriberInterface
 
         $message = (new TemplatedEmail())
             ->to("thony.meyers@gmail.com")
-            ->subject('Thank you for your registration')
+            ->subject('Welcome to the TDL Application')
             ->htmlTemplate('emails/register.html.twig')
-            ->context([
-                "username"=>$user->getUsername(),
-                "emailaddress" => $user->getUsrMail()]);
+            ->context(["username"=>$user->getUsername(),"emailaddress" => $user->getUsrMail()]);
 
         $this->mailer->send($message);
     }

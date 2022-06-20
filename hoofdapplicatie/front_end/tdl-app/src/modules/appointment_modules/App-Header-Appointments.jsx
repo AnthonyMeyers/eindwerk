@@ -5,6 +5,8 @@ import { useNavigate } from "react-router";
 import { parseCookies } from 'nookies';
 import Configgroup from "../extra_modules/Configgroup";
 import { useState, useEffect } from "react";
+import { errorhandlingappointments } from "../../helpers/errorhandling";
+import ErrorMessage from "../extra_modules/Errormessage"
 
  const AppHeaderAppointments = () => {
   const {jwt_token_TDL: token} = parseCookies();
@@ -17,6 +19,7 @@ import { useState, useEffect } from "react";
   const [startTime, setStartTime] = useState(new Date().toLocaleTimeString().substr(0,5));
   const [stopDate, setStopDate] = useState(startDate);
   const [stopTime, setStopTime] = useState(startTime);
+  const [errorAppointment, setErrorAppointment] = useState(false);
 
   //set mutations
   const [addOneAppointment] = useAddOneAppointmentMutation();
@@ -34,6 +37,9 @@ import { useState, useEffect } from "react";
   function handleSubmitappointmentClick(e)
   {
     e.preventDefault();
+    const appointError = errorhandlingappointments("appointment-title", appointmentTitle);
+    setErrorAppointment(appointError);
+    if(!appointError){
     const start = new Date(startDate +" " + startTime).getTime();
     const stop = new Date(stopDate + " " + stopTime).getTime();
     if(start <= stop && appointmentTitle.length >= 4){
@@ -42,21 +48,22 @@ import { useState, useEffect } from "react";
     }
     setAppointmentTitle("");
   }
+  }
 
   return (
     <>
     <header className="header">
       <div className="header__panel">
-        <h1 className="header__panel__title">To Do List</h1>
+        <h1 className="header__panel__title">My To Do List</h1>
         <div className="header__panel__configgroup configgroup">
           <Configgroup/>
           </div>
       </div>
-      <form className="header__todoform" onSubmit={handleSubmitappointmentClick}>
-        <label className="header__todoform__label">
-          Add an appointment
+      <form className="header__todoform header__todoform-appointments" onSubmit={handleSubmitappointmentClick}>
+        <label className="header__todoform__label header__todoform-appointments__label"><span className="header__todoform__label__text header__todoform-appointments__label__text">
+          Add an appointment</span>
           <input
-            className="header__todoform__label__todoinput form-control form-control-lg"
+            className="header__todoform__label__todoinput header__todoform-appointments__label__todoinput form-control form-control-lg"
             type="text"
             id="input-appointment"
             autoComplete="off"
@@ -65,13 +72,13 @@ import { useState, useEffect } from "react";
             onInput={(e) =>setAppointmentTitle(e.target.value)}
           />
         </label>
-        <label className="header__todoform__label">Set the date and time
-        <input className="header__todoform__label__todoinput" type="date" onChange={(e)=>setStartDate(e.target.value)} value={startDate}/>
-        <input className="header__todoform__label__todoinput" type="time" onChange={(e) =>setStartTime(e.target.value)} value={startTime}/>
+        <label className="header__todoform__label header__todoform-appointments__label"><span className="header__todoform__label__text header__todoform-appointments__label__text">Start appointment</span>
+        <input className="header__todoform__label__todoinput header__todoform-appointments__label__todoinput" type="date" onChange={(e)=>setStartDate(e.target.value)} value={startDate}/>
+        <input className="header__todoform__label__todoinput header__todoform-appointments__label__todoinput" type="time" onChange={(e) =>setStartTime(e.target.value)} value={startTime}/>
         </label>
-        <label className="header__todoform__label">Set the stopdate and stoptime
-        <input className="header__todoform__label__todoinput" type="date" onChange={(e)=>setStopDate(e.target.value)} value={stopDate}/>
-        <input className="header__todoform__label__todoinput" type="time" onChange={(e) =>setStopTime(e.target.value)} value={stopTime}/>
+        <label className="header__todoform__label header__todoform-appointments__label"><span className="header__todoform__label__text header__todoform-appointments__label__text">End appointment</span>
+        <input className="header__todoform__label__todoinput header__todoform-appointments__label__todoinput" type="date" onChange={(e)=>setStopDate(e.target.value)} value={stopDate}/>
+        <input className="header__todoform__label__todoinput header__todoform-appointments__label__todoinput" type="time" onChange={(e) =>setStopTime(e.target.value)} value={stopTime}/>
         </label>
         
         <button type="submit" className="header__todoform__addtodo" >
@@ -79,6 +86,7 @@ import { useState, useEffect } from "react";
             Add todo submit button
           </span>
         </button >
+        <ErrorMessage className={"error"}>{errorAppointment}</ErrorMessage>
       </form>
     </header>
 

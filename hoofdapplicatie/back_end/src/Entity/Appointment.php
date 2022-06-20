@@ -172,6 +172,7 @@ class Appointment
         return $this;
     }
 
+
     private function setApmUpdatedatPut(): self
     {
         if($_SERVER["REQUEST_METHOD"] == "PUT"){

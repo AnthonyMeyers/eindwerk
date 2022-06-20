@@ -2,13 +2,14 @@ import { NavLink} from "react-router-dom";
 import { useNavigate } from "react-router";
 import {useState, useEffect} from "react";
 import axios from "axios";
-import IndexFooter from "./IndexFooter";
+import IndexFooter from "../standard_modules/Footer";
 import Errormessage from "../extra_modules/Errormessage";
 import { saveJWTinCookie } from "../../helpers/jwttokens";
 import { errorhandlinglogin } from "../../helpers/errorhandling";
 
 const Login = () => {
-  saveJWTinCookie({jwt_token_TDL: ""});
+  saveJWTinCookie({jwt_token_TDL: null});
+
   //Define useStates
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -50,12 +51,14 @@ const Login = () => {
         localStorage.setItem("userId",JSON.stringify(data.userdata.id))
     }
 
+    localStorage.setItem("time",  JSON.stringify(new Date().toUTCString()))
   //Als er rollen zijn in userdata, opslagen in localstorage
     if("roles" in data.userdata){
       localStorage.setItem("roles",JSON.stringify(data.userdata.roles)) 
     }
   //Navigeer door naar de app
-  nav("/splashscreen");
+  setTimeout(()=>{return nav("/splashscreen");})
+
 }
 
   }catch(error){

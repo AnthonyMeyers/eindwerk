@@ -42,16 +42,16 @@ function handleAddtodoSubmit(e)
     <>
       <header className="header">
         <div className="header__panel">
-          <h1 className="header__panel__title">To Do List</h1>
+          <h1 className="header__panel__title">My To Do List</h1>
           <div className="header__panel__configgroup configgroup">
           <Configgroup/>
           </div>
         </div>
         <form className="header__todoform" onSubmit={handleAddtodoSubmit}>
           <label htmlFor="input-todo" className="header__todoform__label">
-            Add a todo
+            <span className="header__todoform__label__text">Add a todo</span>
             <input
-              maxLength="30"
+              maxLength="22"
               className="header__todoform__label__todoinput form-control form-control-lg"
               type="text"
               id="input-todo"

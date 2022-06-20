@@ -23,14 +23,13 @@ class TodoCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('tdoTitle'),
-            TextEditorField::new('tdoDescription'),
-            BooleanField::new('tdoIsDone'),
-            DateTimeField::new('tdoCreatedAt')->hideOnForm(),
-            DateTimeField::new('tdoUpdatedAt')->hideOnForm(),
-            AssociationField::new('tdoUsr'),
-            AssociationField::new('tdoPty'),
-            AssociationField::new('tdoCty'),
+            TextField::new('tdoTitle', 'Title'),
+            BooleanField::new('tdoIsdone', 'Is done'),
+            AssociationField::new('tdoUsr','Todo user'),
+            AssociationField::new('tdoPty','Priority'),
+            AssociationField::new('tdoCty','Category'),
+            DateTimeField::new('tdoCreatedat', 'Created')->hideOnForm(),
+            DateTimeField::new('tdoUpdatedat','Last updated')->hideOnForm(),
         ];
     }
 

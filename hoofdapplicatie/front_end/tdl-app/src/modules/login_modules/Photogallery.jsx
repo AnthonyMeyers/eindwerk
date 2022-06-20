@@ -1,4 +1,4 @@
-import IndexFooter from "./IndexFooter"
+import IndexFooter from "../standard_modules/Footer";
 
 const Photogallery = () => {
 

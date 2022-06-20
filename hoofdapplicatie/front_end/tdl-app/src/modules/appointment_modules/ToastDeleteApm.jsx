@@ -14,7 +14,7 @@ const ToastDeleteApm = ({id, title}) => {
   return (
     <div className="messagetoast toast show" role="alert" aria-live="assertive" aria-atomic="true" id={`deletetoast-${id}`}>
       <div className="messagetoast__header toast-header">
-        <h3 className="messagetoast__header__title">Message appointment: {title}</h3>
+        <h3 className="messagetoast__header__title">Message appointment:<span> {title}</span></h3>
         <button className="ml-2 mb-1 close messagetoast__header__button btn btn-success"
         type="button" data-dismiss="toast" aria-label="Close">Exit</button>
         </div>

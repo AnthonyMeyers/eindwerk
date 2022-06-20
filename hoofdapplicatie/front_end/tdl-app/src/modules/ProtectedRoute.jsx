@@ -1,19 +1,34 @@
 import {
-    Routes,
-    Route,
-    NavLink,
-    Navigate,
-    useNavigate,
+  NavLink,
+    useNavigate
   } from 'react-router-dom';
+  import { useDispatch } from 'react-redux';
+import { cleanCategories, cleanPriorities, cleanUserdata } from '../data/general';
+import {destroyJWTCookie} from "../helpers/jwttokens";
 
 const ProtectedRoute = ({children}) => {
-  //Get the userId from localstorage and watch it starting when the user goes trough login, if no id, back to login page
+    const nav = useNavigate();
+    const dispatch = useDispatch();
+  //Get the userId from localstorage and watch it starting when the user goes trough login, if no id or id not numeric, back to login page
     const userId = localStorage.getItem("userId");
+    const time = new Date(localStorage.getItem("time"));
+    const now = new Date();
 
-    if (!userId) {
-      return <Navigate to="/login"/>;
-    }
+
   
+    //Inlogtijd laten verlopen na een 50 min, server stopt token na 60 min
+    const useTime = 50 * 60 * 1000;
+
+    if( !userId || userId === isNaN || time.getTime() + useTime <  now.getTime())
+    {
+      dispatch(cleanCategories());
+      dispatch(cleanPriorities());
+      dispatch(cleanUserdata());
+      destroyJWTCookie();
+      localStorage.clear();
+      setTimeout(()=>{return nav("/login");})
+    }
+
     return children;
 }
 

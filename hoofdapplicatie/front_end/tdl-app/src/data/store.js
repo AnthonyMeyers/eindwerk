@@ -1,6 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import todoApi from "./todoApi";
-import admin from "./admin";
 import general from "./general";
 import storage from "redux-persist/lib/storage";
 import {persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER} from "redux-persist";
@@ -18,8 +17,6 @@ const persistedReducer = persistReducer(persistConfig, reducers);
 const store = configureStore({
   reducer: combineReducers({
     [todoApi.reducerPath]: todoApi.reducer,
-    [admin.name]: admin.reducer,
-
     //Redux Slices
     persistedReducer,
   }),

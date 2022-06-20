@@ -1,11 +1,13 @@
 import { useGetContactInfoQuery } from '../../data/todoApi';
 import { parseCookies } from "nookies";
+import { useSelector } from 'react-redux';
 
-const AppointmentContact = ({contactInfo}) => {
+const AppointmentContact = ({contactInfo, startApm: {startDate, startTime}}) => {
   const {jwt_token_TDL: token} = parseCookies();
-
+  const {userData} = useSelector((state)=> state.persistedReducer.generalState);
   //Get contact information
   const {data, isLoading, isSuccess, isError} = useGetContactInfoQuery({id: contactInfo, token});
+
   return (
         <>
           <div className="contactinfo">
@@ -19,8 +21,9 @@ const AppointmentContact = ({contactInfo}) => {
             </div>
               <div className="contactinfo__fiche">
               <h3 className="contactinfo__fiche__info">Contact City: {data?.cntCity || "-"}</h3>
-              <h3 className="contactinfo__fiche__info">Contact Tel: {data?.cntTel || "-"}</h3>
-              <h3 className="contactinfo__fiche__info">Contact Mail: {data?.cntMail || "-"}</h3>
+              <h3 className="contactinfo__fiche__info">Contact Tel: {"cntTel" in data ? <a href={`tel:${data.cntTel}`}>{data.cntTel}</a> : "-"}</h3>
+              <h3 className="contactinfo__fiche__info">Contact Mail: {"cntMail" in data ?
+              <a href={`mailto:${data.cntMail}?bcc=${userData.usrMail}&subject=Our appoinment on ${startDate} at ${startTime}`}>{data.cntMail}</a> : "-"}</h3>
             </div>
           </>
         }

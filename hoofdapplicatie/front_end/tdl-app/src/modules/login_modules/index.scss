@@ -45,13 +45,15 @@
 }
 
 .homefooter{
+
     position: fixed;
     bottom: 0;
     width: 100%;
     padding: 5px;
-    text-align: center;
     background-color: #008Fa0;
 &__text{
+  max-width: none;
+  text-align: center;
     font-size:12px;
     &__symbol{
         font-size: 10px;
@@ -84,7 +86,6 @@
       &__text {
         text-align: center;
         padding: 15px;
-        font-size: 14px;
         margin: 30px;
       }
     }
@@ -99,14 +100,13 @@
         flex-direction: column;
         width: 200px;
         gap: 10px;
-        &__input {
-          height: 20px;
-
-          font-size: 16px;
+        &__textinput {
+          font-weight: bolder;
+          font-size: 18px;
         }
-        &__checkboxinput {
-          margin-top: 10px;
-        }
+        &__check{
+        width: 20px;
+        height: 20px;}
       }
       &__buttongroup {
         display: flex;
@@ -114,6 +114,10 @@
         gap: 20px;
         &__button {
         }
+      }
+      &__policy{
+        display: block;
+        font-size: 20px;
       }
     }
   }
@@ -166,32 +170,30 @@
   }
 }
 
-@media only screen and (min-width: 600px) {
-  #navbar {
-    display: block;
+.splashscreen{
+  margin-top: 100px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  align-items: center;
+  justify-content: center;
+  &__title{
+    text-align: center;
+    width: 100%;
   }
-  .headerhome__mobile {
-    display: none;
+  &__link{
+    margin: 10px;
+    &__button{
+
+    }
   }
+
 }
 
-@media only screen and(min-width: 600px)
-{
-  .headerhome{
-    &__mobile{
-  
-    }
-    &__title{
-  
-    }
-    &__list{
-        &__listitem{
-
-        &__link{
-  
-        }
-        }
-    }
+@media only screen and (min-width: 600px) {
+  .headerhome__mobile {
+    display: none;
   }
   #navbar{
     display: flex;

@@ -19,10 +19,24 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
      * @ApiResource(
      *     normalizationContext={"groups"={"user:read"}},
-     *     denormalizationContext={"groups"={"user:write"}})
+     *     denormalizationContext={"groups"={"user:write"}},
+     *          collectionOperations={
+     *          "get",
+     *          "post"={
+     *              "access_control"="is_granted('IS_AUTHENTICATED_ANONYMOUSLY')",
+     *              "validation_groups"={"Default", "create"}
+     *          },
+     *     },
+     *      itemOperations={
+     *      "get" = {"access_control" = "is_granted('ROLE_USER')"},
+     *      "patch"  = {"access_control" = "is_granted('ROLE_USER')"},
+     *      "put" = {"access_control" = "is_granted('ROLE_USER')"},
+     *      "delete"  = {"access_control" = "is_granted('ROLE_USER')"}},
+     * )
      *
      * @ORM\Entity(repositoryClass=UserRepository::class)
-     * @UniqueEntity(fields={"usrMail", "username"})
+     * @UniqueEntity(fields={"usrMail"})
+     * @UniqueEntity(fields={"usrName"})
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -39,23 +53,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"user:read", "user:write"})
      * @Assert\NotBlank()
      */
-    private $username;
+    private $usrName;
 
     /**
      * @ORM\Column(type="json")
      */
-    private $roles = [];
+    private $usrRoles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
-    private $password;
+    private $usrPassword;
 
     /**
      * @groups({"user:write"})
-     * @SerializedName("password")
-     * @Assert\NotBlank()
+     * @SerializedName("usrPassword")
+     * @Assert\NotBlank(groups={"create"})
      */
     private $plainPassword;
 
@@ -74,6 +88,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * @Groups({"user:read"})
      */
     private $usrCreatedat;
 
@@ -97,12 +112,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"user:read","user:write"})
+     * @Groups({"user:write"})
      */
     private $usrHasagreed;
 
     /**
-     * @ORM\OneToMany(targetEntity=Contact::class, mappedBy="cntUser", orphanRemoval="true")
+     * @ORM\OneToMany(targetEntity=Contact::class, mappedBy="cntUsr", orphanRemoval="true")
      */
     private $contacts;
 
@@ -116,12 +131,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     }
 
-    public function getUsrMail(): ?string
+    public function getUsrmail(): ?string
     {
         return $this->usrMail;
     }
 
-    public function setUsrMail(string $usrMail): self
+    public function setUsrmail(string $usrMail): self
     {
         //Checks if the email address is valid for storing
         $email = $usrMail;
@@ -180,6 +195,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->usrUpdatedat;
     }
 
+
     public function getId(): ?int
     {
         return $this->id;
@@ -190,12 +206,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->username;
+        return $this->usrName;
     }
 
-    public function setUsername(string $username): self
+    public function getUsrname(): string
     {
-            $name = $username;
+        return $this->usrName;
+    }
+
+    public function setusrName(string $usrName): self
+    {
+            $name = $usrName;
             if (empty($name)) {
                 throw new Exception("Name is required");
             } else if (!preg_match("/^[a-zA-Z-' ]*$/",$name)) {
@@ -203,7 +224,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 }
 
 
-        $this->username = strip_tags(trim($username));
+        $this->usrName = strip_tags(trim($usrName));
 
         return $this;
     }
@@ -215,12 +236,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->username;
+        return (string) $this->usrName;
     }
 
     public function __toString()
     {
-        return $this->username;
+        return $this->usrName;
     }
 
     /**
@@ -228,16 +249,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
+        $roles = $this->usrRoles;
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): self
+    public function setUsrRoles(array $roles): self
     {
-        $this->roles = $roles;
+        $this->usrRoles = $roles;
 
         return $this;
     }
@@ -247,13 +268,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getPassword(): string
     {
-        return $this->password;
+        return $this->usrPassword;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(string $usrPassword): self
     {
 
-        $this->password = $password;
+        $this->usrPassword = $usrPassword;
 
         return $this;
     }
@@ -379,7 +400,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->contacts->contains($contact)) {
             $this->contacts[] = $contact;
-            $contact->setCntUser($this);
+            $contact->setCntUsr($this);
         }
 
         return $this;
@@ -389,8 +410,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->contacts->removeElement($contact)) {
             // set the owning side to null (unless already changed)
-            if ($contact->getCntUser() === $this) {
-                $contact->setCntUser(null);
+            if ($contact->getCntUsr() === $this) {
+                $contact->setCntUsr(null);
             }
         }
 

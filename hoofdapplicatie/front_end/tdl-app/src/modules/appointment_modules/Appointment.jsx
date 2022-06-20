@@ -4,6 +4,8 @@ import { useUpdateAppointmentMutation } from '../../data/todoApi';
 import ToastDeleteApm from './ToastDeleteApm';
 import AppointmentContact from './AppointmentContact';
 import { parseCookies } from 'nookies';
+import { errorhandlingappointments } from '../../helpers/errorhandling';
+import ErrorMessage from "../extra_modules/Errormessage";
 
 const Appointment = ({appointment,contacts, activeItem}) => {
   const {jwt_token_TDL: token} = parseCookies();
@@ -18,6 +20,7 @@ const Appointment = ({appointment,contacts, activeItem}) => {
   const [dateStops, setDateStops] = useState(convertToAccurateDay(apmStopsat));
   const [timeStops, setTimeStops] = useState(new Date(apmStopsat).toLocaleTimeString().substr(0,5));
   const [contactPerson, setContactPerson] = useState(apmCnt?.id || 0);
+  const [errorTitle, setErrorTitle] = useState(null);
 
   //Functional usestates
   const [disabled, setDisabled] = useState(true);
@@ -32,8 +35,14 @@ const Appointment = ({appointment,contacts, activeItem}) => {
   useEffect(()=>{
   if(
       activeItem.id === `appointment-${formId}` ||
-      activeItem?.parentElement?.id === `appointment-${formId}`
-      || activeItem?.id === `deletetoast-${id}` || activeItem?.parentElement?.id === `deletetoast-${id}`)
+      activeItem?.parentElement?.id === `appointment-${formId}` ||
+      activeItem?.id === `deletetoast-${id}` ||
+      activeItem?.parentElement?.id === `deletetoast-${id}`||
+      activeItem.id === `appointmentlabel-${formId}` ||
+      activeItem?.parentElement?.id === `appointmentlabel-${formId}` ||
+      activeItem.id === `appointmentbuttongroup-${formId}` ||
+      activeItem?.parentElement?.id === `appointmentbuttongroup-${formId}`
+      )
   {
     setDisabled(false)
   }
@@ -58,47 +67,66 @@ const Appointment = ({appointment,contacts, activeItem}) => {
   function handleUpdateappointmentSubmit(e)
   {
     e.preventDefault();
+    const appointError = errorhandlingappointments("appointment-title", title);
+    setErrorTitle(appointError);
+    if(!appointError){
     const start = new Date(dateStarts +" " + timeStarts).getTime();
     const stop = new Date(dateStops + " " + timeStops).getTime();
     if(start <= stop && title.length >= 4){
       updateAppointment({appId: id, appTitle: title, appStartsAt: dateStarts +" " + timeStarts,
       appStopsAt: dateStops + " " + timeStops, userId: apmUsr.id,appDescription: description,contactId: contactPerson > 0 ? contactPerson : null, token})
     }
+  }
   } 
   return (
+    <>
+      <ErrorMessage className={"error-center"}>{errorTitle}</ErrorMessage>
     <div className="appointment">
+           
     <form className="appointment__front" id={`appointment-${formId}`} onSubmit={handleUpdateappointmentSubmit}>
-    <label htmlFor={`startdate-${id}`}  className="appointment__front__label">Title:</label>
+
+      <div className="appointment__front__sort">
+      <label htmlFor={`startdate-${id}`}  className="appointment__front__label" id={`appointmentlabel-${id}`}><span className="appointment__front__label__text">Title:</span>
       <input type="text" className="appointment__front__input"value={title}
-      onChange={(e)=>setTitle(e.target.value)} disabled={disabled}/>
-      
-      <label htmlFor={`startdate-${id}`}  className="appointment__front__label">Start date</label><input id={`startdate-${id}`}type="date"
-      className="appointment__front__input" value={dateStarts} onChange={(e) => setDateStarts(e.target.value)} disabled={disabled}/>
+      onChange={(e)=>setTitle(e.target.value)} disabled={disabled}/></label>
 
-      <label htmlFor={`starttime-${id}`} className="appointment__front__label">Start time</label><input id={`starttime-${id}`} type="time" 
-      className="appointment__front__input" value={timeStarts} onChange={(e) => setTimeStarts(e.target.value)} disabled={disabled}/>
-
-      <label htmlFor={`enddate-${id}`} className="appointment__front__label">End date</label><input id={`enddate-${id}`} type="date" 
-      className="appointment__front__input" value={dateStops} onChange={(e) => setDateStops(e.target.value)} disabled={disabled}/>
-
-      <label htmlFor={`endtime-${id}`} className="appointment__front__label">End time</label><input id={`endtime-${id}`} type="time" 
-      className="appointment__front__input" value={timeStops} onChange={(e) => setTimeStops(e.target.value)} disabled={disabled}/>
-
-      <label htmlFor={`select-${id}`} className="appointment__front__label">Contact: </label>
+<label htmlFor={`select-${id}`} className="appointment__front__label" id={`appointmentlabel-${id}`}><span className="appointment__front__label__text">Contact: </span>
       {contacts && contacts.length > 0 &&  <select id={`select-${id}`} disabled={disabled} className="appointment__front__select"
       value={contactPerson} onChange={(e) => setContactPerson(e.target.value)}><option value="0"></option>
-      {contacts.map(contact => <option key={contact.id} value={contact.id}>{contact.cntName}</option>)}</select>}
-    
-      <button type="submit" className="appointment__front__button btn btn-outline-secondary">Save appointment</button>
-      <button className="appointment__front__button btn btn-outline-secondary" onClick={() => setShowDelete(!showDelete)}> Delete appointment</button>
-      <button className="appointment__front__button btn btn-outline-secondary" onClick={() => setShowContact(!showContact)}>show contact details</button>
+      {contacts.map(contact => <option key={contact.id} value={contact.id}>{contact.cntName}</option>)}</select>}</label>
       
+</div>
+      <div  className="appointment__front__sort">
+
+
+<label htmlFor={`startdate-${id}`}  className="appointment__front__label" id={`appointmentlabel-${id}`}><span className="appointment__front__label__text">Start date</span><input id={`startdate-${id}`}type="date"
+      className="appointment__front__input appointment__front__input-time" value={dateStarts} onChange={(e) => setDateStarts(e.target.value)} disabled={disabled}/></label>
+        <label htmlFor={`starttime-${id}`} className="appointment__front__label" id={`appointmentlabel-${id}`}><span className="appointment__front__label__text">Start time</span><input id={`starttime-${id}`} type="time" 
+      className="appointment__front__input appointment__front__input-time" value={timeStarts} onChange={(e) => setTimeStarts(e.target.value)} disabled={disabled}/></label>    
+
+</div>
+      <div  className="appointment__front__sort">
+      <label htmlFor={`enddate-${id}`} className="appointment__front__label" id={`appointmentlabel-${id}`}><span className="appointment__front__label__text">End date</span><input id={`enddate-${id}`} type="date" 
+      className="appointment__front__input appointment__front__input-time" value={dateStops} onChange={(e) => setDateStops(e.target.value)} disabled={disabled}/></label>
+      
+      <label htmlFor={`endtime-${id}`} className="appointment__front__label" id={`appointmentlabel-${id}`}><span className="appointment__front__label__text">End time</span><input id={`endtime-${id}`} type="time" 
+      className="appointment__front__input appointment__front__input-time" value={timeStops} onChange={(e) => setTimeStops(e.target.value)} disabled={disabled}/></label>
+      
+      </div>
+      <div className="appointment__front__buttongroup" id={`appointmentbuttongroup-${id}`}>
+
+      <button type="submit" className="appointment__front__buttongroup__button btn btn-outline-secondary">Save appointment</button>
+      <button className="appointment__front__buttongroup__button btn btn-outline-secondary" onClick={() => setShowDelete(!showDelete)}> Delete appointment</button>
+      <button className="appointment__front__buttongroup__button btn btn-outline-secondary" onClick={() => setShowContact(!showContact)}>show contact details</button>
+      </div>
       </form>
+
       {showDelete && !disabled &&
       <ToastDeleteApm id={id} title={apmTitle}/>}
       {showContact && !disabled &&
-      <AppointmentContact contactInfo={contactPerson}/>}
+      <AppointmentContact contactInfo={contactPerson} startApm={({startDate:dateStarts,startTime: timeStarts})}/>}
     </div>
+    </>
   )
 }
 

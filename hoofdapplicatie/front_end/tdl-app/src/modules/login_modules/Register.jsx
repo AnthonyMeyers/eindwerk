@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useRegisterUserMutation } from "../../data/todoApi";
 import axios from "axios";
-import IndexFooter from "./IndexFooter";
+import IndexFooter from "../standard_modules/Footer";
 import { errorhandlingreg } from "../../helpers/errorhandling";
 import Errormessage from "../extra_modules/Errormessage";
 
@@ -73,8 +73,9 @@ const Register = () => {
             value={email} onInput={(e) => setEmail(e.target.value)}/>
           </label>
           <Errormessage className={"error-center"}>{emailError}</Errormessage>
-          <label className="register__form__label">Please confirm that you have read our user agreement before continueing.
-            <input type="checkbox" value={hasAgreed}
+          <a className="register__form__policy" href="https://www.termsfeed.com/live/ef098255-32a4-46ef-a1d5-9bb57194fb38">Our privacy policy</a>
+          <label className="register__form__label">Please confirm that you have read and agree to our privacy policy.
+            <input  className="register__form__label__check" type="checkbox" value={hasAgreed}
             onInput={() => setHasAgreed(!hasAgreed)}/>
           </label><Errormessage className={"error-center"}>{agreedError}</Errormessage>
         <div className="register__form__buttongroup">

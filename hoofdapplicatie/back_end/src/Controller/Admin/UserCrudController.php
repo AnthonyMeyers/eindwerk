@@ -22,12 +22,12 @@ class UserCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('username'),
-            TextField::new('usrMail'),
-            TextField::new('usrPicture'),
-            BooleanField::new('UsrHasAgreed'),
-            DateTimeField::new('UsrCreatedAt')->hideOnForm(),
-            DateTimeField::new('usrUpdatedAt')->hideOnForm(),
+            TextField::new('username','Name'),
+            TextField::new('usrMail','Email'),
+            TextField::new('usrPicture','Avatar')->hideOnIndex(),
+            BooleanField::new('usrHasagreed', 'Did agree'),
+            DateTimeField::new('usrCreatedat','Created')->hideOnForm(),
+            DateTimeField::new('usrUpdatedat', 'Last updated')->hideOnForm(),
 
         ];
     }

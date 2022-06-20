@@ -1,6 +1,7 @@
-import IndexFooter from "./IndexFooter"
+import IndexFooter from "../standard_modules/Footer";
 
 const Home = () => {
+  
   return (
       <>
     <section className="home container">

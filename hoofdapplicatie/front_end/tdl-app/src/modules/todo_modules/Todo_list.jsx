@@ -3,6 +3,7 @@ import Todo from "./Todo";
 import {  useGetAllUserTodosQuery} from "../../data/todoApi";
 import Status from "../standard_modules/App-Status";
 import { parseCookies } from 'nookies';
+import IndexFooter from "../standard_modules/Footer";
 
 const Todo_list = () => {
   const {jwt_token_TDL: token} = parseCookies();
@@ -34,6 +35,7 @@ const Todo_list = () => {
         </ul>
       )}
     </section>
+    <IndexFooter/>
     </>
   );
 };

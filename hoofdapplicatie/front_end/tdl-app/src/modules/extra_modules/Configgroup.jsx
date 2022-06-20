@@ -3,9 +3,11 @@ import { NavLink, useLocation  } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import {destroyJWTCookie} from "../../helpers/jwttokens";
+import { useDispatch } from "react-redux";
+import { cleanCategories, cleanPriorities, cleanUserdata } from "../../data/general"
 
 const Configgroup = () => {
-  
+  const dispatch = useDispatch();
   //Gather information & nav
   const nav = useNavigate();
   const location = useLocation();
@@ -14,12 +16,16 @@ const Configgroup = () => {
   //set the active location if the location changes
   useEffect(()=>{setActive(location.pathname);},[location])
 
-  //Logout on door click
-  async function handleLogoutClick(e){
-    destroyJWTCookie()
+  //Logout on door click & states opschonen
+  function handleLogoutClick(){
+    dispatch(cleanCategories());
+    dispatch(cleanPriorities()); 
+    dispatch(cleanUserdata()); 
+    destroyJWTCookie();
     localStorage.clear();
-    nav("/login");
+    return nav("/login");
   }
+
   return (
       <> 
     {active != "/phonebook" && 

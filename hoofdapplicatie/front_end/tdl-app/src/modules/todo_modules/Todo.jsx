@@ -84,7 +84,7 @@ useEffect(()=>{if(priorities.length > 0 && tdoPty && "id" in tdoPty)
            <div className="todo__front__display todo__front__left">
          <label className="todo__front__left__label"><span className="todo__front__left__label__span">Checked </span>
       <input type="checkbox" spellCheck="false" className="todo__front__left__label__checker" checked={tdoIsdone ? "checked" : ""} onChange={() =>setIsChecked(!isChecked)}/></label>
-      <textarea cols="17" rows="2" maxLength="30" spellCheck="false" type="text"  className={tdoIsdone ? "todo__front__left__title checked" : "todo__front__left__title"}
+      <input maxLength="22" spellCheck="false" className={tdoIsdone ? "todo__front__left__title checked" : "todo__front__left__title"}
           onInput={(e) => setTodoTitle(e.target.value)} value={todoTitle}/>
           </div>
       <div className="todo__front__display todo__front__right">

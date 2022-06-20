@@ -52,7 +52,7 @@ const api = createApi({
       }),
       //Get alle contacts asc
       getAllUserContacts: builder.query({
-        query: ({id, token}) => ({url: `/contacts?pagination=false&cntUser=${id}&order%5BcntName%5D=asc`,
+        query: ({id, token}) => ({url: `/contacts?pagination=false&cntUsr=${id}&order%5BcntName%5D=asc`,
         headers: {
           "Authorization": "Bearer " + token,
           "Content-Type": "application/json",
@@ -66,7 +66,7 @@ const api = createApi({
       }),
       //Get alle contacts van een user order by asc, set title index
       getAllUserContactsIndexed: builder.query({
-        query: ({id, token}) => ({url: `/contacts.json?pagination=false&cntUser=${id}&order%5BcntName%5D=asc`,
+        query: ({id, token}) => ({url: `/contacts.json?pagination=false&cntUsr=${id}&order%5BcntName%5D=asc`,
         headers: {
           "Authorization": "Bearer " + token,
           "Content-Type": "application/json",
@@ -132,8 +132,8 @@ const api = createApi({
           },
           method: "POST",
           body: {
-            username,
-            password,
+            usrName: username,
+            usrPassword: password,
             usrMail: email,
             usrHasagreed: hasAgreed
           },
@@ -170,7 +170,7 @@ const api = createApi({
           },
           method: "POST",
           body: {
-            cntUser: userId,
+            cntUsr: userId,
             cntName: name
           },
         }),
@@ -223,6 +223,32 @@ const api = createApi({
             body: { id, tdoTitle: todoTitle},
           }),
           invalidatesTags: (result, error, arg) => [{ type: 'TODOLIST', id: arg.id }],
+        }),
+        //Wijzig de username van een user
+        changeUsername: builder.mutation({
+          query: ({ id, name, token}) => (console.log(token),{
+            url: `/users/${id}.json`,
+            headers: {
+              "Authorization": "Bearer " + token,
+              "Content-Type": "application/json",
+              accept: "application/json",
+            },
+            method: "PUT",
+            body: { id, usrName: name},
+          }),
+        }),
+        //Wijzig de profile pic van een user
+        changeUserPicture: builder.mutation({
+          query: ({ id, picture, token}) => ({
+            url: `/users/${id}.json`,
+            headers: {
+              "Authorization": "Bearer " + token,
+              "Content-Type": "application/json",
+              accept: "application/json",
+            },
+            method: "PUT",
+            body: { id, usrPicture: picture},
+          }),
         }),
         //Wijzig de category van een todo
         updateCategoryTodo: builder.mutation({
@@ -301,6 +327,7 @@ const api = createApi({
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'TODOLIST', id: arg.id }],
     }),
+
     //DELETE een contact
     removeOneContact: builder.mutation({
       query: ({id, token}) => ({
@@ -314,6 +341,19 @@ const api = createApi({
         body: { id },
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'CONTACTLIST', id: arg.id }],
+    }),
+    //DELETE een user
+    removeUserCompletely: builder.mutation({
+      query: ({userId, token}) => ({
+        url: `/users/${userId}.json`,
+        headers: {
+          "Authorization": "Bearer " + token,
+          "Content-Type": "application/json",
+          accept: "application/json",
+        },
+        method: "DELETE",
+        body: { id: userId },
+      }),
     }),
       //DELETE een appointment
     removeOneAppointment: builder.mutation({
@@ -341,6 +381,7 @@ useGetAllPrioritiesQuery,
 useGetAllUserInfoQuery,
 useGetAllUserTodosQuery,
 useGetAllUserAppointmentsQuery,
+useGetAllUserContactsQuery,
 useGetAllUserContactsIndexedQuery,
 useRegisterUserMutation,
 useUpdateCategoryTodoMutation,
@@ -351,11 +392,13 @@ useChangeAppointmentContactMutation,
 useUpdateAppointmentMutation,
 useAddOneAppointmentMutation,
 useUpdateIsCheckedTodoMutation,
-useGetAllUserContactsQuery,
+useChangeUsernameMutation,
 useUpdateTitleTodoMutation,
+useChangeUserPictureMutation,
 useUpdateOneContactMutation,
 useRemoveOneTodoMutation,
 useRemoveOneAppointmentMutation,
 useRemoveOneContactMutation,
-useAddOneContactMutation
+useAddOneContactMutation,
+useRemoveUserCompletelyMutation
 } = api;
