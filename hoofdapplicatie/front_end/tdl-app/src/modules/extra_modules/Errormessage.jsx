@@ -1,12 +1,12 @@
-import React from 'react'
+import React from "react";
 
-const Errormessage = ({children, className}) => {
+const Errormessage = ({ children, className }) => {
   return (
-    <>  
-        {!children && <p></p>}
-        {children && <p className={className}>{children}</p>}
+    <>
+      {!children && <p></p>}
+      {children && <p className={className}>{children}</p>}
     </>
-  )
-}
+  );
+};
 
-export default Errormessage
+export default Errormessage;

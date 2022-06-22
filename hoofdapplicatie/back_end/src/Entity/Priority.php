@@ -24,6 +24,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 //Todo list op priority afgeblokt, dit is onnodig en kan te veel informatie meegeven.
 
+
 class Priority
 {
     /**
@@ -76,19 +77,22 @@ class Priority
 
     public function setPtyRating(int $ptyRating): self
     {
-        $this->ptyRating = $ptyRating;
-
+        if(!is_numeric($ptyRating)){
+        throw new \Exception("The rating has to be a number.");
+        }
+        $this->ptyRating = trim($ptyRating);
         return $this;
+
     }
 
     public function getPtyTitle(): ?string
     {
-        return $this->ptyTitle;
+        return ucfirst($this->ptyTitle);
     }
 
     public function setPtyTitle(string $ptyTitle): self
     {
-        $this->ptyTitle = ucfirst($ptyTitle);
+        $this->ptyTitle = trim(strip_tags(($ptyTitle)));
 
         return $this;
     }

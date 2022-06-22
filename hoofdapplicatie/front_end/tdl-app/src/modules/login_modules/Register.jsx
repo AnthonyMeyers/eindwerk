@@ -7,7 +7,6 @@ import { errorhandlingreg } from "../../helpers/errorhandling";
 import Errormessage from "../extra_modules/Errormessage";
 
 const Register = () => {
-
   //Set useStates
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -22,73 +21,105 @@ const Register = () => {
   const nav = useNavigate();
 
   //Register user
-  const [registerUser,serverAnswer] = useRegisterUserMutation();
+  const [registerUser, serverAnswer] = useRegisterUserMutation();
 
-  async function handleRegisteruserSubmit(e)
-  {
+  async function handleRegisteruserSubmit(e) {
     e.preventDefault();
-    setUsernameError(errorhandlingreg("register-username",username));
-    setPasswordError(errorhandlingreg("register-password",password));
-    setEmailError(errorhandlingreg("register-email",email));
-    setEmailError(errorhandlingreg("register-email",email));
-    setAgreedError(errorhandlingreg("register-agreed",hasAgreed));
-    if(!usernameError && ! passwordError && !emailError && hasAgreed){
-    registerUser({username, password, email, hasAgreed})
+    setUsernameError(errorhandlingreg("register-username", username));
+    setPasswordError(errorhandlingreg("register-password", password));
+    setEmailError(errorhandlingreg("register-email", email));
+    setEmailError(errorhandlingreg("register-email", email));
+    setAgreedError(errorhandlingreg("register-agreed", hasAgreed));
+    if (!usernameError && !passwordError && !emailError && hasAgreed) {
+      registerUser({ username, password, email, hasAgreed });
     }
   }
 
   //Als de registratie is geslaagd ga terug naar de login.
-  useEffect(()=>{
-  if("isSuccess" in serverAnswer && serverAnswer.isSuccess)
-  {
-    nav("/login");
-  }
-
-  },[serverAnswer])
+  useEffect(() => {
+    if ("isSuccess" in serverAnswer && serverAnswer.isSuccess) {
+      nav("/login");
+    }
+  }, [serverAnswer]);
 
   return (
     <>
-    <section className="container register">
-      <div className="register__block">
-        <h1 className="register__block__title">Register</h1>
-      </div>
+      <section className="container register">
+        <div className="register__block">
+          <h1 className="register__block__title">Register</h1>
+        </div>
         <p className="register__block__text">
-        By registering for this application, you agree that your data will be
-        collected. Your data will only be used for the functionality of this
-        application.
+          By registering for this application, you agree that your data will be
+          collected. Your data will only be used for the functionality of this
+          application.
         </p>
-      <form className="register__form" onSubmit={handleRegisteruserSubmit}>
-        <label className="register__form__label">Username
-          <input type="text" className="register__form__label__textinput form-control"
-            value={username} onInput={(e) => setUsername(e.target.value)}/>
+        <form className="register__form" onSubmit={handleRegisteruserSubmit}>
+          <label className="register__form__label">
+            Username
+            <input
+              type="text"
+              className="register__form__label__textinput form-control"
+              value={username}
+              onInput={(e) => setUsername(e.target.value)}
+            />
           </label>
-          <Errormessage className={"error-center"}>{usernameError}</Errormessage>
-          <label className="register__form__label">Password
-            <input type="password" className="register__form__label__textinput form-control"
-            value={password} onInput={(e) => setPassword(e.target.value)}/>
+          <Errormessage className={"error-center"}>
+            {usernameError}
+          </Errormessage>
+          <label className="register__form__label">
+            Password
+            <input
+              type="password"
+              className="register__form__label__textinput form-control"
+              value={password}
+              onInput={(e) => setPassword(e.target.value)}
+            />
           </label>
-          <Errormessage className={"error-center"}>{passwordError}</Errormessage>
-          <label className="register__form__label">Email address
-            <input type="text" className="register__form__label__textinput form-control"
-            value={email} onInput={(e) => setEmail(e.target.value)}/>
+          <Errormessage className={"error-center"}>
+            {passwordError}
+          </Errormessage>
+          <label className="register__form__label">
+            Email address
+            <input
+              type="text"
+              className="register__form__label__textinput form-control"
+              value={email}
+              onInput={(e) => setEmail(e.target.value)}
+            />
           </label>
           <Errormessage className={"error-center"}>{emailError}</Errormessage>
-          <a className="register__form__policy" href="https://www.termsfeed.com/live/ef098255-32a4-46ef-a1d5-9bb57194fb38">Our privacy policy</a>
-          <label className="register__form__label">Please confirm that you have read and agree to our privacy policy.
-            <input  className="register__form__label__check" type="checkbox" value={hasAgreed}
-            onInput={() => setHasAgreed(!hasAgreed)}/>
-          </label><Errormessage className={"error-center"}>{agreedError}</Errormessage>
-        <div className="register__form__buttongroup">
-          <button type="submit" className="register__form__buttongroup__button btn btn-primary">Register
-          </button>
-          <NavLink to="/login">
-            <button className="register__form__buttongroup__button btn btn-primary">Back to login
+          <a
+            className="register__form__policy"
+            href="https://www.termsfeed.com/live/ef098255-32a4-46ef-a1d5-9bb57194fb38"
+          >
+            Our privacy policy
+          </a>
+          <label className="register__form__label">
+            Please confirm that you have read and agree to our privacy policy.
+            <input
+              className="register__form__label__check"
+              type="checkbox"
+              value={hasAgreed}
+              onInput={() => setHasAgreed(!hasAgreed)}
+            />
+          </label>
+          <Errormessage className={"error-center"}>{agreedError}</Errormessage>
+          <div className="register__form__buttongroup">
+            <button
+              type="submit"
+              className="register__form__buttongroup__button btn btn-primary"
+            >
+              Register
             </button>
-          </NavLink>
-        </div>
-      </form>
-    </section>
-    <IndexFooter/>
+            <NavLink to="/login">
+              <button className="register__form__buttongroup__button btn btn-primary">
+                Back to login
+              </button>
+            </NavLink>
+          </div>
+        </form>
+      </section>
+      <IndexFooter />
     </>
   );
 };

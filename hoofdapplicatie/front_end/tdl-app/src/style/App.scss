@@ -21,7 +21,7 @@ body {
   font-family: "Permanent Marker", Arial, Helvetica, sans-serif;
 }
 
-.container{
+.container {
   margin: 0 auto 50px;
   padding: 15px;
   max-width: 1200px;
@@ -31,23 +31,23 @@ li {
   list-style-type: none;
 }
 h1 {
-  color: #0E3865;
+  color: #0e3865;
   font-size: 25px;
 }
 
 h2 {
   font-size: 20px;
   margin: 20px 0 40px 0;
-  color: #00638F;
+  color: #00638f;
 }
 
-h3{
+h3 {
   font-size: 16px;
   margin-bottom: 15px;
-  color: #008FA0;
+  color: #008fa0;
 }
 
-p{
+p {
   max-width: 700px;
   font-size: 18px;
 }
@@ -56,38 +56,38 @@ p{
   display: none;
 }
 
-.error-center{
-  margin-bottom: 20px;
+.error-center {
+  margin: 10px 0;
   text-align: center;
   color: red;
   font-size: 18px;
 }
 
-.error-end{
+.error-end {
   margin-bottom: 20px;
   text-align: end;
   color: red;
   font-size: 18px;
 }
 
-.error{
+.error {
   color: red;
   font-size: 18px;
 }
 
-.loadingholder{
+.loadingholder {
   width: 100%;
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
-  &__imgholder{
+  &__imgholder {
     position: relative;
-    &__text{
+    &__text {
       position: absolute;
       left: calc(50% - 33.5px);
       bottom: 50%;
     }
-    &__loading{
+    &__loading {
       display: block;
       max-width: 175px;
       aspect-ratio: 1/1;
@@ -95,24 +95,23 @@ p{
   }
 }
 
-
-.navcontainer{
+.navcontainer {
   display: flex;
   justify-content: flex-end;
-&__navigation {
-  width: 200px;
-  padding-right: 10px;
-  &__textlabel {
-    display: flex;
-    justify-content: flex-end;
-    gap: 38px;
-    &__switch {
+  &__navigation {
+    width: 200px;
+    padding-right: 10px;
+    &__textlabel {
+      display: flex;
+      justify-content: flex-end;
+      gap: 38px;
+      &__switch {
+      }
     }
   }
 }
-}
 
-input{
+input {
   padding: 5px;
   font-family: Arial, serif, Helvetica, sans-serif;
   font-style: italic;
@@ -121,8 +120,8 @@ input{
 
 .header {
   display: flex;
-  background-color: #008Fa0;
-  border-bottom: 5px solid #00B896;
+  background-color: #008fa0;
+  border-bottom: 5px solid #00b896;
   flex-direction: column;
   border-bottom-left-radius: 25px;
   border-bottom-right-radius: 25px;
@@ -144,11 +143,11 @@ input{
     align-items: center;
     gap: 20px;
     &__label {
-    text-align: center;      
-     display: flex;
-     flex-wrap: wrap;
-     flex-direction: column;
-     gap: 15px;
+      text-align: center;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      gap: 15px;
       &__todoinput {
         height: 20px;
         width: 240px;
@@ -157,7 +156,7 @@ input{
         border-radius: 5px;
         border: none;
       }
-      &__text{
+      &__text {
         font-size: 20px;
       }
     }
@@ -186,66 +185,76 @@ input{
   }
 }
 
-.messagetoast{
+.messagetoast {
   position: fixed;
   bottom: 0;
   left: 0;
   margin-bottom: 30px;
-  &__header{
-      &__title{
-        display: flex;
-        flex-direction: column;
-      }
-      &__button{
-          position: absolute;
-          top: 0;
-          right: 0;
-          margin: 7.5px;
-          padding: 0 5px;
-      }
-  }
-  &__delete{
-      font-size: 15px;
+  &__header {
+    &__title {
+      display: flex;
+      flex-direction: column;
+    }
+    &__button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: 7.5px;
       padding: 0 5px;
-      margin: 2.5px;}
+    }
+  }
+  &__delete {
+    font-size: 15px;
+    padding: 0 5px;
+    margin: 2.5px;
+  }
 }
 
-.toast-body{
+.toast-body {
   display: flex;
   flex-direction: column;
   gap: 5px;
-  &__label{
+  &__label {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    &__input{
+    &__input {
       border-radius: 5px;
       border: 3px solid transparent;
       outline: 1px solid black;
       width: 220px;
-      &:hover{
+      &:hover {
         border-color: black;
-
       }
     }
   }
 }
 
+.purple {
+  background-color: #b4869f;
+}
 
-.purple{background-color: #B4869F;}
+.green {
+  background-color: #69a297;
+}
 
-.green{background-color: #69A297;}
+.orange {
+  background-color: #edc79b;
+}
 
-.orange{background-color: #EDC79B}
+.blue {
+  background-color: #50808e;
+}
 
-.blue{background-color: #50808E}
+.grey {
+  background-color: #e4e1d89f;
+}
 
-.grey{background-color: 	#e4e1d89f};
+.standard {
+  background-color: #eee;
+}
 
-.standard{background-color: #eee;}
-
-@media screen and (min-width: 475px)
-{
+@media screen and (min-width: 475px) {
   .header {
     &__panel {
       flex-direction: row;
@@ -254,30 +263,26 @@ input{
   }
 }
 
-@media screen and (min-width: 750px)
-{
+@media screen and (min-width: 750px) {
   .header {
     &__panel {
       flex-direction: column;
     }
-    &__todoform{
-      &-appointments{
-      &__label {
-        width: 700px;
-        flex-direction: row;
-        &__todoinput{
-          height: 30px;
+    &__todoform {
+      &-appointments {
+        &__label {
+          width: 700px;
+          flex-direction: row;
+          &__todoinput {
+            height: 30px;
+          }
+          &__text {
+            display: flex;
+            width: 190px;
+            align-items: center;
+          }
         }
-        &__text{
-          display: flex;
-          width: 190px;
-          align-items: center;
-
-        }
-
-      }
       }
     }
   }
 }
-

@@ -75,12 +75,12 @@ class Category
 
     public function getCtyTitle(): ?string
     {
-        return $this->ctyTitle;
+        return ucfirst($this->ctyTitle);
     }
 
     public function setCtyTitle(string $ctyTitle): self
     {
-        $this->ctyTitle = ucfirst($ctyTitle);
+        $this->ctyTitle = trim(strip_tags($ctyTitle));
 
         return $this;
     }
@@ -92,7 +92,7 @@ class Category
 
     public function setCtyClass(string $ctyClass): self
     {
-        $this->ctyClass = $ctyClass;
+        $this->ctyClass = trim(strip_tags($ctyClass));
 
         return $this;
     }

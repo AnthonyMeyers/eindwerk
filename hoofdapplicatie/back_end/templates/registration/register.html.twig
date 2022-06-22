@@ -1,24 +1,46 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %}
+    <link href="{{ asset('css/main.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    {% for flash_error in app.flashes('verify_email_error') %}
+    {% for flash_error in app.flashes('verify_mail_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
+<main class="register-main">
+    {{ form_start(registrationForm, {'attr': {'class':'register-form'}}) }}
+    <h1 class="register-title">Register</h1>
+    {{ form_row(registrationForm.usrName, {
+        row_attr: {'class':"register-sort"},
+        'attr':{'class':'register-input'},
+        label: 'Username',
+        label_attr: {'class': 'register-label'}}) }}
 
-    <h1>Register</h1>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.usrName, {
-            label: 'Username'}) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'}) }}
-        {{ form_row(registrationForm.usrMail, {
-            label: 'Email'}) }}
-    <a href="https://www.termsfeed.com/live/ef098255-32a4-46ef-a1d5-9bb57194fb38">Terms of service.</a>
-        {{ form_row(registrationForm.usrHasagreed, {
-            label: 'Please agree to our terms of service'}) }}
-        <button type="submit" class="btn">Register</button>
+    {{ form_row(registrationForm.plainPassword, {
+        row_attr: {'class':"register-sort"},
+        'attr':{'class':'register-input'},
+        label: 'Password',
+        label_attr: {'class': 'register-label'}}) }}
+
+
+    {{ form_row(registrationForm.usrMail, {
+        row_attr: {'class':"register-sort"},
+        attr:{'class':'register-input'},
+        label: 'Email',
+        label_attr: {'class': 'register-label'}}) }}
+
+    <a target="_blank" href="https://www.termsfeed.com/live/ef098255-32a4-46ef-a1d5-9bb57194fb38">Terms of service.</a>
+    {{ form_row(registrationForm.usrHasagreed, {
+        attr:{'class':'register-checkbox'},
+        label: 'Please agree to our terms of service',
+        label_attr: {'class': 'register-label'}}) }}
+    <button type="submit" class="btn register-button">Register</button>
     {{ form_end(registrationForm) }}
+    <div class="register-description">
+        <p>Welcome to the To Do List admin panel.</p>
+        <p>Register here for an admin account</p>
+    </div>
+</main>
 {% endblock %}

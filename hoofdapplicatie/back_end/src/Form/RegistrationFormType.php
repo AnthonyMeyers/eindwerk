@@ -3,8 +3,10 @@
 namespace App\Form;
 
 use App\Entity\User;
+use EasyCorp\Bundle\EasyAdminBundle\Field\HiddenField;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,7 +21,10 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('usrName', TextType::class)
-            ->add('usrMail', TextType::class)
+            ->add('usrMail', EmailType::class,
+            ['constraints' =>[new NotBlank([
+                'message' => 'Please enter a valid email address.',])]
+            ])
             ->add('usrHasagreed', CheckboxType::class, [
                 'mapped' => true,
                 'constraints' => [

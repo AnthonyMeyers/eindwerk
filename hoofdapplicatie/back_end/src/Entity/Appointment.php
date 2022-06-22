@@ -109,7 +109,7 @@ class Appointment
 
     public function setApmTitle(string $apmTitle): self
     {
-        $this->apmTitle = $apmTitle;
+        $this->apmTitle = trim(strip_tags($apmTitle));
         $this->setApmUpdatedat();
         return $this;
     }

@@ -1,8 +1,8 @@
-.todos{
-&__todolist {
+.todos {
+  &__todolist {
     display: flex;
     flex-direction: column;
-    align-items:center;
+    align-items: center;
     gap: 20px;
     width: 100%;
     &__item {
@@ -15,122 +15,112 @@
   }
 }
 
-.checked{
-    text-decoration: line-through;
+.checked {
+  text-decoration: line-through;
 }
 
-.todo{
+.todo {
   padding: 10px;
   height: 100%;
   width: 100%;
-  &__front{
+  &__front {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     gap: 10px;
-    &__display{
+    &__display {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
     }
-    &__left{
-    &__title{
-      padding: 7.5px;
-      resize: none;
-      border: none;
-      outline: none;
-      background: none;
-      border: 1px solid black;
-      border-radius: 10px;
-      background-color: lightgrey;
-      width: 225px;
-      &:disabled{
+    &__left {
+      &__title {
+        padding: 7.5px;
+        resize: none;
         border: none;
+        outline: none;
+        background: none;
+        border: 1px solid black;
+        border-radius: 10px;
+        background-color: lightgrey;
+        width: 225px;
+        &:disabled {
+          border: none;
+        }
       }
-    }
-    &__label{
-      padding: 7.5px;
-      overflow: hidden;
-      &__checker{
-        display: block;
-        width: 35px;
-        padding: 0;
-        height: 35px;
-        cursor: pointer;
-        accent-color: lightgrey;
-        &:before{
-          content: "";
+      &__label {
+        padding: 7.5px;
+        overflow: hidden;
+        &__checker {
           display: block;
-          width: 100%;
-          height: 100%;
-          background-color: lightgrey;
+          width: 35px;
+          padding: 0;
+          height: 35px;
+          cursor: pointer;
+          accent-color: lightgrey;
+          &:before {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-color: lightgrey;
+          }
+          &:checked:before {
+            display: none;
+          }
         }
-        &:checked:before{
-          display: none;
+        &__span {
+          position: absolute;
+          left: -1000px;
         }
-      }
-      &__span{
-        position: absolute;
-        left: -1000px;
       }
     }
-  }
-    &__right{
-    &__button{
-      color: black;
-      &__innertext
-      {
-        position: absolute;
-        left: -1000px;
-      }
-      &:after{
-        font-family: "icomoon"
-      }
-      &-delete{
-          &:after{
+    &__right {
+      &__button {
+        color: black;
+        &__innertext {
+          position: absolute;
+          left: -1000px;
+        }
+        &:after {
+          font-family: "icomoon";
+        }
+        &-delete {
+          &:after {
             content: "\e9ad";
           }
+        }
+        &-confirm {
+          &:after {
+            content: "\ea10";
           }
-          &-confirm{
-            &:after{
-              content:"\ea10";
-            }
-
-        
+        }
       }
     }
   }
+}
 
+@media screen and(min-width: 730px) {
+  .todo {
+    &__front {
+      flex-direction: row;
+    }
   }
 }
 
-@media screen and(min-width: 730px)
-{
-.todo{
-  &__front{
-   flex-direction: row;
-
+@media screen and(min-width: 730px) {
+  .todo {
+    &__front {
+      flex-direction: row;
+      gap: 25px;
+    }
   }
 }
-}
 
-@media screen and(min-width: 730px)
-{
-.todo{
-  &__front{
-   flex-direction: row;
-   gap: 25px;
-
+@media screen and(min-width: 900px) {
+  .todo {
+    &__front {
+      gap: 150px;
+    }
   }
-}
-}
-
-@media screen and(min-width: 900px)
-{
-.todo{
-  &__front{
-    gap: 150px;
-
-  }
-}
 }

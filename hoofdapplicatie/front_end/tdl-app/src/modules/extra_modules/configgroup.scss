@@ -1,83 +1,76 @@
-.configgroup{
-    display: flex;
-    flex-wrap:wrap;
-    gap: 25px;
+.configgroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
 
-    &__block{
-        color: black;
-        display: block;
-        border: 1px solid gray;
-        border-radius: 5px;
-        padding: 10px;
-        font-family: "icomoon";
-        font-size: 22px;
-        &:hover {
-            color: gray;
-            cursor:pointer;
-        }
-        &__text {
-            position: absolute;
-            left: -10000px;
-        }
+  &__block {
+    color: black;
+    display: block;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 10px;
+    font-family: "icomoon";
+    font-size: 22px;
+    &:hover {
+      color: gray;
+      cursor: pointer;
     }
-    &__contacts{
-        
-        &:after {
-            content: "\e958";
-          }
+    &__text {
+      position: absolute;
+      left: -10000px;
+    }
+  }
+  &__contacts {
+    &:after {
+      content: "\e958";
+    }
+  }
+  &__logout {
+    &:after {
+      content: "\ea14";
+    }
+  }
+  &__config {
+    &:after {
+      content: "\e995";
+    }
+  }
+  &__todos {
+    &:after {
+      content: "\e9ba";
+    }
+  }
+  &__appointments {
+    &:after {
+      content: "\e900";
+    }
+  }
+}
 
+@media screen and (min-width: 425px) {
+  .configgroup {
+    padding: 5px;
+  }
+}
 
+@media screen and (min-width: 750px) {
+  .configgroup {
+    justify-content: flex-start;
+    gap: 10px;
+    &__block {
+      font-family: "Permanent Marker", Arial, Helvetica, sans-serif;
+      font-size: 18px;
+      background-color: #50808e;
+      width: 135px;
+      text-align: center;
+      border: none;
+      &:after {
+        content: none;
       }
-    &__logout{
-        
-        &:after {
-            content: "\ea14";
-          }
-
-    }
-    &__config {
-        &:after {
-            content: "\e995";
-          }
-
-    }
-    &__todos {
-        &:after {
-            content: "\e9ba";
-          }
-
-    }
-    &__appointments {
-        &:after {
-            content: "\e900";
-          }
-
+      &__text {
+        position: relative;
+        left: 0;
+      }
     }
   }
-
-  @media screen and (min-width: 425px)
-  {
-      .configgroup{padding: 5px;}
-  }
-
-  @media screen and (min-width: 750px)
-  {
-      .configgroup{
-          justify-content: flex-start;
-          gap: 10px;
-        &__block{
-            font-family: "Permanent Marker", Arial, Helvetica, sans-serif;
-            font-size: 18px;
-            background-color: #50808E;
-            width: 135px;
-            text-align: center;
-            border: none;
-            &:after{
-                content: none;
-            }
-            &__text {
-                position: relative;
-                left: 0;
-            }
-      }}
-    }
+}

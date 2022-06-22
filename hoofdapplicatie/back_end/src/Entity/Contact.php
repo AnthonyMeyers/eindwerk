@@ -106,7 +106,7 @@ class Contact
     private $cntUpdatedat;
 
     /**
-     * @ORM\OneToMany(targetEntity=Appointment::class, mappedBy="apmCnt", orphanRemoval="true")
+     * @ORM\OneToMany(targetEntity=Appointment::class, mappedBy="apmCnt")
      */
     private $appointments;
 
@@ -139,7 +139,7 @@ class Contact
 
     public function setCntName(string $cntName): self
     {
-        $this->cntName = $cntName;
+        $this->cntName = trim(strip_tags($cntName));
         $this->setCntUpdatedat();
 
         return $this;
@@ -152,7 +152,7 @@ class Contact
 
     public function setCntTel(?string $cntTel): self
     {
-        $this->cntTel = $cntTel;
+        $this->cntTel = trim(strip_tags($cntTel)) ;
         $this->setCntUpdatedat();
         return $this;
     }
@@ -162,8 +162,9 @@ class Contact
      */
     public function setCntMail(string $cntMail): self
     {
-        $this->cntMail = $cntMail;
         $this->setCntUpdatedat();
+        $this->cntMail = $cntMail;
+        return $this;
     }
 
     public function getCntStreet(): ?string
@@ -173,7 +174,7 @@ class Contact
 
     public function setCntStreet(?string $cntStreet): self
     {
-        $this->cntStreet = $cntStreet;
+        $this->cntStreet = trim(strip_tags($cntStreet));
         $this->setCntUpdatedat();
         return $this;
     }
@@ -185,19 +186,19 @@ class Contact
 
     public function setCntPostal(?string $cntPostal): self
     {
-        $this->cntPostal = $cntPostal;
+        $this->cntPostal = trim(strip_tags($cntPostal));
         $this->setCntUpdatedat();
         return $this;
     }
 
     public function getCntCity(): ?string
     {
-        return $this->cntCity;
+        return ucfirst($this->cntCity);
     }
 
     public function setCntCity(?string $cntCity): self
     {
-        $this->cntCity = $cntCity;
+        $this->cntCity = trim(strip_tags($cntCity));
         $this->setCntUpdatedat();
         return $this;
     }

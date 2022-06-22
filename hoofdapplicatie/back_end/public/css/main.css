@@ -7,6 +7,9 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
 }
+button {
+    width: 150px;
+}
 
 .sidebar{
     background-color: whitesmoke;
@@ -32,3 +35,78 @@ body {
 .content{
     margin-bottom: 40px;
 }
+
+.login-form, .register-form{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.login-main, .register-main{
+    background-color: #1C92A9;
+    height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.login-title, .register-title{
+    font-size: 20px;
+    font-weight: bolder;
+    color: #0c4a6e;
+}
+
+.login-description{
+    text-align: center;
+    width: 100%;
+}
+
+.login-message{
+    display: flex;
+    flex-direction: column;
+}
+
+.login-input, .register-input{
+    border-radius: 20px;
+    padding: 10px;
+    min-width: 220px;
+    font-size: 16px;
+
+}
+
+.login-label, .register-label{
+    color: #0c4a6e;
+    font-weight: bolder;
+}
+
+.login-button, .register-button{
+    border-radius: 20px;
+    padding: 10px;
+    background-color: #4bb68d;
+}
+
+.login-user{
+    font-weight: bolder;
+
+}
+
+.login-exit{
+    width: unset;
+    background-color: #1C92A9;
+    padding: 5px;
+    border-radius: 5px;
+
+}
+
+.register-sort, .login-sort{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+

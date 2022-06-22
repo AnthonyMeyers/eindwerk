@@ -1,18 +1,18 @@
 import { NavLink, Routes, Route } from "react-router-dom";
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { useAddOnetodoMutation } from "../../data/todoApi";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import Configgroup from "../extra_modules/Configgroup";
 import { errorhandlingtodos } from "../../helpers/errorhandling";
 import Errormessage from "../extra_modules/Errormessage";
-import { parseCookies } from 'nookies';
+import { parseCookies } from "nookies";
 
 const AppHeaderTodos = () => {
-  const {jwt_token_TDL: token} = parseCookies();
+  const { jwt_token_TDL: token } = parseCookies();
   //Set states
   const [todo, setTodo] = useState("");
-  const [addOneTodo,] = useAddOnetodoMutation();
+  const [addOneTodo] = useAddOnetodoMutation();
   const [error, setError] = useState(null);
 
   //set Navigation
@@ -22,21 +22,29 @@ const AppHeaderTodos = () => {
   const userId = localStorage.getItem("userId");
 
   //Add a todo
-function handleAddtodoSubmit(e)
-{
-  e.preventDefault();
-  const hasError = errorhandlingtodos("todo-title",todo);
+  function handleAddtodoSubmit(e) {
+    e.preventDefault();
+    const hasError = errorhandlingtodos("todo-title", todo);
 
-    if(!hasError){
-      try{
+    if (!hasError) {
+      try {
         setError(null);
-    addOneTodo({id: userId,title: todo, token });
-    setTodo("");
-  }   
-    catch(e){setError("An error has occured.")}
-  }else setError(hasError);
-    
-}
+        const statusAddTodo = addOneTodo({ id: userId, title: todo, token });
+        statusAddTodo.then((resolve) => {
+          if ("error" in resolve) {
+            setError(
+              resolve?.error?.data?.violations[0]?.message ||
+                "An error has occured"
+            );
+          }
+        });
+        setTodo("");
+      } catch (e) {
+        console.log(e);
+        setError("An error has occured.");
+      }
+    } else setError(hasError);
+  }
 
   return (
     <>
@@ -44,7 +52,7 @@ function handleAddtodoSubmit(e)
         <div className="header__panel">
           <h1 className="header__panel__title">My To Do List</h1>
           <div className="header__panel__configgroup configgroup">
-          <Configgroup/>
+            <Configgroup />
           </div>
         </div>
         <form className="header__todoform" onSubmit={handleAddtodoSubmit}>
@@ -71,6 +79,6 @@ function handleAddtodoSubmit(e)
       </header>
     </>
   );
-}
+};
 
 export default AppHeaderTodos;

@@ -17,15 +17,55 @@ export default function Routing() {
       {/*Open routes */}
       <Route exact path="/login" element={<Login />} />
       <Route exact path="/register" element={<Register />} />
-      <Route exact path="/" element={<Home/>}/>
-      <Route exact path="/photogallery" element={<Photogallery/>}/>
-      
+      <Route exact path="/" element={<Home />} />
+      <Route exact path="/photogallery" element={<Photogallery />} />
+
       {/*Protected routes, only when user id known */}
-      <Route exact path="/splashscreen" element={<ProtectedRoute><SplashScreen/></ProtectedRoute>}/>
-      <Route exact path="/todos" element={<ProtectedRoute><Todo_list /></ProtectedRoute>} />
-      <Route exact path="/appointments" element={<ProtectedRoute><Appointments/></ProtectedRoute>}/>
-      <Route exact path="/phonebook" element={<ProtectedRoute><Phonebook/></ProtectedRoute>}/>
-      <Route exact path="/profile" element={<ProtectedRoute><Profile/></ProtectedRoute>}/>
+      <Route
+        exact
+        path="/splashscreen"
+        element={
+          <ProtectedRoute>
+            <SplashScreen />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        exact
+        path="/todos"
+        element={
+          <ProtectedRoute>
+            <Todo_list />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        exact
+        path="/appointments"
+        element={
+          <ProtectedRoute>
+            <Appointments />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        exact
+        path="/phonebook"
+        element={
+          <ProtectedRoute>
+            <Phonebook />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        exact
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 }

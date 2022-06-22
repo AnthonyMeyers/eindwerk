@@ -2,15 +2,23 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import todoApi from "./todoApi";
 import general from "./general";
 import storage from "redux-persist/lib/storage";
-import {persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER} from "redux-persist";
+import {
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
 import generalSlice from "./general";
 
 const persistConfig = {
   key: "general",
-  storage
-}
+  storage,
+};
 
-const reducers = combineReducers({[generalSlice.name]: generalSlice.reducer})
+const reducers = combineReducers({ [generalSlice.name]: generalSlice.reducer });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
@@ -21,9 +29,11 @@ const store = configureStore({
     persistedReducer,
   }),
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({serializableCheck:{
-      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
-    }}).concat(todoApi.middleware),
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }).concat(todoApi.middleware),
 });
 
 export default store;

@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
@@ -54,6 +55,7 @@ class UserCrudController extends AbstractCrudController
             $password,
             TextField::new('usrMail','Email'),
             TextField::new('usrPicture','Avatar')->hideOnIndex(),
+            ArrayField::new('usrRoles','Roles'),
             BooleanField::new('usrHasagreed', 'Did agree'),
             DateTimeField::new('usrCreatedat','Created')->hideOnForm(),
             DateTimeField::new('usrUpdatedat', 'Last updated by user')->hideOnForm(),

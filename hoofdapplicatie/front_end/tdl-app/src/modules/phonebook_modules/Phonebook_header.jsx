@@ -1,12 +1,12 @@
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { useAddOneContactMutation } from "../../data/todoApi";
 import Configgroup from "../extra_modules/Configgroup";
-import { parseCookies } from 'nookies';
+import { parseCookies } from "nookies";
 import Errormessage from "../extra_modules/Errormessage";
 import { errorhandlingcontacts } from "../../helpers/errorhandling";
 
 const PhonebookHeader = () => {
-  const {jwt_token_TDL: token} = parseCookies();
+  const { jwt_token_TDL: token } = parseCookies();
   //Get user id
   const userId = localStorage.getItem("userId");
 
@@ -16,13 +16,12 @@ const PhonebookHeader = () => {
   const [errorContact, setErrorContact] = useState(null);
 
   //Add a todo
-  function handleAddcontactSubmit(e)
-  {
-      e.preventDefault();
-      const error = errorhandlingcontacts("contact-title",contact);
-      setErrorContact(error);
-      if(!error){
-      addOneContact({userId,name: contact, token});
+  function handleAddcontactSubmit(e) {
+    e.preventDefault();
+    const error = errorhandlingcontacts("contact-title", contact);
+    setErrorContact(error);
+    if (!error) {
+      addOneContact({ userId, name: contact, token });
       setContact("");
     }
   }
@@ -33,12 +32,12 @@ const PhonebookHeader = () => {
         <div className="header__panel">
           <h1 className="header__panel__title">My To Do List</h1>
           <div className="header__panel__configgroup configgroup">
-            <Configgroup/>
+            <Configgroup />
           </div>
         </div>
         <form className="header__todoform" onSubmit={handleAddcontactSubmit}>
           <label htmlFor="input-todo" className="header__todoform__label">
-           <span className="header__todoform__label__text" >Contact name</span>
+            <span className="header__todoform__label__text">Contact name</span>
             <input
               className="header__todoform__label__todoinput form-control form-control-lg"
               maxLength="22"
@@ -60,6 +59,6 @@ const PhonebookHeader = () => {
       </header>
     </>
   );
-}
+};
 
 export default PhonebookHeader;

@@ -7,6 +7,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\TodoRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -25,6 +26,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
      *     denormalizationContext={"groups"={"todo_details:write"}})
      *
      * @ORM\Entity(repositoryClass=TodoRepository::class)
+     * @UniqueEntity(fields={"tdoTitle"})
      * @ApiFilter(SearchFilter::class, properties={"tdoUsr"})
  */
 class Todo
@@ -95,12 +97,12 @@ class Todo
 
     public function getTdoTitle(): ?string
     {
-        return $this->tdoTitle;
+        return ucfirst($this->tdoTitle);
     }
 
     public function setTdoTitle(string $tdoTitle): self
     {
-        $this->tdoTitle = $tdoTitle;
+        $this->tdoTitle = trim(strip_tags($tdoTitle));
         $this->setTdoUpdatedat();
         return $this;
     }

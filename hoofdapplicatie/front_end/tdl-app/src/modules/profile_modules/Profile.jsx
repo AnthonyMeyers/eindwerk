@@ -1,76 +1,133 @@
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from "react";
 import IndexFooter from "../standard_modules/Footer";
-import { useSelector } from 'react-redux';
-import ToastProfileDelete from './ToastProfileDelete';
-import ToastProfileUsername from './ToastProfileUsername';
-import ToastProfilePicture from './ToastProfilePicture';
+import { useSelector } from "react-redux";
+import ToastProfileDelete from "./ToastProfileDelete";
+import ToastProfileUsername from "./ToastProfileUsername";
+import ToastProfilePicture from "./ToastProfilePicture";
+import { useGetProfilePicQuery } from "../../data/todoApi";
+import { parseCookies } from "nookies";
 
 const Profile = () => {
-  const {userData} = useSelector((state)=> state.persistedReducer.generalState);
+  const { jwt_token_TDL: token } = parseCookies();
+  const { userData } = useSelector(
+    (state) => state.persistedReducer.generalState
+  );
   const [deleteToast, setDeleteToast] = useState(false);
   const [usernameToast, setUsernameToast] = useState(false);
-  const [pictureToast, setPictureToast] = useState(false)
+  const [pictureToast, setPictureToast] = useState(false);
   const userId = localStorage.getItem("userId");
+  const {
+    data: profileData,
+    isLoading,
+    isError,
+  } = useGetProfilePicQuery({ id: userId, token });
 
-    //Show picturetoast disable others
-    function handlePicturetoastClick()
-    {
+  //Show picturetoast disable others
+  function handlePicturetoastClick() {
     setPictureToast(true);
     setUsernameToast(false);
     setDeleteToast(false);
-    }
+  }
 
-    //Show deletetoast disable others
-    function handleDeletetoastClick()
-    {
+  //Show deletetoast disable others
+  function handleDeletetoastClick() {
     setDeleteToast(true);
     setPictureToast(false);
     setUsernameToast(false);
-    }
+  }
 
-    //Show usernamechangetoast disable others
-    function handleUsernamechangeClick()
-    {
+  //Show usernamechangetoast disable others
+  function handleUsernamechangeClick() {
     setUsernameToast(true);
     setPictureToast(false);
     setDeleteToast(false);
-    }
+  }
 
-console.log(userData);
   return (
     <>
-    <section className="container profile">
-      <h2 className="profile__title">My profile:</h2>
-      <div className="profile__personalsheet">
-        <div className="profile__personalsheet__imgholder">
-      {userData && "usrPicture" in userData && <img className="profile__personalsheet__imgholder__img" src={userData?.usrPicture}/>}
-      {!userData || !userData?.usrPicture || userData?.usrPicture.length == 0 &&
-      <img className="profile__personalsheet__imgholder__img" src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Portrait_placeholder.svg"/>}
-      </div>
-        <div className="profile__personalsheet__address">
-      {userData && "usrName" in userData && <p className="profile__personalsheet__address__paragraph">Username: {userData.usrName}</p>}
-      {userData && "usrMail" in userData && <p className="profile__personalsheet__address__paragraph">Registered email address: {userData.usrMail}</p>}
-      {userData && "usrCreatedat" in userData && <p className="profile__personalsheet__address__paragraph">You are with us sinds: {new Date(userData.usrCreatedat).toDateString()}</p>}
-      <div className="profile__personalsheet__address__buttongroup">
-      <button className="profile__personalsheet__address__buttongroup__button btn btn-success"
-      onClick={handlePicturetoastClick}
-      >Change picture</button>
-      <button className="profile__personalsheet__address__buttongroup__button btn btn-warning"
-      onClick={handleUsernamechangeClick}
-      >Change username</button>
-      <button className="profile__personalsheet__address__buttongroup__button btn btn-danger"
-      onClick={handleDeletetoastClick}
-      >Delete Account</button>
-      </div>
+      <section className="container profile">
+        <h2 className="profile__title">My profile:</h2>
+        <div className="profile__personalsheet">
+          <div className="profile__personalsheet__imgholder">
+            {profileData && "usrPicture" in profileData && (
+              <img
+                className="profile__personalsheet__imgholder__img"
+                src={profileData.usrPicture}
+              />
+            )}
+            {!userData ||
+              !userData?.usrPicture ||
+              (userData?.usrPicture.length == 0 && (
+                <img
+                  className="profile__personalsheet__imgholder__img"
+                  src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Portrait_placeholder.svg"
+                />
+              ))}
+          </div>
+          <div className="profile__personalsheet__address">
+            {userData && "usrName" in userData && (
+              <p className="profile__personalsheet__address__paragraph">
+                Username: {userData.usrName}
+              </p>
+            )}
+            {userData && "usrMail" in userData && (
+              <p className="profile__personalsheet__address__paragraph">
+                Registered email address: {userData.usrMail}
+              </p>
+            )}
+            {userData && "usrCreatedat" in userData && (
+              <p className="profile__personalsheet__address__paragraph">
+                You are with us sinds:{" "}
+                {new Date(userData.usrCreatedat).toDateString()}
+              </p>
+            )}
+            <div className="profile__personalsheet__address__buttongroup">
+              <button
+                className="profile__personalsheet__address__buttongroup__button btn btn-success"
+                onClick={handlePicturetoastClick}
+              >
+                Change picture
+              </button>
+              <button
+                className="profile__personalsheet__address__buttongroup__button btn btn-warning"
+                onClick={handleUsernamechangeClick}
+              >
+                Change username
+              </button>
+              <button
+                className="profile__personalsheet__address__buttongroup__button btn btn-danger"
+                onClick={handleDeletetoastClick}
+              >
+                Delete Account
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
-    {deleteToast && <ToastProfileDelete title={"Delete account"} useShowDelete={setDeleteToast} userId={userId}/>}
-    {usernameToast && <ToastProfileUsername title={"Change username"} useShowUsername={setUsernameToast} userId={userId}/>}
-    {pictureToast && <ToastProfilePicture title={"Change profile picture"} useShowPicture={setPictureToast} userId={userId}/>}
-    <IndexFooter/>
+      </section>
+      {deleteToast && (
+        <ToastProfileDelete
+          title={"Delete account"}
+          useShowDelete={setDeleteToast}
+          userId={userId}
+        />
+      )}
+      {usernameToast && (
+        <ToastProfileUsername
+          title={"Change username"}
+          useShowUsername={setUsernameToast}
+          userId={userId}
+        />
+      )}
+      {pictureToast && (
+        <ToastProfilePicture
+          title={"Change profile picture"}
+          useShowPicture={setPictureToast}
+          userId={userId}
+        />
+      )}
+      <IndexFooter />
     </>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

@@ -39,7 +39,6 @@ use Doctrine\Common\Collections\ArrayCollection;
      * @ORM\Entity(repositoryClass=UserRepository::class)
      * @UniqueEntity(fields={"usrName"})
      * @UniqueEntity(fields={"usrMail"})
-
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -138,16 +137,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->usrMail;
     }
 
+    /**
+     * @param string $usrMail
+     * @return $this
+     * @throws \Exception
+     */
     public function setUsrmail(string $usrMail): self
     {
         //Checks if the email address is valid for storing
-        $email = $usrMail;
+        $email = trim(strip_tags($usrMail));
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $emailErr = "Invalid email format";
-            throw new \Exception($emailErr);
+            throw new \Exception("Invalid email format");
+        }else {
+            $this->setUsrUpdatedat();
+            $this->usrMail = $usrMail;
         }
-        $this->setUsrUpdatedat();
-        $this->usrMail = $usrMail;
+
 
         return $this;
     }
@@ -164,8 +169,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setUsrPicture(?string $usrPicture): self
     {
-        $this->usrPicture = $usrPicture;
         $this->setUsrUpdatedat();
+        $this->usrPicture = trim(strip_tags($usrPicture));
         return $this;
     }
 
@@ -199,15 +204,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @deprecated since Symfony 5.3, use getUserIdentifier instead
+     * Needed for functionality of the class, else class needs to be declared abstract or interface
      */
     public function getUsername(): string
     {
-        return $this->usrName;
+
+        return ucfirst($this->usrName);
     }
 
     public function getUsrName(): string
     {
-        return $this->usrName;
+        return ucfirst($this->usrName);
     }
 
     public function setUsrName(string $usrName): self
@@ -235,6 +242,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return (string) $this->usrName;
     }
 
+    //Geeft php de mogelijkheid om, indien dit als een object terugkomt, hier een string van te maken
     public function __toString()
     {
         return $this->usrName;
@@ -242,6 +250,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @see UserInterface
+     * Needed for functionality of the class, else class needs to be declared abstract or interface
      */
     public function getRoles(): array
     {
@@ -252,15 +261,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
+    /**
+     * @see UserInterface
+     */
+    public function getUsrRoles(): array
+    {
+        $roles = $this->usrRoles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
     public function setUsrRoles(array $roles): self
     {
+
         $this->usrRoles = $roles;
         $this->setUsrUpdatedat();
+
         return $this;
     }
 
     /**
      * @see PasswordAuthenticatedUserInterface
+     * Needed for functionality of the class, else class needs to be declared abstract or interface
      */
     public function getPassword(): string
     {
@@ -306,7 +330,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->appointments->contains($appointment)) {
             $this->appointments[] = $appointment;
-            $appointment->setUsr($this);
+            $appointment->setApmUsr($this);
         }
 
         return $this;
@@ -316,8 +340,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->appointments->removeElement($appointment)) {
             // set the owning side to null (unless already changed)
-            if ($appointment->getUsr() === $this) {
-                $appointment->setUsr(null);
+            if ($appointment->getApmUsr() === $this) {
+                $appointment->getApmUsr(null);
             }
         }
 
