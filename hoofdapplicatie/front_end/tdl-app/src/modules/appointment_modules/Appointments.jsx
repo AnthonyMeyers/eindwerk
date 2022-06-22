@@ -25,14 +25,14 @@ const Appointments = () => {
     contactsError,
     isSuccess,
     contactsSuccess,
-  } = useGetAllUserContactsIndexedQuery({ userId, token });
+  } = useGetAllUserContactsIndexedQuery({ id: userId, token });
 
   const {
     data: allUserAppointments,
     isLoading: appointmentsLoading,
     isError: appointmentsError,
     isSuccess: appointmentsSuccess,
-  } = useGetAllUserAppointmentsQuery({ userId, token });
+  } = useGetAllUserAppointmentsQuery({ id: userId, token });
 
   //Give target to child component for selection form field
   function handleAppointmentsClick(e) {

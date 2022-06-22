@@ -9,7 +9,7 @@ import ErrorMessage from "../extra_modules/Errormessage";
 
 const Appointment = ({ appointment, contacts, activeItem }) => {
   const { jwt_token_TDL: token } = parseCookies();
-  console.log(contacts);
+
   //Make appointment variables available cleanly
   const {
     id,
@@ -109,7 +109,6 @@ const Appointment = ({ appointment, contacts, activeItem }) => {
         >
           <div className="appointment__front__sort">
             <label
-              htmlFor={`startdate-${id}`}
               className="appointment__front__label"
               id={`appointmentlabel-${id}`}
             >

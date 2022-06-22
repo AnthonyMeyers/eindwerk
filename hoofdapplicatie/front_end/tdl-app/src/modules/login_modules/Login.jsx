@@ -47,6 +47,7 @@ const Login = () => {
       //Als er userdata is in de data opslagen in localstorage
       if ("userdata" in data) {
         if ("id" in data.userdata) {
+          console.log(localStorage);
           localStorage.setItem("userId", JSON.stringify(data.userdata.id));
         }
 

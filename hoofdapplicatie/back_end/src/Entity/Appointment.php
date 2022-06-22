@@ -27,7 +27,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
     *   normalizationContext={"groups"={"appointments:read"}},
     *   denormalizationContext={"groups"={"appointments:write"}})
     *   @ORM\Entity(repositoryClass=AppointmentRepository::class)
-    *   @ApiFilter(SearchFilter::class, properties={"cntUser"})
+    *   @ApiFilter(SearchFilter::class, properties={"apmUsr"})
     *   @ApiFilter(OrderFilter::class, properties={"apmStartsat"})
  */
 class Appointment
@@ -104,7 +104,7 @@ class Appointment
 
     public function getApmTitle(): ?string
     {
-        return $this->apmTitle;
+        return ucfirst($this->apmTitle);
     }
 
     public function setApmTitle(string $apmTitle): self

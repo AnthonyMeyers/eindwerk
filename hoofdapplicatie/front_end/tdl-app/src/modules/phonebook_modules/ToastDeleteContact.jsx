@@ -1,14 +1,23 @@
 import { useRemoveOneContactMutation } from "../../data/todoApi";
 import { parseCookies } from "nookies";
 
-const ToastDeleteContact = ({ id, title }) => {
+const ToastDeleteContact = ({ id, title, useSetErrorDetails }) => {
   const { jwt_token_TDL: token } = parseCookies();
 
   //Remove contact mutation
   const [removeOneContact] = useRemoveOneContactMutation();
 
   function handledeleteAppointmentClick() {
-    removeOneContact({ id, token });
+    const removeContactStatus = removeOneContact({ id, token });
+    removeContactStatus.then((resolve) => {
+      if ("error" in resolve) {
+        useSetErrorDetails(
+          resolve?.error?.data?.detail.indexOf("foreign key") > 0
+            ? "This contact has appointments."
+            : "An error has occured"
+        );
+      }
+    });
   }
 
   //Modal from bootstrap, adapted to situation

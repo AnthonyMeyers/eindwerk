@@ -15,7 +15,7 @@ const Todo_list = () => {
     isLoading: isLoadingTodos,
     isError: isErrorTodos,
     isSuccess: isSuccessTodos,
-  } = useGetAllUserTodosQuery({ userId, token });
+  } = useGetAllUserTodosQuery({ id: userId, token });
 
   function handleEditbuttonClick(e) {
     if (["id"] in e.target) setActiveId(e.target.id);

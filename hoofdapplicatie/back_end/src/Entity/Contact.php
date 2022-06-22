@@ -134,7 +134,7 @@ class Contact
 
     public function getCntName(): ?string
     {
-        return $this->cntName;
+        return ucfirst($this->cntName);
     }
 
     public function setCntName(string $cntName): self

@@ -15,7 +15,7 @@ const Phonebook = () => {
     isLoading,
     isError,
     isSuccess,
-  } = useGetAllUserContactsIndexedQuery({ userId, token });
+  } = useGetAllUserContactsIndexedQuery({ id: userId, token });
   const [reset, doReset] = useState(false);
 
   function handleResetcomponentsClick(e) {

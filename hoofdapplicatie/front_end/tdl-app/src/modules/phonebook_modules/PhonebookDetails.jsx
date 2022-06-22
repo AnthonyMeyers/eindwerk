@@ -178,7 +178,12 @@ const PhonebookDetails = ({
             </address>
           )}
           {showDelete && (
-            <ToastDeleteContact title={name} id={id} reset={reset} />
+            <ToastDeleteContact
+              title={name}
+              id={id}
+              reset={reset}
+              useSetErrorDetails={setErrorDetails}
+            />
           )}
         </form>
       </li>

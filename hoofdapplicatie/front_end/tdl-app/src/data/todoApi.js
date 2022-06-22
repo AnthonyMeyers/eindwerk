@@ -5,13 +5,7 @@ const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://wdev2.be/fs_anthonym/eindwerk/api",
   }),
-  tagTypes: [
-    "TODOLIST",
-    "APPOINTMENTLIST",
-    "CONTACTLIST",
-    "CONTACTLISTASC",
-    "PROFILEPICTURE",
-  ],
+  tagTypes: ["TODOLIST", "APPOINTMENTLIST", "CONTACTLIST", "PROFILEPICTURE"],
   refetchOnReconnect: true,
   refetchOnFocus: true,
   endpoints: (builder) => ({
@@ -62,25 +56,17 @@ const api = createApi({
     }),
     //Get alle contact  informatie
     getContactInfo: builder.query({
-      query: ({ id, token }) => (
-        console.log(id),
-        {
-          url: `/contacts/${id}`,
-          headers: {
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/json",
-            accept: "application/json",
-          },
-        }
-      ),
-      providesTags: (result, error, arg) =>
-        result
-          ? [
-              ...result.map(({ id }) => ({ type: "CONTACTLIST", id })),
-              "CONTACTLIST",
-            ]
-          : ["CONTACTLIST"],
+      query: ({ id, token }) => ({
+        url: `/contacts/${id}`,
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+          accept: "application/json",
+        },
+      }),
+      providesTags: ["CONTACTLIST"],
     }),
+    /*
     //Get alle contacts asc
     getAllTheUserContacts: builder.query({
       query: ({ id, token }) => ({
@@ -90,27 +76,28 @@ const api = createApi({
           "Content-Type": "application/json",
           accept: "application/json",
         },
-        providesTags: ["CONTACTLIST"],
-
-        /*(result, error, arg) =>
+        providesTags: (result, error, arg) =>
           result
             ? [
-                ...result.map(({ id }) => ({ type: "CONTACTLISTASC", id })),
-                "CONTACTLISTASC",
+                ...result.map(({ id }) => ({ type: "CONTACTLIST", id })),
+                "CONTACTLIST",
               ]
-            : ["CONTACTLISTASC"],*/
+            : ["CONTACTLIST"],
       }),
-    }),
+    }),*/
     //Get alle contacts van een user order by asc, set title index
     getAllUserContactsIndexed: builder.query({
-      query: ({ id, token }) => ({
-        url: `/contacts.json?pagination=false&cntUsr=${id}&order%5BcntName%5D=asc`,
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/json",
-          accept: "application/json",
-        },
-      }),
+      query: ({ id, token }) => (
+        console.log(id),
+        {
+          url: `/contacts.json?pagination=false&cntUsr=${id}&order%5BcntName%5D=asc`,
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json",
+            accept: "application/json",
+          },
+        }
+      ),
       transformResponse(response) {
         let capital = "";
         const indexing = response.map((contact) => {
@@ -136,14 +123,17 @@ const api = createApi({
     }),
     //Get alle todos van een user
     getAllUserTodos: builder.query({
-      query: ({ id, token }) => ({
-        url: `/todos.json?page=1&pagination=false&tdoUsr=${id}`,
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/json",
-          accept: "application/json",
-        },
-      }),
+      query: ({ id, token }) => (
+        console.log(id),
+        {
+          url: `/todos?page=1&pagination=false&tdoUsr=${id}`,
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json",
+            accept: "application/json",
+          },
+        }
+      ),
       providesTags: (result, error, arg) =>
         result
           ? [...result.map(({ id }) => ({ type: "TODOLIST", id })), "TODOLIST"]
@@ -152,7 +142,7 @@ const api = createApi({
     //Get alle appointments van een user
     getAllUserAppointments: builder.query({
       query: ({ id, token }) => ({
-        url: `/appointments?tdoUsr=${id}.json?pagination=false&order%5BapmStartsat%5D=asc`,
+        url: `http://localhost:8001/api/appointments?page=1&pagination=false&apmUsr=${id}&order%5BapmStartsat%5D=asc`,
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
