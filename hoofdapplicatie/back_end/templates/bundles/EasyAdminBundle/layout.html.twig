@@ -1,8 +1,4 @@
 {% extends '@!EasyAdmin/layout.html.twig' %}
-{% block stylesheets %}
-    <link href="{{ asset('css/main.css') }}" type="text/css" rel="stylesheet" />
-{% endblock %}
-
 {% set page_title_block_output %}{% block page_title %}TDL App admin{% endblock %}{% endset %}
 
 {% block head_favicon %}
@@ -10,7 +6,12 @@
 {% endblock %}
 
 {% block main %}
-      tester
+    <h1 class="dashboard-title">The TDL application dashboard</h1>
+    <section class="dashboard-text">
+    <p>Welcome administrator to the admin panel of the TDL application.</p>
+        <p>Please use the sidebar on the left to make your selection.</p>
+        <p>Have a good day.</p>
+    </section>
 {% endblock %}
 
 {% block content_footer %}

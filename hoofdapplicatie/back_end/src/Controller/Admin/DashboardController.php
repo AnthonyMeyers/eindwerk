@@ -20,12 +20,11 @@ class DashboardController extends AbstractDashboardController
         // redirect to some CRUD controller
         $routeBuilder = $this->get(AdminUrlGenerator::class);
 
-        /*return $this->redirect($routeBuilder->setController(CategoryCrudController::class)->generateUrl());*/
+        if(!$this->isGranted("ROLE_ADMIN"))
+        {
+            return $this->redirectToRoute("app_logout");
+        }
 
-        // you can also redirect to different pages depending on the current user
-
-        // you can also render some template to display a proper Dashboard
-        // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
         return $this->render('bundles/EasyAdminBundle/layout.html.twig');
     }
 
@@ -37,7 +36,7 @@ class DashboardController extends AbstractDashboardController
 
     public function configureAssets(): Assets
     {
-        return parent::configureAssets()->addCssFile('css/main.css');
+        return parent::configureAssets()->addCssFile('css/dashboard.css');
     }
 
     public function configureMenuItems(): iterable

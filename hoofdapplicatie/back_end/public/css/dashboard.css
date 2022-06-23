@@ -1,0 +1,46 @@
+@import "reset.css";
+
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #ddd
+}
+
+.menu-item{
+    margin-bottom: 5px;
+}
+
+.content{
+    margin-bottom: 40px;
+}
+
+.dashboard-title{
+    font-size: 40px;
+    margin-bottom: 30px;
+}
+
+.dashboard-text{
+    font-size: 20px;
+    line-height: 60px;
+}
+
+.content-footer{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: whitesmoke;
+    text-align: center;
+}
+
+.sidebar{
+    background-color: whitesmoke;
+}
+
+.content-header{
+    background-color: transparent;
+}

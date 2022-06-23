@@ -56,7 +56,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $usrName;
 
     /**
-     * @ORM\Column(type="json)
+     * @ORM\Column(type="simple_array")
      */
     private $usrRoles = [];
 
@@ -127,6 +127,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->todos = new ArrayCollection();
         $this->usrCreatedat = new \DateTimeImmutable();
         $this->contacts = new ArrayCollection();
+        $this->setUsrPlainRoleUser();
 
     }
 
@@ -254,7 +255,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->usrRoles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        /*$roles[] = 'ROLE_USER';*/
 
         return array_unique($roles);
     }
@@ -266,7 +267,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->usrRoles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        /*$roles[] = 'ROLE_USER';*/
 
         return array_unique($roles);
     }
@@ -277,6 +278,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->usrRoles = $roles;
         $this->setUsrUpdatedat();
 
+        return $this;
+    }
+
+    private function setUsrPlainRoleUser()
+    {
+        $this->usrRoles[] = "ROLE_USER";
         return $this;
     }
 

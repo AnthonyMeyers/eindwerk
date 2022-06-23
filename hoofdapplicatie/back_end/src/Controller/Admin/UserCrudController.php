@@ -8,6 +8,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -49,13 +50,18 @@ class UserCrudController extends AbstractCrudController
             ->setHelp('If the right is not given, leave the field blank.')
             ->hideOnIndex();
 
+        $fields = [];
+
+
+
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('usrName','Name'),
             $password,
             TextField::new('usrMail','Email'),
             TextField::new('usrPicture','Avatar')->hideOnIndex(),
-            ArrayField::new('usrRoles','Roles'),
+            ChoiceField::new('usrRoles','Roles')->renderExpanded()
+                ->setChoices(["Administrator role"=>"ROLE_ADMIN","Standard role"=>"ROLE_USER"])->allowMultipleChoices(),
             BooleanField::new('usrHasagreed', 'Did agree'),
             DateTimeField::new('usrCreatedat','Created')->hideOnForm(),
             DateTimeField::new('usrUpdatedat', 'Last updated by user')->hideOnForm(),

@@ -11,31 +11,6 @@ button {
     width: 150px;
 }
 
-.sidebar{
-    background-color: whitesmoke;
-}
-
-.content-footer{
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #69a297;
-    text-align: center;
-}
-
-.menu-item{
-    margin-bottom: 5px;
-}
-
-.title{
-    text-decoration: underline;
-}
-
-.content{
-    margin-bottom: 40px;
-}
-
 .login-form, .register-form{
     display: flex;
     flex-direction: column;
@@ -44,7 +19,7 @@ button {
 }
 
 .login-main, .register-main{
-    background-color: #1C92A9;
+    background-color: #ddd;
     height: 100vh;
     display: flex;
     flex-wrap: wrap;
@@ -86,7 +61,7 @@ button {
 .login-button, .register-button{
     border-radius: 20px;
     padding: 10px;
-    background-color: #4bb68d;
+    background-color: #1C92A9;
 }
 
 .login-user{
@@ -113,5 +88,7 @@ button {
     align-items: center;
     gap: 15px;
 }
+
+
 
 
