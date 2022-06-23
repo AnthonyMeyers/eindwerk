@@ -9,8 +9,6 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -23,7 +21,7 @@ use Doctrine\Common\Collections\ArrayCollection;
      *     normalizationContext={"groups"={"user:read"}},
      *     denormalizationContext={"groups"={"user:write"}},
      *          collectionOperations={
-     *          "get",
+     *          "get" = {"access_control" = "is_granted('ROLE_USER')"},
      *          "post"={
      *              "access_control"="is_granted('IS_AUTHENTICATED_ANONYMOUSLY')",
      *              "validation_groups"={"Default", "create"}
@@ -37,8 +35,8 @@ use Doctrine\Common\Collections\ArrayCollection;
      * )
      *
      * @ORM\Entity(repositoryClass=UserRepository::class)
-     * @UniqueEntity(fields={"usrName"})
-     * @UniqueEntity(fields={"usrMail"})
+     * @UniqueEntity(fields={"usrName"}, message="Name is already taken")
+     * @UniqueEntity(fields={"usrMail"}, message="Mail is already taken")
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -58,7 +56,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $usrName;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="json)
      */
     private $usrRoles = [];
 

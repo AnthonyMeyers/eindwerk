@@ -90,7 +90,9 @@ const api = createApi({
       query: ({ id, token }) => (
         console.log(id),
         {
-          url: `/contacts.json?pagination=false&cntUsr=${id}&order%5BcntName%5D=asc`,
+          url: `/contacts.json?pagination=false&cntUsr=${
+            id | 0
+          }&order%5BcntName%5D=asc`,
           headers: {
             Authorization: "Bearer " + token,
             "Content-Type": "application/json",
@@ -126,7 +128,7 @@ const api = createApi({
       query: ({ id, token }) => (
         console.log(id),
         {
-          url: `/todos?page=1&pagination=false&tdoUsr=${id}`,
+          url: `/todos?page=1&pagination=false&tdoUsr=${id | 0}`,
           headers: {
             Authorization: "Bearer " + token,
             "Content-Type": "application/json",
@@ -141,14 +143,19 @@ const api = createApi({
     }),
     //Get alle appointments van een user
     getAllUserAppointments: builder.query({
-      query: ({ id, token }) => ({
-        url: `http://localhost:8001/api/appointments?page=1&pagination=false&apmUsr=${id}&order%5BapmStartsat%5D=asc`,
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/json",
-          accept: "application/json",
-        },
-      }),
+      query: ({ id, token }) => (
+        console.log(token),
+        {
+          url: `/appointments?page=1&pagination=false&apmUsr=${
+            id | 0
+          }&order%5BapmStartsat%5D=asc`,
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json",
+            accept: "application/json",
+          },
+        }
+      ),
       providesTags: (result, error, arg) =>
         result
           ? [

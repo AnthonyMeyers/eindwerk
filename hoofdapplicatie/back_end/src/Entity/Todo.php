@@ -26,8 +26,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
      *     denormalizationContext={"groups"={"todo_details:write"}})
      *
      * @ORM\Entity(repositoryClass=TodoRepository::class)
-     * @UniqueEntity(fields={"tdoTitle"})
      * @ApiFilter(SearchFilter::class, properties={"tdoUsr"})
+     * @UniqueEntity(fields={"tdoTitle","tdoUsr"}, message="You already have this todo.")
  */
 class Todo
 {

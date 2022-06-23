@@ -74,10 +74,7 @@ const Login = () => {
           <h1 className="login__block__title">
             Welcome to the To Do List application.
           </h1>
-          <p className="login__block__text">
-            Please take a moment to login / register to start your personal To
-            Do It experience
-          </p>
+          <h2 className="login__block__text">Please log in</h2>
         </div>
         <form className="login__form" onSubmit={handleUserloginSubmit}>
           <label className="login__form__label">

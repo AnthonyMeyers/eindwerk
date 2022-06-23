@@ -93,7 +93,7 @@ export function errorhandlingappointments(context, variable) {
 
 //Function to check contacts page
 export function errorhandlingcontacts(context, variable) {
-  const regExp = /^[A-Za-z\s.]*$/;
+  const regExp = /^[A-Za-z\s.ç'",]*$/;
   const regExpStreet = /^[A-Za-z0-9\s.]*$/;
   const regExpPostal = /^[A-Za-z0-9]*$/;
   const regExpMail = /\S+@\S+\.\S+/;

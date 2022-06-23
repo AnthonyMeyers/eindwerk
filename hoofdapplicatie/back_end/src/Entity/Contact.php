@@ -7,6 +7,7 @@ use App\Repository\ContactRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
@@ -28,6 +29,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     *   normalizationContext={"groups"={"contacts:read"}},
     *   denormalizationContext={"groups"={"contacts:write"}}))
     *   @ORM\Entity(repositoryClass=ContactRepository::class)
+    * @UniqueEntity(fields={"cntName","cntUsr"}, message="You already have this contact.")
 */
 class Contact
 {

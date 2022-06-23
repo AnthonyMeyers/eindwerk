@@ -1,6 +1,6 @@
 api_platform:
     # The title of the API.
-    title: 'Todo API'
+    title: 'TDL API'
     # The description of the API.
     description: 'Registers todos and appointments for users online.'
     # Allow using plain IDs for JSON format.

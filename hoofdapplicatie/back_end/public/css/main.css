@@ -75,10 +75,10 @@ button {
     padding: 10px;
     min-width: 220px;
     font-size: 16px;
-
 }
 
 .login-label, .register-label{
+    display: block;
     color: #0c4a6e;
     font-weight: bolder;
 }
@@ -101,7 +101,12 @@ button {
     border-radius: 5px;
 
 }
-
+.register-checkbox{
+    display: block;
+    margin: 10px auto;
+    width: 25px;
+    height: 25px;
+}
 .register-sort, .login-sort{
     display: flex;
     flex-direction: column;

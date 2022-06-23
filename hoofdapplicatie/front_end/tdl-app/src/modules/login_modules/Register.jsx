@@ -10,6 +10,7 @@ const Register = () => {
   //Set useStates
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [PasswordCheck, setPasswordCheck] = useState("");
   const [email, setEmail] = useState("");
   const [hasAgreed, setHasAgreed] = useState(false);
   const [usernameError, setUsernameError] = useState(null);
@@ -26,7 +27,10 @@ const Register = () => {
   async function handleRegisteruserSubmit(e) {
     e.preventDefault();
     setUsernameError(errorhandlingreg("register-username", username));
-    setPasswordError(errorhandlingreg("register-password", password));
+
+    if (password == PasswordCheck) {
+      setPasswordError(errorhandlingreg("register-password", password));
+    } else setPasswordError("The password doesn't match.");
     setEmailError(errorhandlingreg("register-email", email));
     setEmailError(errorhandlingreg("register-email", email));
     setAgreedError(errorhandlingreg("register-agreed", hasAgreed));
@@ -75,6 +79,15 @@ const Register = () => {
               onInput={(e) => setPassword(e.target.value)}
             />
           </label>
+          <label className="register__form__label">
+            Confirm Password
+            <input
+              type="password"
+              className="register__form__label__textinput form-control"
+              value={PasswordCheck}
+              onInput={(e) => setPasswordCheck(e.target.value)}
+            />
+          </label>
           <Errormessage className={"error-center"}>
             {passwordError}
           </Errormessage>
@@ -89,6 +102,7 @@ const Register = () => {
           </label>
           <Errormessage className={"error-center"}>{emailError}</Errormessage>
           <a
+            target="_blank"
             className="register__form__policy"
             href="https://www.termsfeed.com/live/ef098255-32a4-46ef-a1d5-9bb57194fb38"
           >
