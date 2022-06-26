@@ -7,7 +7,7 @@ const Status = ({ isLoading, isError }) => {
             <span className="loadingholder__imgholder__text">Loading...</span>
             <img
               className="loadingholder__imgholder__loading"
-              src={"/src/images/loading.gif"}
+              src="https://wdev2.be/fs_anthonym/eindwerk/loading.gif"
             />
           </div>
         </div>
