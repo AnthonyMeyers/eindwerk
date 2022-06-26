@@ -103,12 +103,16 @@ const AppHeaderAppointments = () => {
               type="date"
               onChange={(e) => setStartDate(e.target.value)}
               value={startDate}
+              required
             />
             <input
               className="header__todoform__label__todoinput header__todoform-appointments__label__todoinput"
               type="time"
               onChange={(e) => setStartTime(e.target.value)}
               value={startTime}
+              min="00:00"
+              max="23:59"
+              required
             />
           </label>
           <label className="header__todoform__label header__todoform-appointments__label">
@@ -120,12 +124,16 @@ const AppHeaderAppointments = () => {
               type="date"
               onChange={(e) => setStopDate(e.target.value)}
               value={stopDate}
+              required
             />
             <input
               className="header__todoform__label__todoinput header__todoform-appointments__label__todoinput"
               type="time"
               onChange={(e) => setStopTime(e.target.value)}
               value={stopTime}
+              min="00:00"
+              max="23:59"
+              required
             />
           </label>
 
