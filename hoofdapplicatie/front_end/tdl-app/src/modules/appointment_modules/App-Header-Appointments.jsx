@@ -103,6 +103,10 @@ const AppHeaderAppointments = () => {
               value={startDate}
             />
             <input
+              v-model="hours"
+              step="900"
+              min="00:00"
+              max="12:00"
               className="header__todoform__label__todoinput header__todoform-appointments__label__todoinput"
               type="time"
               onChange={(e) => setStartTime(e.target.value)}
@@ -120,6 +124,10 @@ const AppHeaderAppointments = () => {
               value={stopDate}
             />
             <input
+              v-model="hours"
+              step="900"
+              min="00:00"
+              max="12:00"
               className="header__todoform__label__todoinput header__todoform-appointments__label__todoinput"
               type="time"
               onChange={(e) => setStopTime(e.target.value)}
