@@ -4,7 +4,6 @@
   background-color: #008fa0;
   border-bottom: 5px solid #00b896;
   padding: 10px;
-  gap: 20px;
   &__mobile {
     width: 50px;
     height: 100%;
@@ -12,6 +11,7 @@
     justify-content: center;
     align-items: center;
     font-size: 25px;
+    margin-top: 20px;
     &:after {
       content: "\e9bd";
       font-family: "icomoon";
@@ -29,13 +29,13 @@
   &__list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
     margin-bottom: 5px;
     &__listitem {
-      margin-top: 7px;
+      margin: 10px 0;
       font-size: 22px;
+
       &__link {
-        padding: 4px;
+        padding: 5px;
         color: #00638f;
         &:hover {
           color: gray;
@@ -95,13 +95,13 @@
     align-items: center;
     flex-direction: column;
     width: 100%;
-    gap: 20px;
     &__label {
+      margin-top: 15px;
       display: flex;
       flex-direction: column;
       width: 200px;
-      gap: 10px;
       &__textinput {
+        margin-top: 10px;
         font-weight: bolder;
         font-size: 18px;
       }
@@ -111,10 +111,11 @@
       }
     }
     &__buttongroup {
+      margin-top: 15px;
       display: flex;
       flex-direction: column;
-      gap: 20px;
       &__button {
+        margin-top: 10px;
       }
     }
     &__policy {
@@ -134,11 +135,11 @@
   &__photos {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
   }
 }
 
 .galleryimgholder {
+  margin: 10px;
   flex: 1 1 300px;
   aspect-ratio: 1/1;
   position: relative;
@@ -171,13 +172,12 @@
   align-items: center;
   margin-top: 100px;
   margin-bottom: 30px;
-  gap: 50px;
   &__title {
     text-align: center;
     width: 100%;
   }
   &__link {
-    margin: 10px;
+    margin-top: 50px;
     &__button {
     }
   }
@@ -190,6 +190,13 @@
   #navbar {
     display: flex;
     flex-direction: row;
-    gap: 25px;
+  }
+
+  .headerhome {
+    &__list {
+      &__listitem {
+        margin-right: 25px;
+      }
+    }
   }
 }
