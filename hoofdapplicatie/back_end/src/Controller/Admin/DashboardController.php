@@ -45,7 +45,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Appointments','fa fa-pencil-square-o',AppointmentCrudController::getEntityFqcn());
         yield MenuItem::linkToCrud('Todos','fa fa-list-ul',TodoCrudController::getEntityFqcn());
         yield MenuItem::linkToCrud('Users','fa fa-users',UserCrudController::getEntityFqcn());
-        Yield MenuItem::linkToUrl("To the TDL Application","fa fa-briefcase","http://localhost:3000/login");
-        Yield MenuItem::linkToUrl("To the API","fa fa-briefcase","http://localhost:3000/api/login");
+        Yield MenuItem::linkToUrl("To the TDL Application","fa fa-briefcase","https://eindwerk-one.vercel.app/");
     }
 }

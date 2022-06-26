@@ -55,6 +55,7 @@ class UserCrudController extends AbstractCrudController
             ->setFormType(PasswordType::class)
             ->setFormTypeOption('empty_data', '')
             ->setRequired(true)
+            ->onlyWhenCreating()
             ->hideOnIndex();
 
         $fields = [];
@@ -70,9 +71,9 @@ class UserCrudController extends AbstractCrudController
             ChoiceField::new('usrRoles','Roles')->renderExpanded()
                 ->setChoices(["Administrator role"=>"ROLE_ADMIN","Standard role"=>"ROLE_USER"])->allowMultipleChoices(),
             BooleanField::new('usrHasagreed', 'Did agree')
-                ->setRequired(true)->hideWhenUpdating(),
+                ->setRequired(true)->hideWhenUpdating()->hideOnIndex(),
             BooleanField::new('usrHasagreed', 'Did agree')
-            ->hideWhenCreating()->setDisabled(),
+            ->hideWhenCreating()->setDisabled()->hideOnIndex(),
             DateTimeField::new('usrCreatedat','Created')->hideOnForm(),
             DateTimeField::new('usrUpdatedat', 'Last updated by user')->hideOnForm(),
         ];

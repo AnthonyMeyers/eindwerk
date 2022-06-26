@@ -5,12 +5,12 @@
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    gap: 20px;
     justify-content: center;
   }
 }
 
 .appointment {
+  margin-top: 20px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -22,17 +22,16 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    gap: 15px;
     &__sort {
       display: flex;
       flex-direction: column;
-      gap: 10px;
     }
     &__label {
+      margin-top: 10px;
       display: flex;
       justify-content: flex-start;
       flex-direction: column;
-      gap: 10px;
+      margin-left: 15px;
       &__text {
         width: 100px;
       }
@@ -56,10 +55,12 @@
       }
     }
     &__buttongroup {
+      margin-top: 15px;
+      margin-left: 15px;
       display: flex;
       flex-direction: column;
-      gap: 5px;
       &__button {
+        margin: 5px;
         width: 225px;
       }
     }
@@ -81,10 +82,11 @@
   opacity: 0.8;
   bottom: 0;
   left: 0;
-  gap: 10px;
   &__fiche {
     &__info {
       color: black;
+      margin-top: 5px;
+      margin-right: 10px;
     }
   }
 }
@@ -98,6 +100,15 @@
         flex-direction: row;
         justify-content: center;
         width: 100%;
+      }
+    }
+  }
+  .contactinfo {
+    justify-content: center;
+    &__fiche {
+      margin: 0 30px;
+      &__info {
+        color: black;
       }
     }
   }
@@ -120,18 +131,6 @@
 
       &__buttongroup {
         flex-direction: row;
-      }
-    }
-  }
-}
-
-@media screen and (min-width: 900px) {
-  .contactinfo {
-    justify-content: center;
-    gap: 40px;
-    &__fiche {
-      &__info {
-        color: black;
       }
     }
   }
