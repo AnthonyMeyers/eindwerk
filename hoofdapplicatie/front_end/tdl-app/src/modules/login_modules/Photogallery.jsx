@@ -70,13 +70,13 @@ const Photogallery = () => {
       credits: "GlacierNPS",
     },
     {
-      id: 10,
+      id: 11,
       title: "Golf",
       imgfile: "https://live.staticflickr.com/2701/4291741802_f236fe5be4_b.jpg",
       credits: "Presidio of Monterey: DLIFLC & USAG",
     },
     {
-      id: 11,
+      id: 12,
       title: "Piano",
       imgfile: "https://live.staticflickr.com/3066/3042002903_438f30ddb4_b.jpg",
       credits: "Kim Siever",
