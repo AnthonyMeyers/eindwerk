@@ -1,7 +1,5 @@
 import { parseCookies } from "nookies";
 import { useChangeUserPictureMutation } from "../../data/todoApi";
-import { useNavigate } from "react-router";
-import { useDispatch } from "react-redux";
 import { useState } from "react";
 
 const ToastProfilePicture = ({ userId, title, useShowPicture }) => {
@@ -12,9 +10,7 @@ const ToastProfilePicture = ({ userId, title, useShowPicture }) => {
   //Remove user, clear data en redirect to login
   function handleChangeusernameClick(e) {
     e.preventDefault();
-    if (pictureUrl.length > 0) {
-      changeUsername({ id: userId, picture: pictureUrl, token });
-    }
+    changeUsername({ id: userId, picture: pictureUrl, token });
     useShowPicture(false);
   }
 

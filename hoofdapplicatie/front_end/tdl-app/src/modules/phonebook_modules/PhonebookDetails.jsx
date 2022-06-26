@@ -19,7 +19,9 @@ const PhonebookDetails = ({
   },
   reset,
 }) => {
+  //Get jwt token
   const { jwt_token_TDL: token } = parseCookies();
+
   //set up updatecontactmutation
   const [updateContact] = useUpdateOneContactMutation();
 
@@ -72,8 +74,9 @@ const PhonebookDetails = ({
       statusContacts.then((resolve) => {
         if ("error" in resolve) {
           setErrorDetails(
-            resolve?.error?.data?.violations[0]?.message ||
-              "An error has occured."
+            resolve?.error?.data?.violations[0]?.message != undefined
+              ? resolve?.error?.data?.violations[0]?.message
+              : "An error has occured."
           );
         }
       });

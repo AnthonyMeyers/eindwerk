@@ -7,7 +7,7 @@ class PostRequest
     static function get_data(String $url, Array $post_parameters)
     {
         //url-ify the data for the POST
-        $parameters_string = "";
+        $parameters = "";
 
         foreach($post_parameters as $key=>$value) {
             $parameters .= $key.'='.$value.'&';

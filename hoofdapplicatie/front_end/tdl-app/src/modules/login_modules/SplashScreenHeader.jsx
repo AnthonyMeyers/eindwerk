@@ -1,5 +1,3 @@
-import React from "react";
-
 const SplashScreenHeader = () => {
   return (
     <header className="headerhome">

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Todo from "./Todo";
 import { useGetAllUserTodosQuery } from "../../data/todoApi";
 import Status from "../standard_modules/App-Status";
@@ -6,10 +6,14 @@ import { parseCookies } from "nookies";
 import IndexFooter from "../standard_modules/Footer";
 
 const Todo_list = () => {
+  //Get token & userid
   const { jwt_token_TDL: token } = parseCookies();
   const userId = localStorage.getItem("userId");
+
+  //Set states
   const [activeId, setActiveId] = useState(0);
 
+  //Get all todos of the selected user
   const {
     data: allUserTodos,
     isLoading: isLoadingTodos,
@@ -17,6 +21,7 @@ const Todo_list = () => {
     isSuccess: isSuccessTodos,
   } = useGetAllUserTodosQuery({ id: userId, token });
 
+  //Pass the clicked item id to the child component
   function handleEditbuttonClick(e) {
     if (["id"] in e.target) setActiveId(e.target.id);
   }

@@ -12,12 +12,17 @@ import {
 import { errorhandlingreg } from "../../helpers/errorhandling";
 
 const ToastProfileUsername = ({ userId, title, useShowUsername }) => {
+  //get navigate, dispatch & token
   const nav = useNavigate();
   const dispatch = useDispatch();
   const { jwt_token_TDL: token } = parseCookies();
-  const [changeUsername] = useChangeUsernameMutation();
+
+  //set usestates
   const [username, setUsername] = useState("");
   const [error, setError] = useState(null);
+
+  //Mutations
+  const [changeUsername] = useChangeUsernameMutation();
 
   //Remove user, clear data en redirect to login
   async function handleChangeusernameClick(e) {

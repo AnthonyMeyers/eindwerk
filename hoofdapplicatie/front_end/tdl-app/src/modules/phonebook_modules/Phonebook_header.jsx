@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useAddOneContactMutation } from "../../data/todoApi";
 import Configgroup from "../extra_modules/Configgroup";
 import { parseCookies } from "nookies";
@@ -6,6 +6,7 @@ import Errormessage from "../extra_modules/Errormessage";
 import { errorhandlingcontacts } from "../../helpers/errorhandling";
 
 const PhonebookHeader = () => {
+  //Get jwt token
   const { jwt_token_TDL: token } = parseCookies();
   //Get user id
   const userId = localStorage.getItem("userId");

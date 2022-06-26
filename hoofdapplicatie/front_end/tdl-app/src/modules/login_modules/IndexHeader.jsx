@@ -2,13 +2,12 @@ import { NavLink } from "react-router-dom";
 import { useState } from "react";
 
 const IndexHeader = () => {
+  //Set state
   const [menu, setMenu] = useState(false);
 
+  //Handle mobile menu click
   const handleMobileClick = () => {
     setMenu(!menu);
-  };
-  const handleListitemClick = () => {
-    setMenu(false);
   };
 
   return (

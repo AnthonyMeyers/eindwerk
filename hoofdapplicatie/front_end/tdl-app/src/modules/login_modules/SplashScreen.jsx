@@ -15,18 +15,20 @@ import {
 import { parseCookies } from "nookies";
 import Status from "../standard_modules/App-Status";
 import IndexFooter from "../standard_modules/Footer";
-import SplashScreenHeader from "./SplashScreenHeader";
 
 const SplashScreen = () => {
+  //Get jwt token
   const { jwt_token_TDL: token } = parseCookies();
+
+  //Get navigation in the fray
+  const nav = useNavigate();
 
   //Set states
   const dispatch = useDispatch();
   const userId = localStorage.getItem("userId");
   const [loading, setLoading] = useState(true);
-  const nav = useNavigate();
   const [error, setError] = useState(false);
-  const { jwt_token_TDL } = parseCookies();
+
   const {
     data: categories,
     isLoading: isLoadingCat,
@@ -63,7 +65,6 @@ const SplashScreen = () => {
 
   return (
     <>
-      <SplashScreenHeader />
       <section className="splashscreen">
         <h1 className="splashscreen__title">
           Welcome to The To Do List application

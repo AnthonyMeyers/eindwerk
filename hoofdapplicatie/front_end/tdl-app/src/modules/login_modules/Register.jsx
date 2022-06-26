@@ -4,7 +4,9 @@ import { useRegisterUserMutation } from "../../data/todoApi";
 import IndexFooter from "../standard_modules/Footer";
 import { errorhandlingreg } from "../../helpers/errorhandling";
 import Errormessage from "../extra_modules/Errormessage";
-
+import { checkregistererror } from "../../helpers/registererror";
+import { useDispatch } from "react-redux";
+import { setmessage } from "../../data/message";
 const Register = () => {
   //Set useStates
   const [username, setUsername] = useState("");
@@ -17,12 +19,14 @@ const Register = () => {
   const [emailError, setEmailError] = useState(null);
   const [agreedError, setAgreedError] = useState(null);
 
-  //Set navigate
+  //Set navigate & dispatch
   const nav = useNavigate();
+  const dispatch = useDispatch();
 
   //Register user
   const [registerUser, serverAnswer] = useRegisterUserMutation();
 
+  //Handle the registration of the user on submit of the form
   async function handleRegisteruserSubmit(e) {
     e.preventDefault();
     setUsernameError(errorhandlingreg("register-username", username));
@@ -42,11 +46,9 @@ const Register = () => {
       });
       statusRegisterUser.then((resolve) => {
         if ("error" in resolve) {
-          setAgreedError(
-            resolve?.error?.data?.violations[0].message ||
-              "An error has occured."
-          );
-        }
+          const result = checkregistererror(resolve);
+          setAgreedError(result);
+        } else dispatch(setmessage({ message: "registration successfull." }));
       });
     }
   }
@@ -64,11 +66,6 @@ const Register = () => {
         <div className="register__block">
           <h1 className="register__block__title">Register</h1>
         </div>
-        <p className="register__block__text">
-          By registering for this application, you agree that your data will be
-          collected. Your data will only be used for the functionality of this
-          application.
-        </p>
         <form className="register__form" onSubmit={handleRegisteruserSubmit}>
           <label className="register__form__label">
             Username

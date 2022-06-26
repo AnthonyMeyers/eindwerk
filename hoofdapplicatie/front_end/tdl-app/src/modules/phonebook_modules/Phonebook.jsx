@@ -6,7 +6,9 @@ import IndexFooter from "../standard_modules/Footer";
 import Status from "../standard_modules/App-Status";
 
 const Phonebook = () => {
+  //Get jwt token
   const { jwt_token_TDL: token } = parseCookies();
+
   //Get user id
   const userId = localStorage.getItem("userId");
 
@@ -33,21 +35,12 @@ const Phonebook = () => {
         {contacts && contacts.length > 0 && (
           <div className={"phonebook__list"}>
             {contacts.map((contact, i) => (
-              <>
+              <div key={contact.id}>
                 {"index" in contact && contact.index.length > 0 && (
-                  <h2
-                    className="phonebook__list__index"
-                    key={"index-" + contact?.id}
-                  >
-                    {contact.index}
-                  </h2>
+                  <h2 className="phonebook__list__index">{contact.index}</h2>
                 )}
-                <PhonebookDetails
-                  key={contact.id}
-                  contact={contact}
-                  reset={reset}
-                />
-              </>
+                <PhonebookDetails contact={contact} reset={reset} />
+              </div>
             ))}
           </div>
         )}

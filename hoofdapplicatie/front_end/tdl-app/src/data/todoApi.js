@@ -66,40 +66,18 @@ const api = createApi({
       }),
       providesTags: ["CONTACTLIST"],
     }),
-    /*
-    //Get alle contacts asc
-    getAllTheUserContacts: builder.query({
+    //Get alle contacts van een user order by asc, set title index
+    getAllUserContactsIndexed: builder.query({
       query: ({ id, token }) => ({
-        url: `/contacts?pagination=false&cntUsr=${id}&order%5BcntName%5D=asc`,
+        url: `/contacts.json?pagination=false&cntUsr=${
+          id | 0
+        }&order%5BcntName%5D=asc`,
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
           accept: "application/json",
         },
-        providesTags: (result, error, arg) =>
-          result
-            ? [
-                ...result.map(({ id }) => ({ type: "CONTACTLIST", id })),
-                "CONTACTLIST",
-              ]
-            : ["CONTACTLIST"],
       }),
-    }),*/
-    //Get alle contacts van een user order by asc, set title index
-    getAllUserContactsIndexed: builder.query({
-      query: ({ id, token }) => (
-        console.log(id),
-        {
-          url: `/contacts.json?pagination=false&cntUsr=${
-            id | 0
-          }&order%5BcntName%5D=asc`,
-          headers: {
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/json",
-            accept: "application/json",
-          },
-        }
-      ),
       transformResponse(response) {
         let capital = "";
         const indexing = response.map((contact) => {
@@ -125,17 +103,14 @@ const api = createApi({
     }),
     //Get alle todos van een user
     getAllUserTodos: builder.query({
-      query: ({ id, token }) => (
-        console.log(id),
-        {
-          url: `/todos?page=1&pagination=false&tdoUsr=${id | 0}`,
-          headers: {
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/json",
-            accept: "application/json",
-          },
-        }
-      ),
+      query: ({ id, token }) => ({
+        url: `/todos?page=1&pagination=false&tdoUsr=${id | 0}`,
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+          accept: "application/json",
+        },
+      }),
       providesTags: (result, error, arg) =>
         result
           ? [...result.map(({ id }) => ({ type: "TODOLIST", id })), "TODOLIST"]
@@ -143,19 +118,16 @@ const api = createApi({
     }),
     //Get alle appointments van een user
     getAllUserAppointments: builder.query({
-      query: ({ id, token }) => (
-        console.log(token),
-        {
-          url: `/appointments?page=1&pagination=false&apmUsr=${
-            id | 0
-          }&order%5BapmStartsat%5D=asc`,
-          headers: {
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/json",
-            accept: "application/json",
-          },
-        }
-      ),
+      query: ({ id, token }) => ({
+        url: `/appointments?page=1&pagination=false&apmUsr=${
+          id | 0
+        }&order%5BapmStartsat%5D=asc`,
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+          accept: "application/json",
+        },
+      }),
       providesTags: (result, error, arg) =>
         result
           ? [
@@ -166,23 +138,20 @@ const api = createApi({
     }),
     //Register user
     registerUser: builder.mutation({
-      query: ({ username, password, email, hasAgreed }) => (
-        console.log(hasAgreed),
-        {
-          url: `/users.json`,
-          headers: {
-            "Content-Type": "application/json",
-            accept: "application/json",
-          },
-          method: "POST",
-          body: {
-            usrName: username,
-            usrPassword: password,
-            usrMail: email,
-            usrHasagreed: hasAgreed,
-          },
-        }
-      ),
+      query: ({ username, password, email, hasAgreed }) => ({
+        url: `/users.json`,
+        headers: {
+          "Content-Type": "application/json",
+          accept: "application/json",
+        },
+        method: "POST",
+        body: {
+          usrName: username,
+          usrPassword: password,
+          usrMail: email,
+          usrHasagreed: hasAgreed,
+        },
+      }),
     }),
     //Post een todo
     addOnetodo: builder.mutation({
@@ -275,19 +244,16 @@ const api = createApi({
     }),
     //Wijzig de username van een user
     changeUsername: builder.mutation({
-      query: ({ id, name, token }) => (
-        console.log(token),
-        {
-          url: `/users/${id}.json`,
-          headers: {
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/json",
-            accept: "application/json",
-          },
-          method: "PUT",
-          body: { id, usrName: name },
-        }
-      ),
+      query: ({ id, name, token }) => ({
+        url: `/users/${id}.json`,
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+          accept: "application/json",
+        },
+        method: "PUT",
+        body: { id, usrName: name },
+      }),
     }),
     //Wijzig de profile pic van een user
     changeUserPicture: builder.mutation({
@@ -456,6 +422,7 @@ const api = createApi({
 
 export default api;
 export const {
+  //Query start
   useGetAppointmentContactQuery,
   useGetContactInfoQuery,
   useGetAllCategoriesQuery,
@@ -466,6 +433,8 @@ export const {
   useGetAllUserAppointmentsQuery,
   useGetAllTheUserContactsQuery,
   useGetAllUserContactsIndexedQuery,
+
+  //Mutation start
   useRegisterUserMutation,
   useUpdateCategoryTodoMutation,
   useAddOneContactAppointmentMutation,

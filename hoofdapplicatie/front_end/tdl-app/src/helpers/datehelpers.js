@@ -1,3 +1,4 @@
+//function used in appointments for date control
 export function convertToAccurateDay(inputdate = new Date()) {
   const date = new Date(inputdate);
   const dateString = new Date(date.getTime() - date.getTimezoneOffset() * 60000)

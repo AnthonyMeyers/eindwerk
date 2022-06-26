@@ -6,12 +6,12 @@
   padding: 10px;
   gap: 20px;
   &__mobile {
+    width: 50px;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 50px;
-    height: 100%;
-    font-size: 20px;
+    font-size: 25px;
     &:after {
       content: "\e9bd";
       font-family: "icomoon";
@@ -28,11 +28,12 @@
   }
   &__list {
     display: flex;
+    flex-direction: column;
     gap: 10px;
     margin-bottom: 5px;
-    flex-direction: column;
     &__listitem {
       margin-top: 7px;
+      font-size: 22px;
       &__link {
         padding: 4px;
         color: #00638f;
@@ -45,9 +46,9 @@
 }
 
 .homefooter {
+  width: 100%;
   position: fixed;
   bottom: 0;
-  width: 100%;
   padding: 5px;
   background-color: #8da6da;
   &__text {
@@ -84,17 +85,17 @@
       text-align: center;
     }
     &__text {
-      text-align: center;
       padding: 15px;
       margin: 30px;
+      text-align: center;
     }
   }
   &__form {
     display: flex;
+    align-items: center;
     flex-direction: column;
     width: 100%;
     gap: 20px;
-    align-items: center;
     &__label {
       display: flex;
       flex-direction: column;
@@ -159,22 +160,18 @@
       font-weight: bold;
       font-size: 10px;
       color: white;
-      &-title {
-      }
-      &-credits {
-      }
     }
   }
 }
 
 .splashscreen {
-  margin-top: 100px;
-  margin-bottom: 30px;
   display: flex;
   flex-direction: column;
-  gap: 50px;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+  margin-bottom: 30px;
+  gap: 50px;
   &__title {
     text-align: center;
     width: 100%;
@@ -186,7 +183,7 @@
   }
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 500px) {
   .headerhome__mobile {
     display: none;
   }

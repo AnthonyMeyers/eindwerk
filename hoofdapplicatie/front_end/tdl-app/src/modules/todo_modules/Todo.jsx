@@ -1,4 +1,3 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import {
   useUpdateIsCheckedTodoMutation,
@@ -45,13 +44,14 @@ const todo = ({
     updateIsCheckedTodo({ id, tdoChecked: isChecked, token });
   }, [isChecked]);
 
+  //Gets the correct category for the todo
   useEffect(() => {
     if (categories.length > 0 && tdoCty && "id" in tdoCty) {
       const newCategory = pickFromSelection(categories, tdoCty, "categories");
       setSelectedCategory(newCategory);
     }
   }, [categories]);
-
+  //Gets the correct priority for the todo
   useEffect(() => {
     if (priorities.length > 0 && tdoPty && "id" in tdoPty) {
       const newPriority = pickFromSelection(priorities, tdoPty, "priorities");
@@ -76,7 +76,7 @@ const todo = ({
       });
     }
   }
-
+  //Handles category switch
   function handleCategoryswitchClick(e) {
     setErrorTitle(null);
     const categoryToSet = switchNextSelection(

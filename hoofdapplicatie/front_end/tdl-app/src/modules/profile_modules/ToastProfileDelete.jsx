@@ -10,9 +10,12 @@ import {
 } from "../../data/general";
 
 const ToastProfileDelete = ({ userId, title, useShowDelete }) => {
+  //Get navigation, dispatch & token
   const nav = useNavigate();
   const dispatch = useDispatch();
   const { jwt_token_TDL: token } = parseCookies();
+
+  //Mutations
   const [removeUser] = useRemoveUserCompletelyMutation();
 
   //Remove user, clear data en redirect to login

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   useGetAllUserAppointmentsQuery,
   useGetAllUserContactsIndexedQuery,
@@ -9,6 +9,7 @@ import { parseCookies } from "nookies";
 import IndexFooter from "../standard_modules/Footer";
 
 const Appointments = () => {
+  //Get jwt token
   const { jwt_token_TDL: token } = parseCookies();
   //Get user id from localstorage
   const userId = localStorage.getItem("userId");
@@ -17,20 +18,15 @@ const Appointments = () => {
   const [clickedItem, setClickedItem] = useState("");
 
   //Get data from queries
-  const {
-    data: allContacts,
-    isLoading: contactsLoading,
-    isError,
-    contactsError,
-    isSuccess,
-    contactsSuccess,
-  } = useGetAllUserContactsIndexedQuery({ id: userId, token });
+  const { data: allContacts } = useGetAllUserContactsIndexedQuery({
+    id: userId,
+    token,
+  });
 
   const {
     data: allUserAppointments,
     isLoading: appointmentsLoading,
     isError: appointmentsError,
-    isSuccess: appointmentsSuccess,
   } = useGetAllUserAppointmentsQuery({ id: userId, token });
 
   //Give target to child component for selection form field

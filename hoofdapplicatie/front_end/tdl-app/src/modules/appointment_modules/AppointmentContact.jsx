@@ -6,12 +6,16 @@ const AppointmentContact = ({
   contactInfo,
   startApm: { startDate, startTime },
 }) => {
+  //Get JWT token
   const { jwt_token_TDL: token } = parseCookies();
+
+  //Get userdata from state
   const { userData } = useSelector(
     (state) => state.persistedReducer.generalState
   );
+
   //Get contact information
-  const { data, isLoading, isSuccess, isError } = useGetContactInfoQuery({
+  const { data } = useGetContactInfoQuery({
     id: contactInfo,
     token,
   });

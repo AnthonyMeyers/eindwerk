@@ -37,16 +37,16 @@ li {
   list-style-type: none;
 }
 h1 {
+  font-size: 25px;
   color: #0e3865;
-  font-size: 35px;
 }
 
 h2 {
-  font-size: 30px;
-  margin: 20px 0 40px 0;
-  color: black;
+  font-size: 25px;
   font-family: Arial, Helvetica, sans-serif;
   font-style: italic;
+  color: black;
+  margin: 20px 0 40px 0;
 }
 
 h3 {
@@ -66,22 +66,32 @@ p {
 }
 
 .error-center {
+  font-size: 18px;
   margin: 10px 0;
   text-align: center;
   color: red;
-  font-size: 18px;
 }
 
 .error-end {
+  font-size: 18px;
   margin-bottom: 20px;
   text-align: end;
   color: red;
-  font-size: 18px;
 }
 
 .error {
-  color: red;
   font-size: 18px;
+  color: red;
+}
+
+.notfound {
+  height: calc(100vh - 160px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &__title {
+    text-align: center;
+  }
 }
 
 .loadingholder {
@@ -114,8 +124,6 @@ p {
       display: flex;
       justify-content: flex-end;
       gap: 38px;
-      &__switch {
-      }
     }
   }
 }
@@ -267,7 +275,22 @@ input {
   background-color: #eee;
 }
 
+.active {
+  color: #e4e1d89f;
+}
+
+.message {
+  color: darkgreen;
+}
+
 @media screen and (min-width: 475px) {
+  h1 {
+    font-size: 35px;
+  }
+
+  h2 {
+    font-size: 30px;
+  }
   .header {
     &__panel {
       flex-direction: row;
@@ -290,8 +313,8 @@ input {
             height: 30px;
           }
           &__text {
-            display: flex;
             width: 190px;
+            display: flex;
             align-items: center;
           }
         }

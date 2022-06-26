@@ -232,7 +232,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
             else if (!preg_match("/^[a-zA-Z-0-9' ]*$/",$name))
             {
-                throw new Exception("Only letters, numbers and white space allowed");
+                throw new Exception("Only letters, numbers and white space allowed in names");
             }
 
         $this->usrName = strip_tags(trim($usrName));

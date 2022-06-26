@@ -111,8 +111,8 @@
       flex-direction: column;
       gap: 10px;
       &__namelabel {
-        margin-left: 118px;
         align-items: center;
+        margin-left: 118px;
       }
     }
   }
@@ -128,19 +128,11 @@
 }
 
 @media screen and (min-width: 720px) {
-  .phonebook {
-    &__list {
-      &__index {
-      }
-    }
-  }
   .contact {
     justify-content: flex-start;
     &__form {
       flex-direction: column;
       align-items: flex-start;
-      &__label {
-      }
     }
   }
 

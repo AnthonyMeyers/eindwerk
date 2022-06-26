@@ -48,7 +48,7 @@ const Photogallery = () => {
       imgfile: "grapes.jpg",
       credits: "Meyers Willy",
     },
-    { id: 10, title: "biking", imgfile: "biking.jpg", credits: "CCo commons" },
+    { id: 11, title: "biking", imgfile: "biking.jpg", credits: "CCo commons" },
   ];
 
   return (

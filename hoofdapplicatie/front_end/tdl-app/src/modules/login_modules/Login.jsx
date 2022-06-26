@@ -6,18 +6,35 @@ import IndexFooter from "../standard_modules/Footer";
 import Errormessage from "../extra_modules/Errormessage";
 import { saveJWTinCookie } from "../../helpers/jwttokens";
 import { errorhandlinglogin } from "../../helpers/errorhandling";
+import { useSelector, useDispatch } from "react-redux";
+import { clearmessage } from "../../data/message";
 
 const Login = () => {
+  //Save the login cookie in the browser, activate dispatch & messagestate
   saveJWTinCookie({ jwt_token_TDL: null });
+  const dispatch = useDispatch();
+  const { message } = useSelector(
+    (state) => state.persistedReducer.messageState
+  );
 
   //Define useStates
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [messageService, setMessageService] = useState(message);
 
   //get navigation
   const nav = useNavigate();
 
+  useEffect(() => {
+    if (messageService && messageService.length > 0) {
+      setTimeout(() => {
+        dispatch(clearmessage());
+        setMessageService(null);
+      }, 4000);
+    }
+    return;
+  }, []);
   //Handle the user login submit
   async function handleUserloginSubmit(e) {
     //Log the user in
@@ -44,7 +61,6 @@ const Login = () => {
       //Als er userdata is in de data opslagen in localstorage
       if ("userdata" in data) {
         if ("id" in data.userdata) {
-          console.log(localStorage);
           localStorage.setItem("userId", JSON.stringify(data.userdata.id));
         }
 
@@ -56,7 +72,11 @@ const Login = () => {
         });
       }
     } catch (error) {
-      setError(errorhandlinglogin(error.response.status));
+      setError(
+        errorhandlinglogin(
+          error?.response?.status || "The server is currently unavailable"
+        )
+      );
     }
   }
 
@@ -90,6 +110,9 @@ const Login = () => {
           </label>
           <Errormessage className="error-center">{error}</Errormessage>
           <div className="login__form__buttongroup">
+            {messageService && messageService.length > 0 && (
+              <p className="message">{messageService}</p>
+            )}
             <button
               className="login__form__buttongroup__button btn btn btn-primary"
               type="submit"

@@ -1,6 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import todoApi from "./todoApi";
-import general from "./general";
 import storage from "redux-persist/lib/storage";
 import {
   persistReducer,
@@ -12,13 +11,17 @@ import {
   REGISTER,
 } from "redux-persist";
 import generalSlice from "./general";
+import messageSlice from "./message";
 
 const persistConfig = {
   key: "general",
   storage,
 };
 
-const reducers = combineReducers({ [generalSlice.name]: generalSlice.reducer });
+const reducers = combineReducers({
+  [generalSlice.name]: generalSlice.reducer,
+  [messageSlice.name]: messageSlice.reducer,
+});
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import IndexFooter from "../standard_modules/Footer";
 import { useSelector } from "react-redux";
 import ToastProfileDelete from "./ToastProfileDelete";
@@ -8,19 +8,20 @@ import { useGetProfilePicQuery } from "../../data/todoApi";
 import { parseCookies } from "nookies";
 
 const Profile = () => {
+  //Get jwt token
   const { jwt_token_TDL: token } = parseCookies();
+
+  //Get userdata for profile
   const { userData } = useSelector(
     (state) => state.persistedReducer.generalState
   );
+
+  //Set usestates
   const [deleteToast, setDeleteToast] = useState(false);
   const [usernameToast, setUsernameToast] = useState(false);
   const [pictureToast, setPictureToast] = useState(false);
   const userId = localStorage.getItem("userId");
-  const {
-    data: profileData,
-    isLoading,
-    isError,
-  } = useGetProfilePicQuery({ id: userId, token });
+  const { data: profileData } = useGetProfilePicQuery({ id: userId, token });
 
   //Show picturetoast disable others
   function handlePicturetoastClick() {
@@ -49,15 +50,16 @@ const Profile = () => {
         <h2 className="profile__title">My profile</h2>
         <div className="profile__personalsheet">
           <div className="profile__personalsheet__imgholder">
-            {profileData && "usrPicture" in profileData && (
-              <img
-                className="profile__personalsheet__imgholder__img"
-                src={profileData.usrPicture}
-              />
-            )}
-            {!userData ||
-              !userData?.usrPicture ||
-              (userData?.usrPicture.length == 0 && (
+            {profileData &&
+              "usrPicture" in profileData &&
+              profileData.usrPicture.length != 0 && (
+                <img
+                  className="profile__personalsheet__imgholder__img"
+                  src={profileData.usrPicture}
+                />
+              )}
+            {!profileData ||
+              (!profileData?.usrPicture && (
                 <img
                   className="profile__personalsheet__imgholder__img"
                   src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Portrait_placeholder.svg"

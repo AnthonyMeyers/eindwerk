@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router";
 import { NavLink, useLocation } from "react-router-dom";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { destroyJWTCookie } from "../../helpers/jwttokens";
 import { useDispatch } from "react-redux";
@@ -9,8 +8,10 @@ import {
   cleanPriorities,
   cleanUserdata,
 } from "../../data/general";
+import { setmessage } from "../../data/message";
 
 const Configgroup = () => {
+  //Get dispatch in the fray
   const dispatch = useDispatch();
   //Gather information & nav
   const nav = useNavigate();
@@ -24,6 +25,7 @@ const Configgroup = () => {
 
   //Logout on door click & states opschonen
   function handleLogoutClick() {
+    dispatch(setmessage({ message: "You have successfully logged of." }));
     dispatch(cleanCategories());
     dispatch(cleanPriorities());
     dispatch(cleanUserdata());

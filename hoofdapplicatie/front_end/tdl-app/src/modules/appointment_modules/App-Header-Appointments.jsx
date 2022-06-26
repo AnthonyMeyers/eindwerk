@@ -1,7 +1,5 @@
-import { NavLink, Routes, Route } from "react-router-dom";
 import { convertToAccurateDay } from "../../helpers/datehelpers";
 import { useAddOneAppointmentMutation } from "../../data/todoApi";
-import { useNavigate } from "react-router";
 import { parseCookies } from "nookies";
 import Configgroup from "../extra_modules/Configgroup";
 import { useState, useEffect } from "react";
@@ -9,7 +7,9 @@ import { errorhandlingappointments } from "../../helpers/errorhandling";
 import ErrorMessage from "../extra_modules/Errormessage";
 
 const AppHeaderAppointments = () => {
+  //Get cookie
   const { jwt_token_TDL: token } = parseCookies();
+
   //Get user from localstorage
   const userId = localStorage.getItem("userId");
 
@@ -36,7 +36,7 @@ const AppHeaderAppointments = () => {
     }
   }, [startDate, startTime]);
 
-  //Submit the appointment to the API
+  //Submit the appointment to the API & error on trouble
   function handleSubmitappointmentClick(e) {
     e.preventDefault();
     const appointError = errorhandlingappointments(
@@ -48,12 +48,17 @@ const AppHeaderAppointments = () => {
       const start = new Date(startDate + " " + startTime).getTime();
       const stop = new Date(stopDate + " " + stopTime).getTime();
       if (start <= stop && appointmentTitle.length >= 4) {
-        addOneAppointment({
+        const statusAppointment = addOneAppointment({
           id: userId,
           title: appointmentTitle,
           startsAt: startDate + " " + startTime,
           stopsAt: stopDate + " " + stopTime,
           token,
+        });
+        statusAppointment.then((resolve) => {
+          if ("error" in resolve) {
+            setAppointError("An error occured");
+          }
         });
       }
       setAppointmentTitle("");

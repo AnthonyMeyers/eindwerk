@@ -8,6 +8,7 @@ import { errorhandlingappointments } from "../../helpers/errorhandling";
 import ErrorMessage from "../extra_modules/Errormessage";
 
 const Appointment = ({ appointment, contacts, activeItem }) => {
+  //Get token
   const { jwt_token_TDL: token } = parseCookies();
 
   //Make appointment variables available cleanly
@@ -85,7 +86,7 @@ const Appointment = ({ appointment, contacts, activeItem }) => {
       const start = new Date(dateStarts + " " + timeStarts).getTime();
       const stop = new Date(dateStops + " " + timeStops).getTime();
       if (start <= stop && title.length >= 4) {
-        updateAppointment({
+        const statusAppointment = updateAppointment({
           appId: id,
           appTitle: title,
           appStartsAt: dateStarts + " " + timeStarts,
@@ -94,6 +95,11 @@ const Appointment = ({ appointment, contacts, activeItem }) => {
           appDescription: description,
           contactId: contactPerson > 0 ? contactPerson : null,
           token,
+        });
+        statusAppointment.then((resolve) => {
+          if ("error" in resolve) {
+            setErrorTitle("An error occured");
+          }
         });
       }
     }

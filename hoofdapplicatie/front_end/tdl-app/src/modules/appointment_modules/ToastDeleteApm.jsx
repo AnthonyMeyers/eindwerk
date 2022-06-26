@@ -2,6 +2,7 @@ import { useRemoveOneAppointmentMutation } from "../../data/todoApi";
 import { parseCookies } from "nookies";
 
 const ToastDeleteApm = ({ id, title }) => {
+  //Get jwt token
   const { jwt_token_TDL: token } = parseCookies();
   //Remove appointment mutation
   const [removeOneAppointment] = useRemoveOneAppointmentMutation();
@@ -32,7 +33,7 @@ const ToastDeleteApm = ({ id, title }) => {
           Exit
         </button>
       </div>
-      <div class="toast-body">
+      <div className="toast-body">
         Are you sure you would like to delete this appointment?
       </div>
       <button

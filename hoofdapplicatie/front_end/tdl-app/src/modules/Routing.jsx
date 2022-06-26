@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Todo_list from "./todo_modules/Todo_list";
 import Login from "./login_modules/Login";
 import Register from "./login_modules/Register";
@@ -10,6 +10,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Home from "./login_modules/Home";
 import Photogallery from "./login_modules/Photogallery";
 import Profile from "./profile_modules/Profile";
+import NotFound from "./standard_modules/NotFound";
 
 export default function Routing() {
   return (
@@ -66,6 +67,9 @@ export default function Routing() {
           </ProtectedRoute>
         }
       />
+
+      {/* ROUTE NOT FOUND*/}
+      <Route path="/*" element={<NotFound />} />
     </Routes>
   );
 }

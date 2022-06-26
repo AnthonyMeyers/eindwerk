@@ -1,21 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useAddOnetodoMutation } from "../../data/todoApi";
-
-import { useNavigate } from "react-router";
 import Configgroup from "../extra_modules/Configgroup";
 import { errorhandlingtodos } from "../../helpers/errorhandling";
 import Errormessage from "../extra_modules/Errormessage";
 import { parseCookies } from "nookies";
 
 const AppHeaderTodos = () => {
+  //Get token & navigation
   const { jwt_token_TDL: token } = parseCookies();
+
   //Set states
   const [todo, setTodo] = useState("");
   const [addOneTodo] = useAddOnetodoMutation();
   const [error, setError] = useState(null);
-
-  //set Navigation
-  const nav = useNavigate();
 
   ////Get user id
   const userId = localStorage.getItem("userId");

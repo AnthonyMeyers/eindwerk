@@ -9,14 +9,16 @@ export default function RouterHeader() {
   //Show these headers on these routes
   return (
     <Routes>
-      <Route exact path="/" element={<IndexHeader />} />
       <Route exact path="/register" element={<IndexHeader />} />
       <Route exact path="/login" element={<IndexHeader />} />
       <Route exact path="/photogallery" element={<IndexHeader />} />
       <Route exact path="/todos" element={<AppHeaderTodos />} />
+      <Route exact path="/todos" element={<IndexHeader />} />
       <Route exact path="/appointments" element={<AppHeaderAppointments />} />
       <Route exact path="/phonebook" element={<PhonebookHeader />} />
       <Route exact path="/profile" element={<ProfileHeader />} />
+      <Route exact path="/" element={<IndexHeader />} />
+      <Route exact path="/*" element={<IndexHeader />} />
     </Routes>
   );
 }

@@ -1,3 +1,4 @@
+//Picks from the selection of categories & priorities in todos
 export function pickFromSelection(list = [], listitem = null, context) {
   if (list.length > 0 && listitem != null) {
     return list.reduce((toSelect, listing) => {
@@ -9,6 +10,7 @@ export function pickFromSelection(list = [], listitem = null, context) {
   return list[0];
 }
 
+//Manages the selection switch from categories & priorities in todos
 export function switchNextSelection(list = [], listitem = null, context) {
   if (listitem && list.length > 0) {
     const maxId = list[list.length - 1].id;

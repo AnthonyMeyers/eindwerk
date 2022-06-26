@@ -1,13 +1,12 @@
-import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
 const AppNavigation = () => {
-  //Get the location
+  //Get the location & navigation
   let url = location.href;
+  const nav = useNavigate();
 
   const [isMainPage, setIsMainPage] = useState(url.endsWith("/appointments"));
-  const nav = useNavigate();
 
   function handleContentcycleSwitch() {
     if (isMainPage === false) {
