@@ -76,7 +76,7 @@ export function errorhandlingappointments(context, variable) {
   const regExp = /^[A-Za-z\s]*$/;
 
   if (context === "appointment-title") {
-    if (variable.length <= 2) {
+    if (variable.length <= 3) {
       return "To short to add.";
     }
     if (variable.length > 22) {
@@ -100,7 +100,7 @@ export function errorhandlingcontacts(context, variable) {
   const regExpPhone = /^[0-9\s./()+]*$/;
 
   if (context === "contact-title") {
-    if (variable.length <= 2) {
+    if (variable.length <= 3) {
       return "To short to add.";
     }
     if (variable.length > 22) {

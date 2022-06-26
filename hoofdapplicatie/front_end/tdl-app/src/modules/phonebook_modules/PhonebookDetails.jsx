@@ -51,37 +51,40 @@ const PhonebookDetails = ({
   //save the contact to the api
   function handleContactChangeSubmit(e) {
     e.preventDefault();
-    const errorContacts = errorhandlingcontacts("contact-details", {
-      name,
-      tel,
-      street,
-      postal,
-      city,
-      mail,
-    });
-    setErrorDetails(errorContacts);
-    if (!errorContacts) {
-      const statusContacts = updateContact({
-        conid: id,
+    if (!showDelete) {
+      const errorContacts = errorhandlingcontacts("contact-details", {
         name,
         tel,
         street,
         postal,
         city,
         mail,
-        token,
       });
-      statusContacts.then((resolve) => {
-        if ("error" in resolve) {
-          if (
-            "data" in resolve.error &&
-            "violations" in resolve.error.data &&
-            resolve.error.data.violations.length > 0
-          ) {
-            setErrorDetails(resolve?.error?.data?.violations[0]?.message);
-          } else setErrorDetails("An error has occured");
-        }
-      });
+      setErrorDetails(errorContacts);
+      if (!errorContacts) {
+        const statusContacts = updateContact({
+          conid: id,
+          name,
+          tel,
+          street,
+          postal,
+          city,
+          mail,
+          token,
+        });
+        statusContacts.then((resolve) => {
+          if ("error" in resolve) {
+            console.log(resolve);
+            if (
+              "data" in resolve.error &&
+              "violations" in resolve.error.data &&
+              resolve.error.data.violations.length > 0
+            ) {
+              setErrorDetails(resolve?.error?.data?.violations[0]?.message);
+            } else setErrorDetails("An error has occured");
+          }
+        });
+      }
     }
   }
 

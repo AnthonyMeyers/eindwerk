@@ -18,5 +18,5 @@ export function checkregistererror(resolve) {
     }
   }
 
-  return result;
+  return null;
 }

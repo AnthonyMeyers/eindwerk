@@ -9,6 +9,7 @@ const ToastDeleteContact = ({ id, title, useSetErrorDetails }) => {
 
   function handledeleteAppointmentClick() {
     const removeContactStatus = removeOneContact({ id, token });
+    console.log("test");
     removeContactStatus.then((resolve) => {
       if ("error" in resolve) {
         useSetErrorDetails(
