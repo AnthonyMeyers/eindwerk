@@ -3,52 +3,84 @@ import IndexFooter from "../standard_modules/Footer";
 const Photogallery = () => {
   //The photos to use in the gallery, makes it easy to add
   const photos = [
-    { id: 1, title: "plain", imgfile: "plain.jpg", credits: "CCO commons" },
-    { id: 2, title: "guitar", imgfile: "guitar.jpg", credits: "CCO commons" },
+    {
+      id: 1,
+      title: "Plain",
+      imgfile:
+        "https://live.staticflickr.com/4236/35669515102_2491547155_b.jpg",
+      credits: "CCO commons",
+    },
+    {
+      id: 2,
+      title: "Guitar",
+      imgfile:
+        "https://live.staticflickr.com/4197/34710530692_2793edc78f_b.jpg",
+      credits: "CCO commons",
+    },
     {
       id: 3,
-      title: "landscape",
-      imgfile: "landscape.jpg",
-      credits: "CCO commons",
+      title: "Landscape",
+      imgfile:
+        "https://live.staticflickr.com/5748/20859826112_6530e35e9d_b.jpg",
+      credits: "U.S. Geological Survey",
     },
     {
       id: 4,
-      title: "pink flower",
-      imgfile: "flower.jpg",
-      credits: "CCO commons",
+      title: "Purple flower",
+      imgfile: "https://live.staticflickr.com/64/180279113_20ff72d1cc.jpg",
+      credits: "Kim Siever",
     },
     {
       id: 5,
-      title: "birdspotting",
-      imgfile: "birdspotting.jpg",
-      credits: "CCO commons",
+      title: "Birdspotting",
+      imgfile: "https://live.staticflickr.com/5129/5277661905_2f2462bcd4_b.jpg",
+      credits: " U. S. Fish and Wildlife Service",
     },
-    { id: 6, title: "bee", imgfile: "bee.jpg", credits: "Meyers Willy" },
+    {
+      id: 6,
+      title: "Kiwi",
+      imgfile:
+        "https://live.staticflickr.com/65535/50150206056_49ab093550_b.jpg",
+      credits: "Flyhawaiian",
+    },
     {
       id: 7,
-      title: "blue flowers",
-      imgfile: "blueflowers.jpg",
-      credits: "Meyers Willy",
+      title: "Yellow flowers",
+      imgfile:
+        "https://live.staticflickr.com/65535/48698180318_125e120844_b.jpg",
+      credits: "Lexe-i",
     },
     {
       id: 8,
-      title: "yellow flowers",
-      imgfile: "yellowflowers.jpg",
-      credits: "Meyers Willy",
+      title: "Wineyard",
+      imgfile:
+        "https://live.staticflickr.com/65535/49189794526_bee86eafac_b.jpg",
+      credits: "Bonnie Moreland",
     },
     {
       id: 9,
-      title: "fermenting",
-      imgfile: "fermenting.jpg",
-      credits: "Meyers Willy",
+      title: "Biking",
+      imgfile: "https://live.staticflickr.com/278/19371842885_abcdb54a9e_b.jpg",
+      credits: "GlacierNPS",
     },
     {
       id: 10,
-      title: "blue grapes",
-      imgfile: "grapes.jpg",
-      credits: "Meyers Willy",
+      title: "Hiking",
+      imgfile: "https://live.staticflickr.com/2745/4427396733_b37a240d53_b.jpg",
+      credits: "GlacierNPS",
     },
-    { id: 11, title: "biking", imgfile: "biking.jpg", credits: "CCo commons" },
+    {
+      id: 10,
+      title: "Golf",
+      imgfile: "https://live.staticflickr.com/2701/4291741802_f236fe5be4_b.jpg",
+      credits: "Presidio of Monterey: DLIFLC & USAG",
+    },
+    {
+      id: 11,
+      title: "Piano",
+      imgfile: "https://live.staticflickr.com/3066/3042002903_438f30ddb4_b.jpg",
+      credits: "Kim Siever",
+    },
   ];
 
   return (
@@ -62,7 +94,7 @@ const Photogallery = () => {
             photos.map(({ id, title, imgfile, credits }) => (
               <div key={id} className="galleryimgholder">
                 <img
-                  src={`./src/assets/${imgfile}`}
+                  src={imgfile}
                   alt={title}
                   title={title}
                   className="galleryimgholder__img"
