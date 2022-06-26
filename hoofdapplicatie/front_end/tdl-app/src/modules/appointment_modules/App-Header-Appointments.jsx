@@ -106,12 +106,6 @@ const AppHeaderAppointments = () => {
             />
             <input
               className="header__todoform__label__todoinput header__todoform-appointments__label__todoinput"
-              type="datetime"
-              onChange={(e) => setStartDate(e.target.value)}
-              value={startDate}
-            />
-            <input
-              className="header__todoform__label__todoinput header__todoform-appointments__label__todoinput"
               type="time"
               onChange={(e) => setStartTime(e.target.value)}
               value={startTime}
