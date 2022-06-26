@@ -44,7 +44,7 @@ const Appointments = () => {
         className="container appointments"
         onClick={handleAppointmentsClick}
       >
-        <h2 className="appointments__title">Appointments:</h2>
+        <h2 className="appointments__title">Appointments</h2>
         <Status isLoading={appointmentsLoading} isError={appointmentsError} />
         {allUserAppointments && allUserAppointments.length > 0 && (
           <ul className="appointments__list">

@@ -12,6 +12,7 @@ class UserDataPersister implements DataPersisterInterface
     private $entityManager;
     private $userPasswordEncoder;
 
+    //Deze class encode het password voor de User entity
     public function __construct(EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordEncoder)
     {
         $this->entityManager = $entityManager;
@@ -25,6 +26,8 @@ class UserDataPersister implements DataPersisterInterface
 
     /**
      * @param User $data
+     * De data getPlainpassword bevat, encode dan plainpassword en set het met setPassword
+     * en wijzig in de database
      */
     public function persist($data)
     {
@@ -39,6 +42,7 @@ class UserDataPersister implements DataPersisterInterface
         $this->entityManager->flush();
     }
 
+    //Verwijder de data
     public function remove($data)
     {
         $this->entityManager->remove($data);

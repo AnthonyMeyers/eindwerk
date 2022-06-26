@@ -37,9 +37,6 @@ const Login = () => {
           },
         }
       );
-      let a = false;
-      let b = false;
-      let c = false;
       if ("token" in data) {
         saveJWTinCookie(data.token);
       }
@@ -52,17 +49,13 @@ const Login = () => {
         }
 
         localStorage.setItem("time", JSON.stringify(new Date().toUTCString()));
-        //Als er rollen zijn in userdata, opslagen in localstorage
-        if ("roles" in data.userdata) {
-          localStorage.setItem("roles", JSON.stringify(data.userdata.roles));
-        }
+
         //Navigeer door naar de app
         setTimeout(() => {
           return nav("/splashscreen");
         });
       }
     } catch (error) {
-      console.log(error);
       setError(errorhandlinglogin(error.response.status));
     }
   }

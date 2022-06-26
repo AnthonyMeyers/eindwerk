@@ -1,7 +1,6 @@
-import { NavLink, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useAddOnetodoMutation } from "../../data/todoApi";
-import axios from "axios";
+
 import { useNavigate } from "react-router";
 import Configgroup from "../extra_modules/Configgroup";
 import { errorhandlingtodos } from "../../helpers/errorhandling";
@@ -31,16 +30,15 @@ const AppHeaderTodos = () => {
         setError(null);
         const statusAddTodo = addOneTodo({ id: userId, title: todo, token });
         statusAddTodo.then((resolve) => {
-          if ("error" in resolve) {
+          if ("error" in resolve && "data" in resolve.error) {
             setError(
-              resolve?.error?.data?.violations[0]?.message ||
-                "An error has occured"
+              resolve?.error?.data?.violations?.[0]?.message ||
+                "An error occured"
             );
           }
         });
         setTodo("");
       } catch (e) {
-        console.log(e);
         setError("An error has occured.");
       }
     } else setError(hasError);

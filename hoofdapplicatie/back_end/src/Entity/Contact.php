@@ -26,9 +26,10 @@ use Symfony\Component\Validator\Constraints as Assert;
     *     "put" = {"access_control" = "is_granted('ROLE_USER')"},
     *     "delete"  = {"access_control" = "is_granted('ROLE_USER')"}},
     *
-    *   normalizationContext={"groups"={"contacts:read"}},
-    *   denormalizationContext={"groups"={"contacts:write"}}))
-    *   @ORM\Entity(repositoryClass=ContactRepository::class)
+    *  normalizationContext={"groups"={"contacts:read"}},
+    *  denormalizationContext={"groups"={"contacts:write"}}))
+    *
+    * @ORM\Entity(repositoryClass=ContactRepository::class)
     * @UniqueEntity(fields={"cntName","cntUsr"}, message="You already have this contact.")
 */
 class Contact
@@ -81,14 +82,6 @@ class Contact
     private $cntMail;
 
     /**
-     * @return string
-     */
-    public function getCntMail(): string
-    {
-        return $this->cntMail;
-    }
-
-    /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="contacts")
      * @Groups({"contacts:read","contacts:write"})
      * @Assert\NotBlank()
@@ -108,7 +101,7 @@ class Contact
     private $cntUpdatedat;
 
     /**
-     * @ORM\OneToMany(targetEntity=Appointment::class, mappedBy="apmCnt")
+     * @ORM\OneToMany(targetEntity=Appointment::class, mappedBy="apmCnt",orphanRemoval=false)
      */
     private $appointments;
 
@@ -118,6 +111,7 @@ class Contact
         $this->appointments = new ArrayCollection();
         $this->cntCreatedat = new \DateTimeImmutable();
     }
+
 
     public function getCntCreatedat(): ?\DateTimeImmutable
     {
@@ -160,12 +154,21 @@ class Contact
     }
 
     /**
+     * @return string
+     */
+    public function getCntMail(): string
+    {
+        return $this->cntMail;
+    }
+
+    /**
      * @param string $cntMail
+     * @return Contact
      */
     public function setCntMail(string $cntMail): self
     {
         $this->setCntUpdatedat();
-        $this->cntMail = $cntMail;
+        $this->cntMail = trim(strip_tags($cntMail));
         return $this;
     }
 

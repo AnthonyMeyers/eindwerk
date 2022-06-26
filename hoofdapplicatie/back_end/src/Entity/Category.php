@@ -13,11 +13,13 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 
 /**
     * @ApiResource(
-    *     collectionOperations={
+    *   collectionOperations={
     *     "get" = {"access_control" = "is_granted('ROLE_USER')"}},
     *
-    *   itemOperations={"get" = {"access_control" = "is_granted('ROLE_USER')"}},
-    *   normalizationContext={"groups"={"categories:read"}})
+    *   itemOperations={
+    *     "get" = {"access_control" = "is_granted('ROLE_USER')"}},
+    *
+    *    normalizationContext={"groups"={"categories:read"}})
     *
     *  @ORM\Entity(repositoryClass=CategoryRepository::class)
     *  @ApiFilter(BooleanFilter::class, properties={"ctyIsclassavailable"})

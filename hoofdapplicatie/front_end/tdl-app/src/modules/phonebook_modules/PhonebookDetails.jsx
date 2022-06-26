@@ -33,7 +33,7 @@ const PhonebookDetails = ({
   const [isShown, setIsShown] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [errorDetails, setErrorDetails] = useState(null);
-  console.log(id);
+
   //Resets the modals
   useEffect(() => {
     setShowDelete(false);
@@ -59,7 +59,7 @@ const PhonebookDetails = ({
     });
     setErrorDetails(errorContacts);
     if (!errorContacts) {
-      updateContact({
+      const statusContacts = updateContact({
         conid: id,
         name,
         tel,
@@ -68,6 +68,14 @@ const PhonebookDetails = ({
         city,
         mail,
         token,
+      });
+      statusContacts.then((resolve) => {
+        if ("error" in resolve) {
+          setErrorDetails(
+            resolve?.error?.data?.violations[0]?.message ||
+              "An error has occured."
+          );
+        }
       });
     }
   }
@@ -81,7 +89,7 @@ const PhonebookDetails = ({
             <input
               spellCheck="false"
               maxLength="22"
-              className="contact__form__namelabel__input"
+              className="contact__form__namelabel__input form-control"
               type="text"
               value={name}
               onInput={(e) => setName(e.target.value)}
@@ -129,7 +137,7 @@ const PhonebookDetails = ({
                   maxLength="40"
                   value={street}
                   onInput={(e) => setStreet(e.target.value)}
-                  className="contactaddress__label__input"
+                  className="contactaddress__label__input form-control"
                 />
               </label>
               <label className="contactaddress__label">
@@ -140,7 +148,7 @@ const PhonebookDetails = ({
                   maxLength="10"
                   value={postal}
                   onInput={(e) => setPostal(e.target.value)}
-                  className="contactaddress__label__input"
+                  className="contactaddress__label__input form-control"
                 />
               </label>
               <label className="contactaddress__label">
@@ -151,7 +159,7 @@ const PhonebookDetails = ({
                   maxLength="22"
                   value={city}
                   onInput={(e) => setCity(e.target.value)}
-                  className="contactaddress__label__input"
+                  className="contactaddress__label__input form-control"
                 />
               </label>
               <label className="contactaddress__label">
@@ -162,7 +170,7 @@ const PhonebookDetails = ({
                   maxLength="15"
                   value={tel}
                   onInput={(e) => setTel(e.target.value)}
-                  className="contactaddress__label__input"
+                  className="contactaddress__label__input form-control"
                 />
               </label>
               <label className="contactaddress__label">
@@ -172,7 +180,7 @@ const PhonebookDetails = ({
                   spellCheck="false"
                   value={mail}
                   onInput={(e) => setMail(e.target.value)}
-                  className="contactaddress__label__input"
+                  className="contactaddress__label__input form-control"
                 />
               </label>
             </address>

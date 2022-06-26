@@ -11,6 +11,7 @@ class EasyAdminSubscriber implements EventSubscriberInterface
 {
     private $userPasswordHasher;
 
+    //De password hasher voor het admn panel
     public function __construct(UserPasswordHasherInterface $userPasswordHasher)
     {
         $this->userPasswordHasher = $userPasswordHasher;

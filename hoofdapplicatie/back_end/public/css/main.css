@@ -18,7 +18,7 @@ button {
     align-items: center;
 }
 
-.login-main, .register-main{
+.login-main, .register-main, .error-main{
     background-color: #ddd;
     height: 100vh;
     display: flex;

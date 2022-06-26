@@ -1,12 +1,17 @@
 {% extends "baseemail.html.twig" %}
+
     {% block pagetitle %}
+
         <h1>Hello {{ username }}</h1>
+
     {% endblock %}
 
     {% block pagecontents %}
+
         <p>Your account has been deleted.</p>
         <p>We regret that we couldn't have been more to your service.</p>
         <p>We still hope to see you again soon!</p>
         <p>With regards,</p>
         <p>The TDL app staff</p>
+
     {% endblock %}

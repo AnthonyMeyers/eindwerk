@@ -9,6 +9,7 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -17,26 +18,24 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
-     * @ApiResource(
-     *     normalizationContext={"groups"={"user:read"}},
-     *     denormalizationContext={"groups"={"user:write"}},
-     *          collectionOperations={
-     *          "get" = {"access_control" = "is_granted('ROLE_USER')"},
-     *          "post"={
-     *              "access_control"="is_granted('IS_AUTHENTICATED_ANONYMOUSLY')",
-     *              "validation_groups"={"Default", "create"}
-     *          },
-     *     },
-     *      itemOperations={
-     *      "get" = {"access_control" = "is_granted('ROLE_USER')"},
-     *      "patch"  = {"access_control" = "is_granted('ROLE_USER')"},
-     *      "put" = {"access_control" = "is_granted('ROLE_USER')"},
-     *      "delete"  = {"access_control" = "is_granted('ROLE_USER')"}},
-     * )
-     *
-     * @ORM\Entity(repositoryClass=UserRepository::class)
-     * @UniqueEntity(fields={"usrName"}, message="Name is already taken")
-     * @UniqueEntity(fields={"usrMail"}, message="Mail is already taken")
+    * @ApiResource(
+    *   collectionOperations={
+    *    "get" = {"access_control" = "is_granted('ROLE_USER')"},
+    *    "post"={"access_control"="is_granted('IS_AUTHENTICATED_ANONYMOUSLY')",
+    *           "validation_groups"={"Default", "create"}},
+    *      },
+    *    itemOperations={
+    *       "get" = {"access_control" = "is_granted('ROLE_USER')"},
+    *       "patch"  = {"access_control" = "is_granted('ROLE_USER')"},
+    *       "put" = {"access_control" = "is_granted('ROLE_USER')"},
+    *       "delete"  = {"access_control" = "is_granted('ROLE_USER')"}},
+    *
+    *    normalizationContext={"groups"={"user:read"}},
+    *    denormalizationContext={"groups"={"user:write"}},)
+    *
+    * @ORM\Entity(repositoryClass=UserRepository::class)
+    * @UniqueEntity(fields={"usrName"}, message="Name is already taken")
+    * @UniqueEntity(fields={"usrMail"}, message="Mail is already taken")
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -121,6 +120,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $contacts;
 
+    /**
+     * @var string
+     * een leeg password voor admin panel
+     */
+    private $clearpassword;
+
     public function __construct()
     {
         $this->appointments = new ArrayCollection();
@@ -173,12 +178,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isusrHasagreed(): ?bool
+    public function getUsrHasagreed(): ?bool
     {
         return $this->usrHasagreed;
     }
 
-    public function setusrHasagreed(bool $usrHasagreed = false): self
+    public function setUsrHasagreed(bool $usrHasagreed = false): self
     {
 
         //The user always has to give permission to use his/hers data before storage
@@ -219,12 +224,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUsrName(string $usrName): self
     {
             $name = $usrName;
-            if (empty($name)) {
-                throw new Exception("Name is required");
-            } else if (!preg_match("/^[a-zA-Z-' ]*$/",$name)) {
-                    $nameErr = "Only letters and white space allowed";
-                }
 
+            if (empty($name))
+            {
+                throw new Exception("Name is required");
+            }
+
+            else if (!preg_match("/^[a-zA-Z-0-9' ]*$/",$name))
+            {
+                throw new Exception("Only letters, numbers and white space allowed");
+            }
 
         $this->usrName = strip_tags(trim($usrName));
 
@@ -346,7 +355,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->appointments->removeElement($appointment)) {
             // set the owning side to null (unless already changed)
             if ($appointment->getApmUsr() === $this) {
-                $appointment->getApmUsr(null);
+                $appointment->setApmUsr(null);
             }
         }
 
@@ -394,6 +403,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @param mixed $plainPassword
      * @throws \Exception
+     * Geeft een error als het passwoord te onveilig is.
      */
     public function setPlainPassword($plainPassword): self
     {
@@ -405,7 +415,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             {
                 $this->setUsrUpdatedat();
                 $this->plainPassword = $plainPassword;
-            }else throw new \Exception("The password should have at least 3 letters and 3 numbers.");
+            }
+            else throw new \Exception("The password should have at least 3 letters and 3 numbers.");
 
         }
         else throw new \Exception("The password should be more than 6 characters long.");
@@ -451,13 +462,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    //...
-
-    /**
-     * @var string clear password for backend
-     */
-    private $clearpassword;
-
     /**
      * @return string
      */
@@ -475,6 +479,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         $this->setPassword($clearpassword);
     }
-
 
 }

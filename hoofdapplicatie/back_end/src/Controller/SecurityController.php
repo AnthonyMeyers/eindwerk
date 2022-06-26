@@ -10,7 +10,8 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/login", name="app_login")
+     * @Route("/", name="app_login")
+     * Zorgt voor het login formulier bij start van de website
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -23,9 +24,26 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/logout", name="app_logout")
+     * @Route("/checklogin",name="check_login_form")
+     * Login form wijst door naar hier, hier wordt nagekeken of de gebruiker een admin role heeft
+     * Zo niet, wordt de gebruiker direct doorverwezen naar logout
      */
-    public function logout(): void
+    public function logincheck()
+    {
+        if($this->isGranted("ROLE_ADMIN"))
+        {
+            return $this->redirectToRoute("app_admin_page");
+        }
+        return $this->redirectToRoute("app_logout");
+    }
+
+
+
+    /**
+     * @Route("/logout", name="app_logout")
+     * Logt de gebruiker uit en keert terug naar login
+     */
+    public function logout()
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }

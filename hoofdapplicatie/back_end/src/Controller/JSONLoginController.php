@@ -17,8 +17,7 @@ class JSONLoginController extends AbstractController
     public function login(IriConverterInterface $iriConverter)
     {
 
-
-        if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+        if (!$this->isGranted('IS_ADMIN')) {
             return $this->json([
                 'error' => 'Invalid login request: check that the Content-Type header is "application/json".'
             ], 400);

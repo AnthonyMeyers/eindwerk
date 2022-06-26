@@ -12,8 +12,9 @@
     font-family: "icomoon";
     font-size: 22px;
     &:hover {
-      color: gray;
+      color: whitesmoke;
       cursor: pointer;
+      border-color: black;
     }
     &__text {
       position: absolute;
@@ -60,7 +61,7 @@
     &__block {
       font-family: "Permanent Marker", Arial, Helvetica, sans-serif;
       font-size: 18px;
-      background-color: #50808e;
+      background-color: #4972c6;
       width: 135px;
       text-align: center;
       border: none;

@@ -9,6 +9,7 @@ class AuthenticationSuccessListener
 {
     /**
      * @param AuthenticationSuccessEvent $event
+     * Geeft de user id mee terug samen met de token
      */
     public function onAuthenticationSuccessResponse(AuthenticationSuccessEvent $event)
     {
@@ -20,8 +21,7 @@ class AuthenticationSuccessListener
         }
 
         $data['userdata'] = array(
-            'id' => $user->getId(),
-            'roles' => $user->getRoles(),
+            'id' => $user->getId()
         );
 
         $event->setData($data);

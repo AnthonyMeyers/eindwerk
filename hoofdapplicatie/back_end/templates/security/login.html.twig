@@ -1,41 +1,54 @@
 {% extends 'base.html.twig' %}
+
 {% block stylesheets %}
+
     <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
+
 {% endblock %}
+
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-<main class="login-main">
 
+    <main class="login-main">
 
+        <form class="login-form" method="post">
 
-    <form class="login-form" method="post">
-    <h1 class="h3 mb-3 font-weight-normal login-title" class="login-title">Please sign in</h1>
-    <label class="login-label" for="inputUsername">Username</label>
-    <input class="login-input" type="text" value="{{ last_username }}" name="_username" id="inputUsername" class="form-control" autocomplete="username" required autofocus>
-    <label class="login-label" for="inputPassword">Password</label>
-    <input class="login-input" type="password" name="_password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
+            <h1 class="h3 mb-3 font-weight-normal login-title" class="login-title">Please sign in</h1>
+            <label class="login-label" for="inputUsername">Username</label>
+            <input class="login-input" type="text" value="{{ last_username }}" name="_username" id="inputUsername" class="form-control" autocomplete="username" required autofocus>
+            <label class="login-label" for="inputPassword">Password</label>
+            <input class="login-input" type="password" name="_password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+            <input type="hidden" name="_csrf_token"value="{{ csrf_token('authenticate') }}">
 
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% if error %}
+
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+
+            {% endif %}
+
+            <button class="btn btn-lg btn-primary login-button" type="submit"> Sign in</button>
+
+        </form>
+
+        {% if app.user %}
+
+            <div class="login-sort mb-3">
+
+                <p>You are logged in as <span class="login-user">{{ app.user.userIdentifier }}</span></p>
+                <a href="{{ path('app_logout') }}"><button class="login-exit">Logout</button></a>
+
+            </div>
+
         {% endif %}
-    >
 
-    <button class="btn btn-lg btn-primary login-button" type="submit">
-        Sign in
-    </button>
-</form>
-    {% if app.user %}
-        <div class="login-sort mb-3">
-            <p>You are logged in as <span class="login-user">{{ app.user.userIdentifier }}</span></p>
-            <a href="{{ path('app_logout') }}"><button class="login-exit">Logout</button></a>
+        <div class="login-description  login-sort">
+
+            <p>Welcome to the To Do List admin panel.</p>
+            <p>Please make sure to log in with an admin user account.</p>
+
         </div>
-    {% endif %}
-    <div class="login-description  login-sort">
-        <p>Welcome to the To Do List admin panel.</p>
-        <p>Please make sure to log in with an admin user account.</p>
-    </div>
-</main>
+
+    </main>
+
 {% endblock %}

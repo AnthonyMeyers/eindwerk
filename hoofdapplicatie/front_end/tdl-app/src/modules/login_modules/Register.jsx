@@ -1,7 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useRegisterUserMutation } from "../../data/todoApi";
-import axios from "axios";
 import IndexFooter from "../standard_modules/Footer";
 import { errorhandlingreg } from "../../helpers/errorhandling";
 import Errormessage from "../extra_modules/Errormessage";
@@ -35,7 +34,20 @@ const Register = () => {
     setEmailError(errorhandlingreg("register-email", email));
     setAgreedError(errorhandlingreg("register-agreed", hasAgreed));
     if (!usernameError && !passwordError && !emailError && hasAgreed) {
-      registerUser({ username, password, email, hasAgreed });
+      const statusRegisterUser = registerUser({
+        username,
+        password,
+        email,
+        hasAgreed,
+      });
+      statusRegisterUser.then((resolve) => {
+        if ("error" in resolve) {
+          setAgreedError(
+            resolve?.error?.data?.violations[0].message ||
+              "An error has occured."
+          );
+        }
+      });
     }
   }
 

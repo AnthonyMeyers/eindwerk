@@ -17,17 +17,13 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-        // redirect to some CRUD controller
+        // ga naar een bepaalde crud controller
         $routeBuilder = $this->get(AdminUrlGenerator::class);
 
-        if(!$this->isGranted("ROLE_ADMIN"))
-        {
-            return $this->redirectToRoute("app_logout");
-        }
-
-        return $this->render('bundles/EasyAdminBundle/layout.html.twig');
+        return $this->render('bundles/EasyAdminBundle/layout.html.twig',);
     }
 
+    //Past bepaalde layout aan in het dashboard
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
@@ -39,6 +35,7 @@ class DashboardController extends AbstractDashboardController
         return parent::configureAssets()->addCssFile('css/dashboard.css');
     }
 
+    //Zorgt voor de menuitems die linken naar de controllers.
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
@@ -49,5 +46,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Todos','fa fa-list-ul',TodoCrudController::getEntityFqcn());
         yield MenuItem::linkToCrud('Users','fa fa-users',UserCrudController::getEntityFqcn());
         Yield MenuItem::linkToUrl("To the TDL Application","fa fa-briefcase","http://localhost:3000/login");
+        Yield MenuItem::linkToUrl("To the API","fa fa-briefcase","http://localhost:3000/api/login");
     }
 }

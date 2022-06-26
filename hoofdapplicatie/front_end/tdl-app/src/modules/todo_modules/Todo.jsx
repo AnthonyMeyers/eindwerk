@@ -48,7 +48,6 @@ const todo = ({
   useEffect(() => {
     if (categories.length > 0 && tdoCty && "id" in tdoCty) {
       const newCategory = pickFromSelection(categories, tdoCty, "categories");
-
       setSelectedCategory(newCategory);
     }
   }, [categories]);
@@ -135,8 +134,8 @@ const todo = ({
               spellCheck="false"
               className={
                 tdoIsdone
-                  ? "todo__front__left__title checked"
-                  : "todo__front__left__title"
+                  ? "todo__front__left__title checked form-control"
+                  : "todo__front__left__title form-control"
               }
               onInput={(e) => setTodoTitle(e.target.value)}
               value={todoTitle}

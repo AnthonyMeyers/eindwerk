@@ -1,16 +1,25 @@
 {% extends 'base.html.twig' %}
+
 {% block stylesheets %}
     <link href="{{ asset('css/main.css') }}" type="text/css" rel="stylesheet" />
 {% endblock %}
+
 {% block title %}Register{% endblock %}
 
 {% block body %}
+
     {% for flash_error in app.flashes('verify_mail_error') %}
+
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+
     {% endfor %}
+
 <main class="register-main">
+
     {{ form_start(registrationForm, {'attr': {'class':'register-form'}}) }}
+
     <h1 class="register-title">Register</h1>
+
     {{ form_row(registrationForm.usrName, {
         row_attr: {'class':"register-sort"},
         'attr':{'class':'register-input'},
@@ -36,9 +45,13 @@
         attr:{'class':'register-checkbox'},
         label: 'Please agree to our terms of service',
         label_attr: {'class': 'register-label'}}) }}
+
     <button type="submit" class="btn register-button">Register</button>
+
     {{ form_end(registrationForm) }}
+
     <div class="register-description">
+
         <p>Welcome to the To Do List admin panel.</p>
         <p>Register here for an admin account</p>
     </div>

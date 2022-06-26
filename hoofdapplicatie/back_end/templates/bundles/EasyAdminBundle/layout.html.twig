@@ -1,17 +1,33 @@
 {% extends '@!EasyAdmin/layout.html.twig' %}
-{% set page_title_block_output %}{% block page_title %}TDL App admin{% endblock %}{% endset %}
+
+{% set page_title_block_output %}
+
+    {% block page_title %}
+
+        TDL App admin
+
+    {% endblock %}
+
+{% endset %}
 
 {% block head_favicon %}
+
     <link rel="shortcut icon" href="{{ asset("assets/tdl-logo.jpg") }}">
+
 {% endblock %}
 
 {% block main %}
+
     <h1 class="dashboard-title">The TDL application dashboard</h1>
+
     <section class="dashboard-text">
-    <p>Welcome administrator to the admin panel of the TDL application.</p>
+
+        <p>Welcome administrator to the admin panel of the TDL application.</p>
         <p>Please use the sidebar on the left to make your selection.</p>
         <p>Have a good day.</p>
+
     </section>
+
 {% endblock %}
 
 {% block content_footer %}

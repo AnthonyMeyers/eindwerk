@@ -35,14 +35,13 @@
     }
     &__left {
       &__title {
-        padding: 7.5px;
+        padding: 5px;
         resize: none;
         border: none;
         outline: none;
-        background: none;
         border: 1px solid black;
         border-radius: 10px;
-        background-color: lightgrey;
+        background-color: whitesmoke;
         width: 225px;
         &:disabled {
           border: none;
@@ -57,13 +56,12 @@
           padding: 0;
           height: 35px;
           cursor: pointer;
-          accent-color: lightgrey;
+          accent-color: #8da6da;
           &:before {
-            content: "";
             display: block;
             width: 100%;
             height: 100%;
-            background-color: lightgrey;
+            background-color: whitesmoke;
           }
           &:checked:before {
             display: none;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Todo from "./Todo";
 import { useGetAllUserTodosQuery } from "../../data/todoApi";
 import Status from "../standard_modules/App-Status";
@@ -24,7 +24,7 @@ const Todo_list = () => {
   return (
     <>
       <section className="container todos" onClick={handleEditbuttonClick}>
-        <h2 className="todos__title">Active todos:</h2>
+        <h2 className="todos__title">Active todos</h2>
         <Status isLoading={isLoadingTodos} isError={isErrorTodos} />
         {allUserTodos && allUserTodos.length > 0 && (
           <ul className="todos__todolist">

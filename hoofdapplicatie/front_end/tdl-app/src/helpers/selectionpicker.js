@@ -10,7 +10,7 @@ export function pickFromSelection(list = [], listitem = null, context) {
 }
 
 export function switchNextSelection(list = [], listitem = null, context) {
-  if (list.length > 0 && listitem != null) {
+  if (listitem && list.length > 0) {
     const maxId = list[list.length - 1].id;
     let isFound = false;
     if (listitem.id >= maxId) {
@@ -18,10 +18,12 @@ export function switchNextSelection(list = [], listitem = null, context) {
     }
     if (listitem.id < maxId) {
       const subject = list.reduce((selected, listing) => {
-        if (listing.id === listitem.id + 1 && !isFound) {
+        if (listing.id > listitem.id && !isFound) {
           isFound = true;
           return listing;
-        } else return selected;
+        }
+
+        return selected;
       }, null);
       return subject;
     }

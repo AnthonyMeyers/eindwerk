@@ -46,7 +46,7 @@ const Profile = () => {
   return (
     <>
       <section className="container profile">
-        <h2 className="profile__title">My profile:</h2>
+        <h2 className="profile__title">My profile</h2>
         <div className="profile__personalsheet">
           <div className="profile__personalsheet__imgholder">
             {profileData && "usrPicture" in profileData && (

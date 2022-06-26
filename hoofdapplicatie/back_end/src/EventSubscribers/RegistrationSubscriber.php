@@ -32,6 +32,7 @@ class RegistrationSubscriber implements EventSubscriberInterface
         ];
     }
 
+    //Stuurt een welkommail naar de gebruiker die zich net heeft geregistreerd
     public function sendRegistrationMail(ViewEvent $event): void
     {
 
@@ -43,7 +44,7 @@ class RegistrationSubscriber implements EventSubscriberInterface
         }
 
         $message = (new TemplatedEmail())
-            ->to("thony.meyers@gmail.com")
+            ->to($user->getUsrmail())
             ->subject('Welcome to the TDL Application')
             ->htmlTemplate('emails/register.html.twig')
             ->context(["username"=>$user->getUsername(),"emailaddress" => $user->getUsrMail()]);
@@ -51,6 +52,7 @@ class RegistrationSubscriber implements EventSubscriberInterface
         $this->mailer->send($message);
     }
 
+    //Bevestigd het verwijderen van de account
     public function sendRemoveAccountMail(ViewEvent $event): void
     {
         $user = $event->getControllerResult();
@@ -61,7 +63,7 @@ class RegistrationSubscriber implements EventSubscriberInterface
         }
 
         $message = (new TemplatedEmail())
-            ->to("thony.meyers@gmail.com")
+            ->to($user->getUsrmail())
             ->subject('Goodbye')
             ->htmlTemplate('emails/removeuser.html.twig')
             ->context(["username"=>$user->getUsername(),"emailaddress" => $user->getUsrMail()]);

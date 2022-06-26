@@ -21,7 +21,15 @@ const PhonebookHeader = () => {
     const error = errorhandlingcontacts("contact-title", contact);
     setErrorContact(error);
     if (!error) {
-      addOneContact({ userId, name: contact, token });
+      const contactStatus = addOneContact({ userId, name: contact, token });
+      contactStatus.then((resolve) => {
+        if ("error" in resolve) {
+          setErrorContact(
+            resolve?.error?.data?.violations[0]?.message ||
+              "An error has occured"
+          );
+        }
+      });
       setContact("");
     }
   }

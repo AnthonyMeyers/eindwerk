@@ -26,6 +26,7 @@ class Authenticator extends AbstractLoginFormAuthenticator
 
     private $router;
 
+    //Authenticeert de gebruiker en logt hem/haar in
     public function __construct(UrlGeneratorInterface $urlGenerator, RouterInterface $router)
     {
         $this->urlGenerator = $urlGenerator;
@@ -57,11 +58,11 @@ class Authenticator extends AbstractLoginFormAuthenticator
     {
 
 
-        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
+        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName))
+        {
             return new RedirectResponse($targetPath);
         }
         return new RedirectResponse($this->router->generate('app_admin_page'));
-        // For example:
 
     }
 

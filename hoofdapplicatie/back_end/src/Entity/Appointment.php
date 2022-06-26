@@ -7,25 +7,25 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\AppointmentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 /**
     * @ApiResource(
-    *     collectionOperations={
+    *   collectionOperations={
     *     "get" = {"access_control" = "is_granted('ROLE_USER')"},
     *     "post" = {"access_control" = "is_granted('ROLE_USER')"}},
     *
-    *      itemOperations={
+    *   itemOperations={
     *     "get" = {"access_control" = "is_granted('ROLE_USER')"},
     *     "patch"  = {"access_control" = "is_granted('ROLE_USER')"},
     *     "put" = {"access_control" = "is_granted('ROLE_USER')"},
     *     "delete"  = {"access_control" = "is_granted('ROLE_USER')"}},
     *
-    *   normalizationContext={"groups"={"appointments:read"}},
-    *   denormalizationContext={"groups"={"appointments:write"}})
+    *    normalizationContext={"groups"={"appointments:read"}},
+    *    denormalizationContext={"groups"={"appointments:write"}})
+    *
     *   @ORM\Entity(repositoryClass=AppointmentRepository::class)
     *   @ApiFilter(SearchFilter::class, properties={"apmUsr"})
     *   @ApiFilter(OrderFilter::class, properties={"apmStartsat"})
@@ -89,9 +89,10 @@ class Appointment
     {
         $this->apmCreatedat = new \DateTimeImmutable();
         $this->apmContact = new ArrayCollection();
-
     }
 
+    //Als de appointment opgevraagd wordt en de entity returnt het hele object, gebruikt de back end __toString
+    //om de titel op te vragen, magic method.
     public function __toString()
     {
         return $this->apmTitle;
@@ -112,16 +113,6 @@ class Appointment
         $this->apmTitle = trim(strip_tags($apmTitle));
         $this->setApmUpdatedat();
         return $this;
-    }
-
-    public function getApmCreatedat(): ?\DateTimeImmutable
-    {
-        return $this->apmCreatedat;
-    }
-
-    public function getApmUpdatedat(): ?\DateTimeInterface
-    {
-        return $this->apmUpdatedat;
     }
 
     public function getApmStartsat(): ?\DateTimeInterface
@@ -160,14 +151,6 @@ class Appointment
         return $this;
     }
 
-    private function setApmUpdatedat(): self
-    {
-        if($_SERVER["REQUEST_METHOD"] == "PATCH" ||$_SERVER["REQUEST_METHOD"] == "PUT" ){
-            $this->apmUpdatedat = new \DateTimeImmutable();
-        }
-        return $this;
-    }
-
     public function getApmCnt(): ?Contact
     {
         return $this->apmCnt;
@@ -178,6 +161,25 @@ class Appointment
 
         $this->apmCnt = $apmCnt;
         $this->setApmUpdatedat();
+        return $this;
+
+    }
+
+    public function getApmCreatedat(): ?\DateTimeImmutable
+    {
+        return $this->apmCreatedat;
+    }
+
+    public function getApmUpdatedat(): ?\DateTimeInterface
+    {
+        return $this->apmUpdatedat;
+    }
+
+    private function setApmUpdatedat(): self
+    {
+        if($_SERVER["REQUEST_METHOD"] == "PATCH" ||$_SERVER["REQUEST_METHOD"] == "PUT" ){
+            $this->apmUpdatedat = new \DateTimeImmutable();
+        }
         return $this;
     }
 

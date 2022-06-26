@@ -17,8 +17,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
 
 body {
-  background-color: #86b6ee;
   font-family: "Permanent Marker", Arial, Helvetica, sans-serif;
+  background: rgb(204, 220, 254);
+  background: linear-gradient(
+    0deg,
+    rgba(204, 220, 254, 1) 22%,
+    rgba(178, 185, 253, 1) 86%
+  );
+  min-height: 100vh;
 }
 
 .container {
@@ -32,13 +38,15 @@ li {
 }
 h1 {
   color: #0e3865;
-  font-size: 25px;
+  font-size: 35px;
 }
 
 h2 {
-  font-size: 20px;
+  font-size: 30px;
   margin: 20px 0 40px 0;
-  color: #00638f;
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: italic;
 }
 
 h3 {
@@ -117,12 +125,13 @@ input {
   font-family: Arial, serif, Helvetica, sans-serif;
   font-style: italic;
   font-size: 18px;
+  background-color: whitesmoke;
 }
 
 .header {
   display: flex;
-  background-color: #008fa0;
-  border-bottom: 5px solid #00b896;
+  background-color: #8da6da;
+  border-bottom: 5px solid #4972c6;
   flex-direction: column;
   border-bottom-left-radius: 25px;
   border-bottom-right-radius: 25px;
@@ -130,11 +139,13 @@ input {
     display: flex;
     flex-direction: column;
     padding: 5px;
+    padding-top: 20px;
+    padding-left: 25px;
     &__title {
       margin: 10px;
       font-size: 25px;
       font-weight: bolder;
-      color: $cyan-800;
+      color: $cyan-900;
     }
   }
   &__todoform {
@@ -156,6 +167,7 @@ input {
         padding: 10px;
         border-radius: 5px;
         border: none;
+        background-color: whitesmoke;
       }
       &__text {
         font-size: 20px;
@@ -168,7 +180,7 @@ input {
 
       background-color: transparent;
       border-color: transparent;
-      color: white;
+      color: whitesmoke;
       &:after {
         content: "\ea0a";
         font-family: "icomoon";

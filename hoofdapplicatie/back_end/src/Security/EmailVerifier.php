@@ -16,6 +16,8 @@ class EmailVerifier
     private $mailer;
     private $entityManager;
 
+    //File bijgehouden voor toekomstige referentie, deze is momenteel NIET in gebruik.
+    //Het isverified veld bestaat momenteel niet
     public function __construct(VerifyEmailHelperInterface $helper, MailerInterface $mailer, EntityManagerInterface $manager)
     {
         $this->verifyEmailHelper = $helper;

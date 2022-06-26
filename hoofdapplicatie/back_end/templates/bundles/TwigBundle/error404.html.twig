@@ -1,0 +1,23 @@
+{# templates/bundles/TwigBundle/Exception/error404.html.twig #}
+{% extends 'base.html.twig' %}
+
+    {% block stylesheets %}
+
+        <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
+
+    {% endblock %}
+
+{% block body %}
+
+    <main class="error-main">
+
+        <h1>Page not found</h1>
+
+        <p>
+            The requested page couldn't be located. Checkout for any URL
+            misspelling or <a href="{{ path('app_login') }}">return to the login page</a>.
+        </p>
+
+    </main>
+
+{% endblock %}

@@ -115,7 +115,7 @@ const Appointment = ({ appointment, contacts, activeItem }) => {
               <span className="appointment__front__label__text">Title:</span>
               <input
                 type="text"
-                className="appointment__front__input"
+                className="appointment__front__input form-control"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 disabled={disabled}
@@ -134,7 +134,7 @@ const Appointment = ({ appointment, contacts, activeItem }) => {
                 <select
                   id={`select-${id}`}
                   disabled={disabled}
-                  className="appointment__front__select"
+                  className="appointment__front__select custom-select"
                   value={contactPerson}
                   onChange={(e) => setContactPerson(e.target.value)}
                 >
@@ -160,7 +160,7 @@ const Appointment = ({ appointment, contacts, activeItem }) => {
               <input
                 id={`startdate-${id}`}
                 type="date"
-                className="appointment__front__input appointment__front__input-time"
+                className="appointment__front__input appointment__front__input-time form-control "
                 value={dateStarts}
                 onChange={(e) => setDateStarts(e.target.value)}
                 disabled={disabled}
@@ -177,7 +177,7 @@ const Appointment = ({ appointment, contacts, activeItem }) => {
               <input
                 id={`starttime-${id}`}
                 type="time"
-                className="appointment__front__input appointment__front__input-time"
+                className="appointment__front__input appointment__front__input-time form-control "
                 value={timeStarts}
                 onChange={(e) => setTimeStarts(e.target.value)}
                 disabled={disabled}
@@ -194,7 +194,7 @@ const Appointment = ({ appointment, contacts, activeItem }) => {
               <input
                 id={`enddate-${id}`}
                 type="date"
-                className="appointment__front__input appointment__front__input-time"
+                className="appointment__front__input appointment__front__input-time form-control "
                 value={dateStops}
                 onChange={(e) => setDateStops(e.target.value)}
                 disabled={disabled}
@@ -210,7 +210,7 @@ const Appointment = ({ appointment, contacts, activeItem }) => {
               <input
                 id={`endtime-${id}`}
                 type="time"
-                className="appointment__front__input appointment__front__input-time"
+                className="appointment__front__input appointment__front__input-time form-control "
                 value={timeStops}
                 onChange={(e) => setTimeStops(e.target.value)}
                 disabled={disabled}
@@ -223,19 +223,19 @@ const Appointment = ({ appointment, contacts, activeItem }) => {
           >
             <button
               type="submit"
-              className="appointment__front__buttongroup__button btn btn-outline-secondary"
+              className="appointment__front__buttongroup__button btn btn-primary"
             >
               Save appointment
             </button>
             <button
-              className="appointment__front__buttongroup__button btn btn-outline-secondary"
+              className="appointment__front__buttongroup__button btn btn-primary"
               onClick={() => setShowDelete(!showDelete)}
             >
               {" "}
               Delete appointment
             </button>
             <button
-              className="appointment__front__buttongroup__button btn btn-outline-secondary"
+              className="appointment__front__buttongroup__button btn btn-primary"
               onClick={() => setShowContact(!showContact)}
             >
               show contact details

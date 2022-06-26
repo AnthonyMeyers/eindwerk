@@ -11,10 +11,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
      * @ApiResource(
-     *      collectionOperations={
-     *      "get" = {"access_control" = "is_granted('ROLE_USER')"}},
+     *  collectionOperations={
+     *     "get" = {"access_control" = "is_granted('ROLE_USER')"}},
      *
-     *   itemOperations={"get" = {"access_control" = "is_granted('ROLE_USER')"}},
+     *  itemOperations={
+ *         "get" = {"access_control" = "is_granted('ROLE_USER')"}},
      *
      *  normalizationContext={"groups"={"priorities:read"}},
      *  denormalizationContext={"groups"={"priorities:write"}}))
@@ -53,8 +54,6 @@ class Priority
      */
     private $todos;
 
-
-
     public function __construct()
     {
         $this->todos = new ArrayCollection();
@@ -78,9 +77,13 @@ class Priority
     public function setPtyRating(int $ptyRating): self
     {
         if(!is_numeric($ptyRating)){
-        throw new \Exception("The rating has to be a number.");
+
+            throw new \Exception("The rating has to be a number.");
+
         }
+
         $this->ptyRating = trim($ptyRating);
+
         return $this;
 
     }
@@ -119,8 +122,11 @@ class Priority
     public function addTodo(Todo $todo): self
     {
         if (!$this->todos->contains($todo)) {
+
             $this->todos[] = $todo;
+
             $todo->setTdoPty($this);
+
         }
 
         return $this;
@@ -131,7 +137,9 @@ class Priority
         if ($this->todos->removeElement($todo)) {
             // set the owning side to null (unless already changed)
             if ($todo->getTdoPty() === $this) {
+
                 $todo->setTdoPty(null);
+                
             }
         }
 

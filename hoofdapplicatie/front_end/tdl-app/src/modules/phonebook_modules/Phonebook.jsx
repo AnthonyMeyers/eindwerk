@@ -28,7 +28,7 @@ const Phonebook = () => {
         className="phonebook container"
         onClick={handleResetcomponentsClick}
       >
-        <h2 className="phonebook__title">Contacts:</h2>
+        <h2 className="phonebook__title">Contacts</h2>
         <Status isLoading={isLoading} isError={isError} />
         {contacts && contacts.length > 0 && (
           <div className={"phonebook__list"}>
