@@ -7,7 +7,10 @@ const Status = ({ isLoading, isError }) => {
             <span className="loadingholder__imgholder__text">Loading...</span>
             <img
               className="loadingholder__imgholder__loading"
-              src="./src/images/loading.gif"
+              src={
+                import.meta.env.VITE_NAVLINK_STANDARD +
+                "/src/images/loading.gif"
+              }
             />
           </div>
         </div>
