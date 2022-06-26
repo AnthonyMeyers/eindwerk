@@ -4,7 +4,7 @@ import { useUpdateOneContactMutation } from "../../data/todoApi";
 import { parseCookies } from "nookies";
 import { errorhandlingcontacts } from "../../helpers/errorhandling";
 import Errormessage from "../extra_modules/Errormessage";
-//test
+
 const PhonebookDetails = ({
   contact: {
     cntCity,
@@ -73,11 +73,13 @@ const PhonebookDetails = ({
       });
       statusContacts.then((resolve) => {
         if ("error" in resolve) {
-          setErrorDetails(
-            resolve?.error?.data?.violations[0]?.message != undefined
-              ? resolve?.error?.data?.violations[0]?.message
-              : "An error has occured."
-          );
+          if (
+            "data" in resolve.error &&
+            "violations" in resolve.error.data &&
+            resolve.error.data.violations.length > 0
+          ) {
+            setErrorDetails(resolve?.error?.data?.violations[0]?.message);
+          } else setErrorDetails("An error has occured");
         }
       });
     }

@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const api = createApi({
   reducerPath: "todoApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://wdev2.be/fs_anthonym/eindwerk/api",
+    baseUrl: import.meta.env.VITE_API_BASEURL,
   }),
   tagTypes: ["TODOLIST", "APPOINTMENTLIST", "CONTACTLIST", "PROFILEPICTURE"],
   refetchOnReconnect: true,

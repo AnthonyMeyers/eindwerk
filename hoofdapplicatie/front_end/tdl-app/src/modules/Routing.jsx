@@ -16,15 +16,31 @@ export default function Routing() {
   return (
     <Routes>
       {/*Open routes */}
-      <Route exact path="/login" element={<Login />} />
-      <Route exact path="/register" element={<Register />} />
-      <Route exact path="/" element={<Home />} />
-      <Route exact path="/photogallery" element={<Photogallery />} />
+      <Route
+        exact
+        path={import.meta.env.VITE_NAVLINK_STANDARD + "/login"}
+        element={<Login />}
+      />
+      <Route
+        exact
+        path={import.meta.env.VITE_NAVLINK_STANDARD + "/register"}
+        element={<Register />}
+      />
+      <Route
+        exact
+        path={import.meta.env.VITE_NAVLINK_STANDARD + "/"}
+        element={<Home />}
+      />
+      <Route
+        exact
+        path={import.meta.env.VITE_NAVLINK_STANDARD + "/photogallery"}
+        element={<Photogallery />}
+      />
 
       {/*Protected routes, only when user id known */}
       <Route
         exact
-        path="/splashscreen"
+        path={import.meta.env.VITE_NAVLINK_STANDARD + "/splashscreen"}
         element={
           <ProtectedRoute>
             <SplashScreen />
@@ -33,7 +49,7 @@ export default function Routing() {
       />
       <Route
         exact
-        path="/todos"
+        path={import.meta.env.VITE_NAVLINK_STANDARD + "/todos"}
         element={
           <ProtectedRoute>
             <Todo_list />
@@ -42,7 +58,7 @@ export default function Routing() {
       />
       <Route
         exact
-        path="/appointments"
+        path={import.meta.env.VITE_NAVLINK_STANDARD + "/appointments"}
         element={
           <ProtectedRoute>
             <Appointments />
@@ -51,7 +67,7 @@ export default function Routing() {
       />
       <Route
         exact
-        path="/phonebook"
+        path={import.meta.env.VITE_NAVLINK_STANDARD + "/phonebook"}
         element={
           <ProtectedRoute>
             <Phonebook />
@@ -60,7 +76,7 @@ export default function Routing() {
       />
       <Route
         exact
-        path="/profile"
+        path={import.meta.env.VITE_NAVLINK_STANDARD + "/profile"}
         element={
           <ProtectedRoute>
             <Profile />
@@ -69,7 +85,10 @@ export default function Routing() {
       />
 
       {/* ROUTE NOT FOUND*/}
-      <Route path="/*" element={<NotFound />} />
+      <Route
+        path={import.meta.env.VITE_NAVLINK_STANDARD + "/*"}
+        element={<NotFound />}
+      />
     </Routes>
   );
 }
