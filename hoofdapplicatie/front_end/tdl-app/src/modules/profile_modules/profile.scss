@@ -7,9 +7,9 @@
     background: lightgray;
     border-radius: 20px;
     padding: 20px;
-    gap: 50px;
     background-color: #75a0ad;
     &__imgholder {
+      margin-right: 50px;
       max-width: 300px;
       border-radius: 20px;
       overflow: hidden;
@@ -25,11 +25,15 @@
       flex-wrap: wrap;
       flex-direction: column;
       justify-content: center;
-      gap: 20px;
+
       &__buttongroup {
+        margin-top: 20px;
         display: flex;
         flex-wrap: wrap;
-        gap: 20px;
+        &__button {
+          margin-top: 20px;
+          margin-right: 20px;
+        }
       }
     }
   }
