@@ -43,10 +43,12 @@ const AppHeaderAppointments = () => {
       "appointment-title",
       appointmentTitle
     );
+
     setErrorAppointment(appointError);
     if (!appointError) {
       const start = new Date(startDate + " " + startTime).getTime();
       const stop = new Date(stopDate + " " + stopTime).getTime();
+
       if (start <= stop && appointmentTitle.length >= 4) {
         const statusAppointment = addOneAppointment({
           id: userId,
@@ -103,10 +105,12 @@ const AppHeaderAppointments = () => {
               value={startDate}
             />
             <input
-              v-model="hours"
-              step="900"
-              min="00:00"
-              max="12:00"
+              className="header__todoform__label__todoinput header__todoform-appointments__label__todoinput"
+              type="datetime"
+              onChange={(e) => setStartDate(e.target.value)}
+              value={startDate}
+            />
+            <input
               className="header__todoform__label__todoinput header__todoform-appointments__label__todoinput"
               type="time"
               onChange={(e) => setStartTime(e.target.value)}
@@ -124,10 +128,6 @@ const AppHeaderAppointments = () => {
               value={stopDate}
             />
             <input
-              v-model="hours"
-              step="900"
-              min="00:00"
-              max="12:00"
               className="header__todoform__label__todoinput header__todoform-appointments__label__todoinput"
               type="time"
               onChange={(e) => setStopTime(e.target.value)}

@@ -181,10 +181,6 @@ const Appointment = ({ appointment, contacts, activeItem }) => {
                 Start time
               </span>
               <input
-                v-model="hours"
-                step="900"
-                min="00:00"
-                max="12:00"
                 id={`starttime-${id}`}
                 type="time"
                 className="appointment__front__input appointment__front__input-time form-control "
@@ -218,10 +214,6 @@ const Appointment = ({ appointment, contacts, activeItem }) => {
             >
               <span className="appointment__front__label__text">End time</span>
               <input
-                v-model="hours"
-                step="900"
-                min="00:00"
-                max="12:00"
                 id={`endtime-${id}`}
                 type="time"
                 className="appointment__front__input appointment__front__input-time form-control "
