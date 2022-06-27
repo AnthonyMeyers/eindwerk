@@ -73,6 +73,7 @@ const Profile = () => {
                 <img
                   className="profile__personalsheet__imgholder__img"
                   src={profileData.usrPicture}
+                  alt="profile pic"
                 />
               )}
             {!profileData ||
