@@ -72,9 +72,12 @@ const PhonebookDetails = ({
           mail,
           token,
         });
+
         statusContacts.then((resolve) => {
+          console.log(resolve);
           if ("error" in resolve) {
             if ("data" in resolve.error && "violations" in resolve.error.data) {
+              console.log(resolve);
               setErrorDetails(resolve?.error?.data?.violations[0]?.message);
             } else setErrorDetails("An error has occured");
           }

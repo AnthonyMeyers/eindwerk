@@ -114,49 +114,6 @@
           },
           {
             "objectType": "Table_LOGICAL",
-            "name": "Priority",
-            "comment": "",
-            "oldName": "",
-            "fields": [
-              {
-                "objectType": "TableField_LOGICAL",
-                "name": "pty_id",
-                "type": "INTEGER",
-                "length": 9,
-                "decimals": 0,
-                "isNullable": false,
-                "defaultType": "None",
-                "defaultValue": "",
-                "comment": "",
-                "oldName": "pty_id"
-              },
-              {
-                "objectType": "TableField_LOGICAL",
-                "name": "pty_rating",
-                "type": "INTEGER",
-                "length": 2,
-                "decimals": 0,
-                "isNullable": false,
-                "defaultType": "None",
-                "defaultValue": "",
-                "comment": "",
-                "oldName": "pty_rating"
-              }
-            ],
-            "foreignKeys": [],
-            "indexes": [],
-            "uniques": [],
-            "primaryKey": {
-              "objectType": "PrimaryKey_LOGICAL",
-              "name": "",
-              "fields": [
-                "pty_id"
-              ],
-              "oldName": ""
-            }
-          },
-          {
-            "objectType": "Table_LOGICAL",
             "name": "Reminder",
             "comment": "",
             "oldName": "",
@@ -212,13 +169,13 @@
           },
           {
             "objectType": "Table_LOGICAL",
-            "name": "Appointment",
+            "name": "Appointment_contact",
             "comment": "",
             "oldName": "",
             "fields": [
               {
                 "objectType": "TableField_LOGICAL",
-                "name": "apm_id",
+                "name": "apm_cnt_id",
                 "type": "INTEGER",
                 "length": 9,
                 "decimals": 0,
@@ -226,118 +183,76 @@
                 "defaultType": "None",
                 "defaultValue": "",
                 "comment": "",
-                "oldName": "apm_id"
+                "oldName": "apm_cnt_id"
               },
               {
                 "objectType": "TableField_LOGICAL",
-                "name": "apm_usr_id",
+                "name": "cnt_apm_id",
                 "type": "INTEGER",
                 "length": 9,
                 "decimals": 0,
-                "isNullable": true,
-                "defaultType": "None",
-                "defaultValue": "",
-                "comment": "",
-                "oldName": "apm_usr_id"
-              },
-              {
-                "objectType": "TableField_LOGICAL",
-                "name": "apm_title",
-                "type": "VARCHAR",
-                "length": 200,
-                "decimals": 0,
                 "isNullable": false,
                 "defaultType": "None",
                 "defaultValue": "",
                 "comment": "",
-                "oldName": "apm_title"
-              },
-              {
-                "objectType": "TableField_LOGICAL",
-                "name": "apm_description",
-                "type": "VARCHAR",
-                "length": 255,
-                "decimals": 0,
-                "isNullable": true,
-                "defaultType": "None",
-                "defaultValue": "",
-                "comment": "",
-                "oldName": "apm_description"
-              },
-              {
-                "objectType": "TableField_LOGICAL",
-                "name": "apm_createdAt",
-                "type": "DATETIME",
-                "length": 20,
-                "decimals": 0,
-                "isNullable": false,
-                "defaultType": "None",
-                "defaultValue": "",
-                "comment": "",
-                "oldName": "apm_createdAt"
-              },
-              {
-                "objectType": "TableField_LOGICAL",
-                "name": "apm_updatedAt",
-                "type": "DATETIME",
-                "length": 20,
-                "decimals": 0,
-                "isNullable": true,
-                "defaultType": "None",
-                "defaultValue": "",
-                "comment": "",
-                "oldName": "apm_updatedAt"
-              },
-              {
-                "objectType": "TableField_LOGICAL",
-                "name": "apm_startsAt",
-                "type": "DATETIME",
-                "length": 20,
-                "decimals": 0,
-                "isNullable": false,
-                "defaultType": "None",
-                "defaultValue": "",
-                "comment": "",
-                "oldName": "apm_startsAt"
-              },
-              {
-                "objectType": "TableField_LOGICAL",
-                "name": "apm_StopsAt",
-                "type": "DATETIME",
-                "length": 20,
-                "decimals": 0,
-                "isNullable": false,
-                "defaultType": "None",
-                "defaultValue": "",
-                "comment": "",
-                "oldName": "apm_StopsAt"
+                "oldName": "cnt_apm_id"
               }
             ],
-            "foreignKeys": [
+            "foreignKeys": [],
+            "indexes": [],
+            "uniques": []
+          },
+          {
+            "objectType": "Table_LOGICAL",
+            "name": "Priority",
+            "comment": "",
+            "oldName": "",
+            "fields": [
               {
-                "objectType": "ForeignKey_LOGICAL",
-                "name": "fk_Schedule_Schedule_1",
-                "fields": [
-                  "apm_id"
-                ],
-                "referencedSchema": "default",
-                "referencedTable": "Reminder",
-                "referencedFields": [
-                  "rmr_apm_id"
-                ],
-                "sourceCardinality": "ZeroOrManyRelationship",
-                "targetCardinality": "OneAndOnlyOneRelationship",
+                "objectType": "TableField_LOGICAL",
+                "name": "pty_id",
+                "type": "INTEGER",
+                "length": 9,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "None",
+                "defaultValue": "",
                 "comment": "",
-                "oldName": ""
+                "oldName": "pty_id"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "pty_rating",
+                "type": "INTEGER",
+                "length": 2,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "None",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "pty_rating"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "pty_title",
+                "type": "VARCHAR",
+                "length": 100,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "None",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "pty_title"
               }
             ],
+            "foreignKeys": [],
             "indexes": [],
             "uniques": [],
             "primaryKey": {
               "objectType": "PrimaryKey_LOGICAL",
               "name": "",
               "fields": [
-                "apm_id"
+                "pty_id"
               ],
               "oldName": ""
             }
@@ -366,7 +281,7 @@
                 "type": "VARCHAR",
                 "length": 100,
                 "decimals": 0,
-                "isNullable": true,
+                "isNullable": false,
                 "defaultType": "None",
                 "defaultValue": "",
                 "comment": "",
@@ -378,11 +293,23 @@
                 "type": "VARCHAR",
                 "length": 100,
                 "decimals": 0,
-                "isNullable": true,
+                "isNullable": false,
                 "defaultType": "None",
                 "defaultValue": "",
                 "comment": "",
                 "oldName": "cty_class"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "cty_isavailable",
+                "type": "TINYINT",
+                "length": 1,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "None",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "cty_isavailable"
               }
             ],
             "foreignKeys": [],
@@ -393,6 +320,166 @@
               "name": "",
               "fields": [
                 "cty_id"
+              ],
+              "oldName": ""
+            }
+          },
+          {
+            "objectType": "Table_LOGICAL",
+            "name": "User",
+            "comment": "",
+            "oldName": "",
+            "fields": [
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "usr_id",
+                "type": "INT",
+                "length": 9,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "None",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "usr_id"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "usr_name",
+                "type": "VARCHAR",
+                "length": 25,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "None",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "usr_name"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "usr_roles",
+                "type": "VARCHAR",
+                "length": 255,
+                "decimals": 0,
+                "isNullable": true,
+                "defaultType": "None",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "usr_roles"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "usr_password",
+                "type": "VARCHAR",
+                "length": 255,
+                "decimals": 0,
+                "isNullable": true,
+                "defaultType": "None",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "usr_password"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "usr_hasagreed",
+                "type": "TINYINT",
+                "length": 1,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "None",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "usr_hasagreed"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "usr_mail",
+                "type": "VARCHAR",
+                "length": 255,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "None",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "usr_mail"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "usr_picture",
+                "type": "VARCHAR",
+                "length": 255,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "None",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "usr_picture"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "usr_createdat",
+                "type": "DATETIME",
+                "length": 20,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "None",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "usr_createdat"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "usr_updatedat",
+                "type": "DATETIME",
+                "length": 20,
+                "decimals": 0,
+                "isNullable": true,
+                "defaultType": "None",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "usr_updatedat"
+              }
+            ],
+            "foreignKeys": [
+              {
+                "objectType": "ForeignKey_LOGICAL",
+                "name": "fk_User_User_1",
+                "fields": [
+                  "usr_id"
+                ],
+                "referencedSchema": "default",
+                "referencedTable": "Todo",
+                "referencedFields": [
+                  "tdo_usr_id"
+                ],
+                "sourceCardinality": "OneAndOnlyOneRelationship",
+                "targetCardinality": "ZeroOrManyRelationship",
+                "comment": "",
+                "oldName": ""
+              },
+              {
+                "objectType": "ForeignKey_LOGICAL",
+                "name": "fk_User_User_2",
+                "fields": [
+                  "usr_id"
+                ],
+                "referencedSchema": "default",
+                "referencedTable": "Appointment",
+                "referencedFields": [
+                  "apm_usr_id"
+                ],
+                "sourceCardinality": "OneAndOnlyOneRelationship",
+                "targetCardinality": "ZeroOrManyRelationship",
+                "comment": "",
+                "oldName": ""
+              }
+            ],
+            "indexes": [],
+            "uniques": [],
+            "primaryKey": {
+              "objectType": "PrimaryKey_LOGICAL",
+              "name": "",
+              "fields": [
+                "usr_id"
               ],
               "oldName": ""
             }
@@ -465,31 +552,19 @@
               },
               {
                 "objectType": "TableField_LOGICAL",
-                "name": "tdo_description",
-                "type": "varchar",
-                "length": 255,
-                "decimals": 0,
-                "isNullable": true,
-                "defaultType": "None",
-                "defaultValue": "",
-                "comment": "",
-                "oldName": "tdo_description"
-              },
-              {
-                "objectType": "TableField_LOGICAL",
-                "name": "tdo_isDone",
-                "type": "INTEGER",
+                "name": "tdo_isdone",
+                "type": "TINYINT",
                 "length": 1,
                 "decimals": 0,
                 "isNullable": false,
                 "defaultType": "None",
                 "defaultValue": "",
                 "comment": "",
-                "oldName": "tdo_isDone"
+                "oldName": "tdo_isdone"
               },
               {
                 "objectType": "TableField_LOGICAL",
-                "name": "tdo_createdAt",
+                "name": "tdo_createdat",
                 "type": "DATETIME",
                 "length": 20,
                 "decimals": 0,
@@ -497,11 +572,11 @@
                 "defaultType": "None",
                 "defaultValue": "",
                 "comment": "",
-                "oldName": "tdo_createdAt"
+                "oldName": "tdo_createdat"
               },
               {
                 "objectType": "TableField_LOGICAL",
-                "name": "tdo_updatedAt",
+                "name": "tdo_updatedat",
                 "type": "DATETIME",
                 "length": 20,
                 "decimals": 0,
@@ -509,19 +584,7 @@
                 "defaultType": "None",
                 "defaultValue": "",
                 "comment": "",
-                "oldName": "tdo_updatedAt"
-              },
-              {
-                "objectType": "TableField_LOGICAL",
-                "name": "tdo_stopsAt",
-                "type": "DATETIME",
-                "length": 20,
-                "decimals": 0,
-                "isNullable": true,
-                "defaultType": "None",
-                "defaultValue": "",
-                "comment": "",
-                "oldName": "tdo_stopsAt"
+                "oldName": "tdo_updatedat"
               }
             ],
             "foreignKeys": [
@@ -591,25 +654,49 @@
           },
           {
             "objectType": "Table_LOGICAL",
-            "name": "User",
+            "name": "Appointment",
             "comment": "",
             "oldName": "",
             "fields": [
               {
                 "objectType": "TableField_LOGICAL",
-                "name": "usr_id",
-                "type": "INT",
+                "name": "apm_id",
+                "type": "INTEGER",
                 "length": 9,
                 "decimals": 0,
                 "isNullable": false,
                 "defaultType": "None",
                 "defaultValue": "",
                 "comment": "",
-                "oldName": "usr_id"
+                "oldName": "apm_id"
               },
               {
                 "objectType": "TableField_LOGICAL",
-                "name": "usr_name",
+                "name": "apm_usr_id",
+                "type": "INTEGER",
+                "length": 9,
+                "decimals": 0,
+                "isNullable": true,
+                "defaultType": "None",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "apm_usr_id"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "apm_cnt_id",
+                "type": "INTEGER",
+                "length": 9,
+                "decimals": 0,
+                "isNullable": true,
+                "defaultType": "None",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "apm_cnt_id"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "apm_title",
                 "type": "VARCHAR",
                 "length": 100,
                 "decimals": 0,
@@ -617,47 +704,11 @@
                 "defaultType": "None",
                 "defaultValue": "",
                 "comment": "",
-                "oldName": "usr_name"
+                "oldName": "apm_title"
               },
               {
                 "objectType": "TableField_LOGICAL",
-                "name": "usr_mail",
-                "type": "VARCHAR",
-                "length": 100,
-                "decimals": 0,
-                "isNullable": false,
-                "defaultType": "None",
-                "defaultValue": "",
-                "comment": "",
-                "oldName": "usr_mail"
-              },
-              {
-                "objectType": "TableField_LOGICAL",
-                "name": "usr_password",
-                "type": "VARCHAR",
-                "length": 150,
-                "decimals": 0,
-                "isNullable": true,
-                "defaultType": "None",
-                "defaultValue": "",
-                "comment": "",
-                "oldName": "usr_password"
-              },
-              {
-                "objectType": "TableField_LOGICAL",
-                "name": "usr_key",
-                "type": "VARCHAR",
-                "length": 20,
-                "decimals": 0,
-                "isNullable": false,
-                "defaultType": "None",
-                "defaultValue": "",
-                "comment": "",
-                "oldName": "usr_key"
-              },
-              {
-                "objectType": "TableField_LOGICAL",
-                "name": "usr_createdAt",
+                "name": "apm_createdat",
                 "type": "DATETIME",
                 "length": 20,
                 "decimals": 0,
@@ -665,11 +716,11 @@
                 "defaultType": "None",
                 "defaultValue": "",
                 "comment": "",
-                "oldName": "usr_createdAt"
+                "oldName": "apm_createdat"
               },
               {
                 "objectType": "TableField_LOGICAL",
-                "name": "usr_updatedAt",
+                "name": "apm_updatedat",
                 "type": "DATETIME",
                 "length": 20,
                 "decimals": 0,
@@ -677,45 +728,59 @@
                 "defaultType": "None",
                 "defaultValue": "",
                 "comment": "",
-                "oldName": "usr_updatedAt"
+                "oldName": "apm_updatedat"
               },
               {
                 "objectType": "TableField_LOGICAL",
-                "name": "usr_picture",
-                "type": "VARCHAR",
-                "length": 255,
+                "name": "apm_startsat",
+                "type": "DATETIME",
+                "length": 20,
                 "decimals": 0,
                 "isNullable": false,
                 "defaultType": "None",
                 "defaultValue": "",
                 "comment": "",
-                "oldName": "usr_picture"
+                "oldName": "apm_startsat"
               },
               {
                 "objectType": "TableField_LOGICAL",
-                "name": "usr_hasAgreed",
-                "type": "",
-                "length": 0,
+                "name": "apm_Stopsat",
+                "type": "DATETIME",
+                "length": 20,
                 "decimals": 0,
                 "isNullable": false,
                 "defaultType": "None",
                 "defaultValue": "",
                 "comment": "",
-                "oldName": "usr_hasAgreed"
+                "oldName": "apm_Stopsat"
               }
             ],
             "foreignKeys": [
               {
                 "objectType": "ForeignKey_LOGICAL",
-                "name": "fk_User_User_1",
+                "name": "fk_Schedule_Schedule_1",
                 "fields": [
-                  "usr_id"
+                  "apm_id"
                 ],
                 "referencedSchema": "default",
-                "referencedTable": "Todo",
+                "referencedTable": "Reminder",
                 "referencedFields": [
-                  "tdo_usr_id"
+                  "rmr_apm_id"
                 ],
+                "sourceCardinality": "ZeroOrManyRelationship",
+                "targetCardinality": "OneAndOnlyOneRelationship",
+                "comment": "",
+                "oldName": ""
+              },
+              {
+                "objectType": "ForeignKey_LOGICAL",
+                "name": "fk_Appointment_Appointment_1",
+                "fields": [
+                  "apm_cnt_id"
+                ],
+                "referencedSchema": "default",
+                "referencedTable": "Appointment_contact",
+                "referencedFields": [],
                 "sourceCardinality": "OneAndOnlyOneRelationship",
                 "targetCardinality": "ZeroOrManyRelationship",
                 "comment": "",
@@ -723,17 +788,17 @@
               },
               {
                 "objectType": "ForeignKey_LOGICAL",
-                "name": "fk_User_User_2",
+                "name": "fk_Appointment_Appointment_2",
                 "fields": [
-                  "usr_id"
+                  "apm_cnt_id"
                 ],
                 "referencedSchema": "default",
-                "referencedTable": "Appointment",
+                "referencedTable": "Contact",
                 "referencedFields": [
-                  "apm_usr_id"
+                  "cnt_id"
                 ],
-                "sourceCardinality": "OneAndOnlyOneRelationship",
-                "targetCardinality": "ZeroOrManyRelationship",
+                "sourceCardinality": "ZeroOrManyRelationship",
+                "targetCardinality": "ZeroOrOneRelationship",
                 "comment": "",
                 "oldName": ""
               }
@@ -744,10 +809,172 @@
               "objectType": "PrimaryKey_LOGICAL",
               "name": "",
               "fields": [
-                "usr_id"
+                "apm_id"
               ],
               "oldName": ""
             }
+          },
+          {
+            "objectType": "Table_LOGICAL",
+            "name": "Contact",
+            "comment": "",
+            "oldName": "",
+            "fields": [
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "cnt_id",
+                "type": "INTEGER",
+                "length": 9,
+                "decimals": 9,
+                "isNullable": true,
+                "defaultType": "None",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "cnt_id"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "cnt_user_id",
+                "type": "INTEGER",
+                "length": 9,
+                "decimals": 0,
+                "isNullable": true,
+                "defaultType": "None",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "cnt_user_id"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "cnt_name",
+                "type": "VARCHAR",
+                "length": 255,
+                "decimals": 0,
+                "isNullable": true,
+                "defaultType": "None",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "cnt_name"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "cnt_tel",
+                "type": "VARCHAR",
+                "length": 20,
+                "decimals": 0,
+                "isNullable": true,
+                "defaultType": "None",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "cnt_tel"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "cnt_street",
+                "type": "VARCHAR",
+                "length": 255,
+                "decimals": 0,
+                "isNullable": true,
+                "defaultType": "None",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "cnt_street"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "cnt_postal",
+                "type": "VARCHAR",
+                "length": 50,
+                "decimals": 0,
+                "isNullable": true,
+                "defaultType": "None",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "cnt_postal"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "cnt_city",
+                "type": "VARCHAR",
+                "length": 100,
+                "decimals": 0,
+                "isNullable": true,
+                "defaultType": "None",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "cnt_city"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "cnt_mail",
+                "type": "VARCHAR",
+                "length": 200,
+                "decimals": 0,
+                "isNullable": true,
+                "defaultType": "None",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "cnt_mail"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "cnt_createdat",
+                "type": "DATETIME",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": true,
+                "defaultType": "None",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "cnt_createdat"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "cnt_updatedat",
+                "type": "DATETIME",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": true,
+                "defaultType": "None",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "cnt_updatedat"
+              }
+            ],
+            "foreignKeys": [
+              {
+                "objectType": "ForeignKey_LOGICAL",
+                "name": "fk_contact_list_contact_list_1",
+                "fields": [
+                  "cnt_usr_id"
+                ],
+                "referencedSchema": "default",
+                "referencedTable": "User",
+                "referencedFields": [
+                  "usr_id"
+                ],
+                "sourceCardinality": "ZeroOrManyRelationship",
+                "targetCardinality": "OneAndOnlyOneRelationship",
+                "comment": "",
+                "oldName": ""
+              },
+              {
+                "objectType": "ForeignKey_LOGICAL",
+                "name": "fk_contact_list_contact_list_2",
+                "fields": [
+                  "cnt_usr_id"
+                ],
+                "referencedSchema": "default",
+                "referencedTable": "Appointment_contact",
+                "referencedFields": [],
+                "sourceCardinality": "OneAndOnlyOneRelationship",
+                "targetCardinality": "ZeroOrManyRelationship",
+                "comment": "",
+                "oldName": ""
+              }
+            ],
+            "indexes": [],
+            "uniques": []
           }
         ]
       }
@@ -804,7 +1031,7 @@
           "schemaName": "default",
           "tableName": "Appointment",
           "x": 180,
-          "y": 480,
+          "y": 550,
           "width": 200,
           "height": 240,
           "isBold": false,
@@ -835,10 +1062,26 @@
           "type": "table",
           "schemaName": "default",
           "tableName": "Category",
-          "x": 460,
-          "y": 480,
+          "x": 790,
+          "y": 450,
           "width": 200,
-          "height": 230,
+          "height": 160,
+          "isBold": false,
+          "titleColor": {
+            "r": 55,
+            "g": 131,
+            "b": 192,
+            "a": 1
+          }
+        },
+        {
+          "type": "table",
+          "schemaName": "default",
+          "tableName": "Contact",
+          "x": 460,
+          "y": 550,
+          "width": 200,
+          "height": 250,
           "isBold": false,
           "titleColor": {
             "r": 55,
@@ -909,11 +1152,11 @@
             },
             {
               "x": 110,
-              "y": 540
+              "y": 610
             },
             {
               "x": 165,
-              "y": 540
+              "y": 610
             }
           ],
           "label": {
@@ -985,25 +1228,113 @@
           "vertices": [
             {
               "x": 675,
-              "y": 290
+              "y": 310
             },
             {
-              "x": 760,
-              "y": 290
+              "x": 730,
+              "y": 310
             },
             {
-              "x": 760,
-              "y": 530
+              "x": 730,
+              "y": 490
             },
             {
-              "x": 675,
-              "y": 530
+              "x": 775,
+              "y": 490
             }
           ],
           "label": {
             "x": 665,
-            "y": 252,
+            "y": 272,
             "width": 116,
+            "height": 30,
+            "fontName": "Arial Unicode MS",
+            "fontSize": 14,
+            "fontColor": {
+              "r": 51,
+              "g": 51,
+              "b": 51,
+              "a": 1
+            },
+            "isFontBold": false,
+            "isFontItalic": false,
+            "isVisible": false
+          }
+        },
+        {
+          "name": "fk_contact_list_contact_list_1",
+          "sourceTableName": "Contact",
+          "sourceSchemaName": "default",
+          "lineWidth": 1,
+          "visible": true,
+          "vertices": [
+            {
+              "x": 675,
+              "y": 610
+            },
+            {
+              "x": 730,
+              "y": 610
+            },
+            {
+              "x": 730,
+              "y": 500
+            },
+            {
+              "x": 280,
+              "y": 500
+            },
+            {
+              "x": 280,
+              "y": 455
+            }
+          ],
+          "label": {
+            "x": 469,
+            "y": 572,
+            "width": 196,
+            "height": 30,
+            "fontName": "Arial Unicode MS",
+            "fontSize": 14,
+            "fontColor": {
+              "r": 51,
+              "g": 51,
+              "b": 51,
+              "a": 1
+            },
+            "isFontBold": false,
+            "isFontItalic": false,
+            "isVisible": false
+          }
+        },
+        {
+          "name": "fk_Appointment_Appointment_2",
+          "sourceTableName": "Appointment",
+          "sourceSchemaName": "default",
+          "lineWidth": 1,
+          "visible": true,
+          "vertices": [
+            {
+              "x": 395,
+              "y": 630
+            },
+            {
+              "x": 440,
+              "y": 630
+            },
+            {
+              "x": 440,
+              "y": 590
+            },
+            {
+              "x": 445,
+              "y": 590
+            }
+          ],
+          "label": {
+            "x": 385,
+            "y": 592,
+            "width": 226,
             "height": 30,
             "fontName": "Arial Unicode MS",
             "fontSize": 14,

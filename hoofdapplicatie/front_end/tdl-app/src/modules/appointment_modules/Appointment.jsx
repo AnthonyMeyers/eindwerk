@@ -77,6 +77,9 @@ const Appointment = ({ appointment, contacts, activeItem }) => {
     }
   }, [dateStarts, timeStarts, dateStops, timeStops]);
 
+  function handleShowcontactdataClick() {
+    setShowContact(!showContact);
+  }
   //Update appointment
   function handleUpdateappointmentSubmit(e) {
     e.preventDefault();
@@ -104,6 +107,7 @@ const Appointment = ({ appointment, contacts, activeItem }) => {
       }
     }
   }
+
   return (
     <>
       <ErrorMessage className={"error-center"}>{errorTitle}</ErrorMessage>
@@ -242,7 +246,7 @@ const Appointment = ({ appointment, contacts, activeItem }) => {
             </button>
             <button
               className="appointment__front__buttongroup__button btn btn-primary"
-              onClick={() => setShowContact(!showContact)}
+              onClick={handleShowcontactdataClick}
             >
               show contact details
             </button>

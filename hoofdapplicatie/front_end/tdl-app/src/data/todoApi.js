@@ -57,7 +57,7 @@ const api = createApi({
     //Get alle contact  informatie
     getContactInfo: builder.query({
       query: ({ id, token }) => ({
-        url: `/contacts/${id}`,
+        url: `/contacts/${id}.json`,
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
