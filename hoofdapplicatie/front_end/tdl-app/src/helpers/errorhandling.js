@@ -1,6 +1,6 @@
 //Function to check for invalid registration values
 export function errorhandlingreg(context, variable) {
-  const regExp = /^[A-Za-z0-9]*$/;
+  const regExp = /^[A-Za-z0-9_.]*$/;
   const regExpMail = /\S+@\S+\.\S+/;
 
   if (context === "register-username") {
@@ -73,7 +73,7 @@ export function errorhandlingtodos(context, variable) {
 
 //Function to check appointments page
 export function errorhandlingappointments(context, variable) {
-  const regExp = /^[A-Za-z\s]*$/;
+  const regExp = /^[A-Za-z\s_."']*$/;
 
   if (context === "appointment-title") {
     if (variable.length <= 3) {

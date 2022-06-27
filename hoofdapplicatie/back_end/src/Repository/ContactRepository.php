@@ -32,10 +32,12 @@ class ContactRepository extends ServiceEntityRepository
 
     public function remove(Contact $entity, bool $flush = false): void
     {
+
         $this->getEntityManager()->remove($entity);
 
         if ($flush) {
             $this->getEntityManager()->flush();
+
         }
     }
 

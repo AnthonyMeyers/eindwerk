@@ -95,6 +95,9 @@
     align-items: center;
     flex-direction: column;
     width: 100%;
+    &__policy {
+      margin-top: 10px;
+    }
     &__label {
       margin-top: 15px;
       display: flex;

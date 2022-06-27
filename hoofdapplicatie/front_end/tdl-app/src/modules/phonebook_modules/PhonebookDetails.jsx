@@ -74,12 +74,7 @@ const PhonebookDetails = ({
         });
         statusContacts.then((resolve) => {
           if ("error" in resolve) {
-            console.log(resolve);
-            if (
-              "data" in resolve.error &&
-              "violations" in resolve.error.data &&
-              resolve.error.data.violations.length > 0
-            ) {
+            if ("data" in resolve.error && "violations" in resolve.error.data) {
               setErrorDetails(resolve?.error?.data?.violations[0]?.message);
             } else setErrorDetails("An error has occured");
           }
@@ -103,7 +98,7 @@ const PhonebookDetails = ({
               onInput={(e) => setName(e.target.value)}
             />
           </label>
-          <Errormessage className={"error"}>{errorDetails}</Errormessage>
+          <Errormessage className={"error-custom"}>{errorDetails}</Errormessage>
           <div className="contact__form__buttongroup">
             <button
               type="button"

@@ -61,7 +61,7 @@ const SplashScreen = () => {
       setLoading(false);
       setError(true);
     }
-  }, [isSuccessPty, isSuccessPty, isSuccessUser]);
+  }, [categories, priorities, userData]);
 
   return (
     <>

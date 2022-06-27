@@ -2,7 +2,6 @@ import { useState } from "react";
 import IndexFooter from "../standard_modules/Footer";
 import { useSelector } from "react-redux";
 import ToastProfileDelete from "./ToastProfileDelete";
-import ToastProfileUsername from "./ToastProfileUsername";
 import ToastProfilePicture from "./ToastProfilePicture";
 import { useGetProfilePicQuery } from "../../data/todoApi";
 import { parseCookies } from "nookies";
@@ -18,15 +17,18 @@ const Profile = () => {
 
   //Set usestates
   const [deleteToast, setDeleteToast] = useState(false);
-  const [usernameToast, setUsernameToast] = useState(false);
   const [pictureToast, setPictureToast] = useState(false);
   const userId = localStorage.getItem("userId");
-  const { data: profileData } = useGetProfilePicQuery({ id: userId, token });
+
+  //Gets the profile picture
+  const { data: profileData } = useGetProfilePicQuery({
+    id: userId,
+    token,
+  });
 
   //Show picturetoast disable others
   function handlePicturetoastClick() {
     setPictureToast(true);
-    setUsernameToast(false);
     setDeleteToast(false);
   }
 
@@ -34,15 +36,15 @@ const Profile = () => {
   function handleDeletetoastClick() {
     setDeleteToast(true);
     setPictureToast(false);
-    setUsernameToast(false);
   }
 
+  /*
   //Show usernamechangetoast disable others
   function handleUsernamechangeClick() {
     setUsernameToast(true);
     setPictureToast(false);
     setDeleteToast(false);
-  }
+  }*/
 
   return (
     <>
@@ -90,12 +92,7 @@ const Profile = () => {
               >
                 Change picture
               </button>
-              <button
-                className="profile__personalsheet__address__buttongroup__button btn btn-warning"
-                onClick={handleUsernamechangeClick}
-              >
-                Change username
-              </button>
+
               <button
                 className="profile__personalsheet__address__buttongroup__button btn btn-danger"
                 onClick={handleDeletetoastClick}
@@ -113,13 +110,6 @@ const Profile = () => {
           userId={userId}
         />
       )}
-      {usernameToast && (
-        <ToastProfileUsername
-          title={"Change username"}
-          useShowUsername={setUsernameToast}
-          userId={userId}
-        />
-      )}
       {pictureToast && (
         <ToastProfilePicture
           title={"Change profile picture"}
@@ -133,3 +123,15 @@ const Profile = () => {
 };
 
 export default Profile;
+
+/*  <button
+    className="profile__personalsheet__address__buttongroup__button btn btn-warning"
+    onClick={handleUsernamechangeClick}>
+    Change username</button>
+
+    {usernameToast && (
+     <ToastProfileUsername
+     title={"Change username"}
+     useShowUsername={setUsernameToast}
+     userId={userId}/>
+      )}*/

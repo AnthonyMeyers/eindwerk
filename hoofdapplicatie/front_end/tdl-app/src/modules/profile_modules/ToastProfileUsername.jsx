@@ -30,23 +30,25 @@ const ToastProfileUsername = ({ userId, title, useShowUsername }) => {
     setError(null);
     const nativeError = errorhandlingreg("register-username", username);
     if (!nativeError) {
-      const result = await changeUsername({
+      const result = changeUsername({
         id: userId,
         name: username,
         token,
       });
-      if (result && "error" in result && "status" in result.error) {
-        if (result.error.status === 422) {
-          setError("Username already known");
-        } else setError("An error occurred");
-      } else {
-        dispatch(cleanCategories());
-        dispatch(cleanPriorities());
-        dispatch(cleanUserdata());
-        destroyJWTCookie();
-        localStorage.clear();
-        return nav("/login");
-      }
+      result.then((resolve) => {
+        if ("error" in resolve) {
+          if ("data" in resolve.error) {
+            setError("User already exists.");
+          }
+        } else {
+          dispatch(cleanCategories());
+          dispatch(cleanPriorities());
+          dispatch(cleanUserdata());
+          destroyJWTCookie();
+          localStorage.clear();
+          return nav("/login");
+        }
+      });
     } else setError(nativeError);
   }
 

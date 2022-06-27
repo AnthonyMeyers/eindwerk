@@ -9,14 +9,11 @@ const ToastDeleteContact = ({ id, title, useSetErrorDetails }) => {
 
   function handledeleteAppointmentClick() {
     const removeContactStatus = removeOneContact({ id, token });
-    console.log("test");
     removeContactStatus.then((resolve) => {
       if ("error" in resolve) {
-        useSetErrorDetails(
-          resolve?.error?.data?.detail.indexOf("foreign key") > 0
-            ? "This contact has appointments."
-            : "An error has occured"
-        );
+        if ("data" in resolve.error) {
+          useSetErrorDetails(resolve?.error?.data?.detail);
+        }
       }
     });
   }

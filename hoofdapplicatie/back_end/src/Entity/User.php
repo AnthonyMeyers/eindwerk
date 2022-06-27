@@ -136,6 +136,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     }
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
     public function getUsrmail(): ?string
     {
         return $this->usrMail;
@@ -201,10 +206,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * @deprecated since Symfony 5.3, use getUserIdentifier instead
@@ -230,9 +231,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 throw new Exception("Name is required");
             }
 
-            else if (!preg_match("/^[a-zA-Z-0-9' ]*$/",$name))
+            else if (!preg_match("/^[a-zA-Z-0-9'_. ]*$/",$name))
             {
-                throw new Exception("Only letters, numbers and white space allowed in names");
+                throw new Exception("Invalid name character");
             }
 
         $this->usrName = strip_tags(trim($usrName));
@@ -444,6 +445,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeContact(Contact $contact): self
     {
+
         if ($this->contacts->removeElement($contact)) {
             // set the owning side to null (unless already changed)
             if ($contact->getCntUsr() === $this) {
