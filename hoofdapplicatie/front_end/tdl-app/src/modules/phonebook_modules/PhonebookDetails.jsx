@@ -4,6 +4,8 @@ import { useUpdateOneContactMutation } from "../../data/todoApi";
 import { parseCookies } from "nookies";
 import { errorhandlingcontacts } from "../../helpers/errorhandling";
 import Errormessage from "../extra_modules/Errormessage";
+import { ToastContainer } from "react-toastify";
+import { errorToast } from "../../helpers/toast";
 
 const PhonebookDetails = ({
   contact: {
@@ -60,7 +62,7 @@ const PhonebookDetails = ({
         city,
         mail,
       });
-      setErrorDetails(errorContacts);
+      errorToast(errorContacts);
       if (!errorContacts) {
         const statusContacts = updateContact({
           conid: id,
@@ -74,12 +76,11 @@ const PhonebookDetails = ({
         });
 
         statusContacts.then((resolve) => {
-          console.log(resolve);
           if ("error" in resolve) {
             if ("data" in resolve.error && "violations" in resolve.error.data) {
               console.log(resolve);
-              setErrorDetails(resolve?.error?.data?.violations[0]?.message);
-            } else setErrorDetails("An error has occured");
+              errorToast(resolve?.error?.data?.violations[0]?.message);
+            } else errorToast("An error has occured");
           }
         });
       }
@@ -89,6 +90,7 @@ const PhonebookDetails = ({
   return (
     <>
       <li className="contact">
+        <ToastContainer />
         <form onSubmit={handleContactChangeSubmit} className="contact__form">
           <label className="contact__form__namelabel">
             Name

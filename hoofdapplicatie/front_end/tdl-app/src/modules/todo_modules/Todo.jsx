@@ -13,7 +13,8 @@ import {
 } from "../../helpers/selectionpicker";
 import { parseCookies } from "nookies";
 import { errorhandlingtodos } from "../../helpers/errorhandling";
-import Errormessage from "../extra_modules/Errormessage";
+import { ToastContainer } from "react-toastify";
+import { errorToast } from "../../helpers/toast";
 
 const todo = ({
   todo: { id, tdoTitle, tdoIsdone, tdoPty, tdoCty },
@@ -37,7 +38,6 @@ const todo = ({
   const [removeTodo] = useRemoveOneTodoMutation();
   const [updateCategory] = useUpdateCategoryTodoMutation();
   const [updatePriority] = useUpdatePriorityTodoMutation();
-  const [errorTitle, setErrorTitle] = useState(null);
   const [disabled, setDisabled] = useState(false);
 
   //Update todo isChecked als gebruiker checkbox aanklikt
@@ -64,22 +64,21 @@ const todo = ({
   function handleTitlechangeClick(e) {
     e.preventDefault();
     const errortodo = errorhandlingtodos("todo-title", todoTitle);
-    setErrorTitle(errortodo);
+
     if (!errortodo) {
       const statusAddTitle = updateTitleTodo({ id, todoTitle, token });
       statusAddTitle.then((response) => {
         if ("error" in response) {
-          setErrorTitle(
+          errorToast(
             response?.error?.data?.violations[0]?.message ||
               "An error has occured"
           );
         }
       });
-    }
+    } else errorToast(errortodo);
   }
   //Handles category switch
   function handleCategoryswitchClick(e) {
-    setErrorTitle(null);
     const categoryToSet = switchNextSelection(
       categories,
       selectedCategory,
@@ -93,7 +92,6 @@ const todo = ({
 
   //Handle priority change
   function handlePriorityswitchClick() {
-    setErrorTitle(null);
     const priorityToSet = switchNextSelection(
       priorities,
       selectedPriority,
@@ -125,6 +123,7 @@ const todo = ({
             : `todo standard`
         }
       >
+        <ToastContainer />
         <form
           className="todo__front"
           onSubmit={handleTitlechangeClick}
@@ -218,7 +217,6 @@ const todo = ({
             )}
           </div>
         </form>
-        <Errormessage className="error-center">{errorTitle}</Errormessage>
       </div>
     </>
   );
