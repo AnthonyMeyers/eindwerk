@@ -38,6 +38,7 @@ const todo = ({
   const [updateCategory] = useUpdateCategoryTodoMutation();
   const [updatePriority] = useUpdatePriorityTodoMutation();
   const [errorTitle, setErrorTitle] = useState(null);
+  const [disabled, setDisabled] = useState(false);
 
   //Update todo isChecked als gebruiker checkbox aanklikt
   useEffect(() => {
@@ -104,6 +105,17 @@ const todo = ({
     }
   }
 
+  //Handle the removal of a todo
+  function handleRemovetodoClick() {
+    setDisabled(true);
+    const removeStatus = removeTodo({ id, token });
+    removeStatus.then((resolve) =>
+      setTimeout(() => {
+        setDisabled(false);
+      }, 750)
+    );
+  }
+
   return (
     <>
       <div
@@ -153,7 +165,8 @@ const todo = ({
             <button
               type="button"
               className="todo__front__right__button todo__front__right__button-delete btn btn-outline-secondary"
-              onClick={() => removeTodo({ id, token })}
+              onClick={handleRemovetodoClick}
+              disabled={disabled}
             >
               <span className="todo__front__right__button__innertext">
                 Delete todo
