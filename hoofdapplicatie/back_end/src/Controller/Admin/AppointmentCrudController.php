@@ -24,7 +24,8 @@ class AppointmentCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('apmTitle', 'Title')
-,
+                ->setFormTypeOptions(['attr' =>['minlength' => "4", "maxlength" => "22","pattern"=>"[A-Za-z\s_.']+"]])
+                ->setHelp("Min 4 standard characters"),
             AssociationField::new('apmUsr', 'User')
                 ->setRequired(true)->renderAsNativeWidget(),
             AssociationField::new('apmCnt', 'Contact'),

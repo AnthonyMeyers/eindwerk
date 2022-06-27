@@ -10,9 +10,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserCrudController extends AbstractCrudController
@@ -65,10 +67,12 @@ class UserCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('usrName','Name')
-            ->setFormTypeOptions(['attr' =>['minlength' => "5", "maxlength" => "50","pattern"=>"/^[A-Za-z0-9\s.ç'_,]*$/"]])->setHelp("Min 5 characters"),
+                ->setFormTypeOptions(['attr' =>['minlength' => "5", "maxlength" => "50","pattern"=>"[A-Za-z0-9\s.ç'_,]+"]])
+                ->setHelp("Min 5 characters"),
             $password,
             $newpassword,
-            TextField::new('usrMail','Email'),
+            TextField::new('usrMail','Email')
+                ->setHelp("Correct format please 'example@user.com'"),
             TextField::new('usrPicture','Avatar')->hideOnIndex(),
             ChoiceField::new('usrRoles','Roles')->renderExpanded()
                 ->setChoices(["Administrator role"=>"ROLE_ADMIN","Standard role"=>"ROLE_USER"])->allowMultipleChoices(),

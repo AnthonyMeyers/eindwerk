@@ -73,7 +73,7 @@ export function errorhandlingtodos(context, variable) {
 
 //Function to check appointments page
 export function errorhandlingappointments(context, variable) {
-  const regExp = /^[A-Za-z\s_."']*$/;
+  const regExp = /^[A-Za-z\s_.']*$/;
 
   if (context === "appointment-title") {
     if (variable.length <= 3) {
@@ -94,10 +94,9 @@ export function errorhandlingappointments(context, variable) {
 //Function to check contacts page
 export function errorhandlingcontacts(context, variable) {
   const regExp = /^[A-Za-z\s.ç'_,]*$/;
-  const regExpStreet = /^[A-Za-z0-9\s.]*$/;
-  const regExpPostal = /^[A-Za-z0-9]*$/;
+  const regExpStreet = /^[A-Za-z0-9\s.']*$/;
+  const regExpPostal = /^[A-Za-z0-9\s]*$/;
   const regExpMail = /\S+@\S+\.\S+/;
-  const regExpPhone = /^[0-9\s./()+]*$/;
 
   if (context === "contact-title") {
     if (variable.length <= 3) {
@@ -136,10 +135,6 @@ export function errorhandlingcontacts(context, variable) {
       if (tel.length != 0 && tel.length < 9) {
         return "Phonenumber to short";
       }
-
-      if (!regExpPhone.test(tel)) {
-        return "Invalid phone number";
-      }
     }
 
     if (street) {
@@ -148,6 +143,10 @@ export function errorhandlingcontacts(context, variable) {
       }
       if (street.length > 40) {
         return "The streetname is to long.";
+      }
+
+      if (!regExpStreet.test(street)) {
+        return "street has Invalid characters";
       }
     }
 
@@ -171,10 +170,6 @@ export function errorhandlingcontacts(context, variable) {
 
       if (city.length > 22) {
         return "City name to long";
-      }
-
-      if (!regExpStreet.test(street)) {
-        return "street has Invalid characters";
       }
 
       if (!regExp.test(city)) {
