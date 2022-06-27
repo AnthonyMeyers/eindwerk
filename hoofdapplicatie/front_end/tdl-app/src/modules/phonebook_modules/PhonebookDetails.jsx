@@ -3,7 +3,6 @@ import ToastDeleteContact from "./ToastDeleteContact";
 import { useUpdateOneContactMutation } from "../../data/todoApi";
 import { parseCookies } from "nookies";
 import { errorhandlingcontacts } from "../../helpers/errorhandling";
-import Errormessage from "../extra_modules/Errormessage";
 import { ToastContainer } from "react-toastify";
 import { errorToast } from "../../helpers/toast";
 
@@ -50,6 +49,13 @@ const PhonebookDetails = ({
     });
   }
 
+  useEffect(() => {
+    if (errorDetails) {
+      errorToast(errorDetails);
+      setErrorDetails(null);
+    }
+  }, [errorDetails]);
+
   //save the contact to the api
   function handleContactChangeSubmit(e) {
     e.preventDefault();
@@ -78,7 +84,6 @@ const PhonebookDetails = ({
         statusContacts.then((resolve) => {
           if ("error" in resolve) {
             if ("data" in resolve.error && "violations" in resolve.error.data) {
-              console.log(resolve);
               errorToast(resolve?.error?.data?.violations[0]?.message);
             } else errorToast("An error has occured");
           }
@@ -103,7 +108,6 @@ const PhonebookDetails = ({
               onInput={(e) => setName(e.target.value)}
             />
           </label>
-          <Errormessage className={"error-custom"}>{errorDetails}</Errormessage>
           <div className="contact__form__buttongroup">
             <button
               type="button"
