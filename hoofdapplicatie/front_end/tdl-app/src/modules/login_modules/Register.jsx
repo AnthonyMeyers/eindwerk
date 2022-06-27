@@ -18,6 +18,7 @@ const Register = () => {
   const [passwordError, setPasswordError] = useState(null);
   const [emailError, setEmailError] = useState(null);
   const [agreedError, setAgreedError] = useState(null);
+  const [disabled, setDisabled] = useState(false);
 
   //Set navigate & dispatch
   const nav = useNavigate();
@@ -29,6 +30,7 @@ const Register = () => {
   //Handle the registration of the user on submit of the form
   async function handleRegisteruserSubmit(e) {
     e.preventDefault();
+    setDisabled(true);
     setUsernameError(errorhandlingreg("register-username", username));
 
     if (password == PasswordCheck) {
@@ -44,13 +46,14 @@ const Register = () => {
         email,
         hasAgreed,
       });
-      statusRegisterUser.then((resolve) => {
-        if ("error" in resolve) {
-          const result = checkregistererror(resolve);
-          setAgreedError(result);
-        } else dispatch(setmessage({ message: "registration successfull." }));
-      });
+
+      const data = await statusRegisterUser;
+      if ("error" in data) {
+        const result = checkregistererror(data);
+        setAgreedError(result);
+      } else dispatch(setmessage({ message: "registration successfull." }));
     }
+    setDisabled(false);
   }
 
   //Als de registratie is geslaagd ga terug naar de login.
@@ -131,6 +134,7 @@ const Register = () => {
             <button
               type="submit"
               className="register__form__buttongroup__button btn btn-primary"
+              disabled={disabled}
             >
               Register
             </button>
