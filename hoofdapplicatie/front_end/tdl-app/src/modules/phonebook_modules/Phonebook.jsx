@@ -4,6 +4,8 @@ import PhonebookDetails from "./PhonebookDetails";
 import { parseCookies } from "nookies";
 import IndexFooter from "../standard_modules/Footer";
 import Status from "../standard_modules/App-Status";
+import { ToastContainer } from "react-toastify";
+import { errorToast } from "../../helpers/toast";
 
 const Phonebook = () => {
   //Get jwt token
@@ -16,10 +18,15 @@ const Phonebook = () => {
     data: contacts,
     isLoading,
     isError,
-    isSuccess,
   } = useGetAllUserContactsIndexedQuery({ id: userId, token });
   const [reset, doReset] = useState(false);
 
+  //Adds error toast
+  useEffect(() => {
+    if (isError) {
+      errorToast("The server is currently unavailable.");
+    }
+  }, [contacts]);
   function handleResetcomponentsClick(e) {
     doReset(!reset);
   }
@@ -30,8 +37,9 @@ const Phonebook = () => {
         className="phonebook container"
         onClick={handleResetcomponentsClick}
       >
+        <ToastContainer />
         <h2 className="phonebook__title">Contacts</h2>
-        <Status isLoading={isLoading} isError={isError} />
+        <Status isLoading={isLoading} />
         {contacts && contacts.length > 0 && (
           <div className={"phonebook__list"}>
             {contacts.map((contact, i) => (

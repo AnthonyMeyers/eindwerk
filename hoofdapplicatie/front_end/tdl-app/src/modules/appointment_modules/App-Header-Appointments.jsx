@@ -4,7 +4,8 @@ import { parseCookies } from "nookies";
 import Configgroup from "../extra_modules/Configgroup";
 import { useState, useEffect } from "react";
 import { errorhandlingappointments } from "../../helpers/errorhandling";
-import ErrorMessage from "../extra_modules/Errormessage";
+import { ToastContainer } from "react-toastify";
+import { errorToast } from "../../helpers/toast";
 
 const AppHeaderAppointments = () => {
   //Get cookie
@@ -21,7 +22,6 @@ const AppHeaderAppointments = () => {
   );
   const [stopDate, setStopDate] = useState(startDate);
   const [stopTime, setStopTime] = useState(startTime);
-  const [errorAppointment, setErrorAppointment] = useState(false);
 
   //set mutations
   const [addOneAppointment] = useAddOneAppointmentMutation();
@@ -44,7 +44,7 @@ const AppHeaderAppointments = () => {
       appointmentTitle
     );
 
-    setErrorAppointment(appointError);
+    errorToast(appointError);
     if (!appointError) {
       const start = new Date(startDate + " " + startTime).getTime();
       const stop = new Date(stopDate + " " + stopTime).getTime();
@@ -59,7 +59,7 @@ const AppHeaderAppointments = () => {
         });
         statusAppointment.then((resolve) => {
           if ("error" in resolve) {
-            setAppointError("An error occured");
+            errorToast("Could not add appointment.");
           }
         });
       }
@@ -70,6 +70,7 @@ const AppHeaderAppointments = () => {
   return (
     <>
       <header className="header">
+        <ToastContainer />
         <div className="header__panel">
           <h1 className="header__panel__title">My To Do List</h1>
           <div className="header__panel__configgroup configgroup">
@@ -142,7 +143,6 @@ const AppHeaderAppointments = () => {
               Add todo submit button
             </span>
           </button>
-          <ErrorMessage className={"error"}>{errorAppointment}</ErrorMessage>
         </form>
       </header>
     </>

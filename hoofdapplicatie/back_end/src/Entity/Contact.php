@@ -135,6 +135,7 @@ class Contact
 
     public function setCntName(string $cntName): self
     {
+
         $this->cntName = trim(strip_tags($cntName));
         $this->setCntUpdatedat();
 
@@ -167,8 +168,12 @@ class Contact
      */
     public function setCntMail(string $cntMail): self
     {
+        $email = $cntMail;
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            throw new \Exception("Invalid email format");
+        }
         $this->setCntUpdatedat();
-        $this->cntMail = trim(strip_tags($cntMail));
+        $this->cntMail = trim(strip_tags($email));
         return $this;
     }
 

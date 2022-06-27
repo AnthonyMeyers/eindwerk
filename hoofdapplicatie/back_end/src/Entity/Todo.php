@@ -8,6 +8,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\TodoRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -102,6 +103,10 @@ class Todo
 
     public function setTdoTitle(string $tdoTitle): self
     {
+        if(strlen($tdoTitle) < 3)
+            {
+                throw new Exception("Invalid todo length.");
+            }
         $this->tdoTitle = trim(strip_tags($tdoTitle));
         $this->setTdoUpdatedat();
         return $this;

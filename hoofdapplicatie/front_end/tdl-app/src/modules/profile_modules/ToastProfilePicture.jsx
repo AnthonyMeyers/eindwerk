@@ -1,16 +1,31 @@
 import { parseCookies } from "nookies";
 import { useChangeUserPictureMutation } from "../../data/todoApi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const ToastProfilePicture = ({ userId, title, useShowPicture }) => {
+const ToastProfilePicture = ({
+  userId,
+  title,
+  useShowPicture,
+  usePictureStatus,
+}) => {
   const { jwt_token_TDL: token } = parseCookies();
-  const [changeUsername] = useChangeUserPictureMutation();
+  const [changePicture] = useChangeUserPictureMutation();
   const [pictureUrl, setPictureUrl] = useState("");
 
-  //Remove user, clear data en redirect to login
-  function handleChangeusernameClick(e) {
+  async function handleChangePicturesubmit(e) {
     e.preventDefault();
-    changeUsername({ id: userId, picture: pictureUrl, token });
+    const statusPic = changePicture({
+      id: userId,
+      picture: pictureUrl,
+      token,
+    });
+    const data = await statusPic;
+
+    if ("error" in data) {
+      usePictureStatus(false);
+    } else {
+      usePictureStatus(true);
+    }
     useShowPicture(false);
   }
 
@@ -37,7 +52,7 @@ const ToastProfilePicture = ({ userId, title, useShowPicture }) => {
           Exit
         </button>
       </div>
-      <form onSubmit={handleChangeusernameClick}>
+      <form onSubmit={handleChangePicturesubmit}>
         <div className="toast-body">
           {" "}
           Change your profile picture?

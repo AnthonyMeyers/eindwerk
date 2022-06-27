@@ -1,6 +1,6 @@
 //Function to check for invalid registration values
 export function errorhandlingreg(context, variable) {
-  const regExp = /^[A-Za-z0-9_.]*$/;
+  const regExp = /^[A-Za-z0-9\s.ç'_,]*$/;
   const regExpMail = /\S+@\S+\.\S+/;
 
   if (context === "register-username") {
@@ -53,14 +53,14 @@ export function errorhandlinglogin(statuscode) {
 
 //Function to check todo page
 export function errorhandlingtodos(context, variable) {
-  const regExp = /^[A-Za-z\s]*$/;
+  const regExp = /^[A-Za-z\s._']*$/;
 
   if (context === "todo-title") {
     if (variable.length <= 2) {
-      return "To short to add.";
+      return "Todo to short to add.";
     }
     if (variable.length > 22) {
-      return "To long to add.";
+      return "Todo to long to add.";
     }
     if (!regExp.test(variable)) {
       return "Invalid characters";
@@ -93,7 +93,7 @@ export function errorhandlingappointments(context, variable) {
 
 //Function to check contacts page
 export function errorhandlingcontacts(context, variable) {
-  const regExp = /^[A-Za-z\s.ç'",]*$/;
+  const regExp = /^[A-Za-z\s.ç'_,]*$/;
   const regExpStreet = /^[A-Za-z0-9\s.]*$/;
   const regExpPostal = /^[A-Za-z0-9]*$/;
   const regExpMail = /\S+@\S+\.\S+/;

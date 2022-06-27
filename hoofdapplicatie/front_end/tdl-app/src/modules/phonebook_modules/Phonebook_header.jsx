@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useAddOneContactMutation } from "../../data/todoApi";
 import Configgroup from "../extra_modules/Configgroup";
 import { parseCookies } from "nookies";
-import Errormessage from "../extra_modules/Errormessage";
 import { errorhandlingcontacts } from "../../helpers/errorhandling";
+import { ToastContainer } from "react-toastify";
+import { errorToast } from "../../helpers/toast";
 
 const PhonebookHeader = () => {
   //Get jwt token
@@ -14,30 +15,29 @@ const PhonebookHeader = () => {
   //Set states
   const [contact, setContact] = useState("");
   const [addOneContact] = useAddOneContactMutation();
-  const [errorContact, setErrorContact] = useState(null);
 
   //Add a todo
   function handleAddcontactSubmit(e) {
     e.preventDefault();
     const error = errorhandlingcontacts("contact-title", contact);
-    setErrorContact(error);
+    errorToast(error);
     if (!error) {
       const contactStatus = addOneContact({ userId, name: contact, token });
       contactStatus.then((resolve) => {
         if ("error" in resolve) {
-          setErrorContact(
+          errorToast(
             resolve?.error?.data?.violations[0]?.message ||
               "An error has occured"
           );
-        }
+        } else setContact("");
       });
-      setContact("");
     }
   }
 
   return (
     <>
       <header className="header">
+        <ToastContainer />
         <div className="header__panel">
           <h1 className="header__panel__title">My To Do List</h1>
           <div className="header__panel__configgroup configgroup">
@@ -58,7 +58,6 @@ const PhonebookHeader = () => {
               onInput={(e) => setContact(e.target.value)}
             />
           </label>
-          <Errormessage className={"error"}>{errorContact}</Errormessage>
           <button type="submit" className="header__todoform__addtodo">
             <span className="header__todoform__addtodo__text">
               Add todo submit button

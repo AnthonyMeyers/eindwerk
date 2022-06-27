@@ -8,7 +8,6 @@ Use App\Entity\Contact;
 use App\Repository\ContactRepository;
 use ApiPlatform\Core\DataProvider\SerializerAwareDataProviderInterface;
 use ApiPlatform\Core\DataProvider\SerializerAwareDataProviderTrait;
-use mysql_xdevapi\Exception;
 
 final class ContactItemDataProvider implements ItemDataProviderInterface, RestrictedDataProviderInterface, SerializerAwareDataProviderInterface
 {

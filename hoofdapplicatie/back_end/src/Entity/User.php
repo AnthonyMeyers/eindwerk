@@ -231,7 +231,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 throw new Exception("Name is required");
             }
 
-            else if (!preg_match("/^[a-zA-Z-0-9'_. ]*$/",$name))
+            if(strlen($name) < 5)
+            {
+                throw new Exception("Username is to short");
+            }
+
+            else if (!preg_match("/^[A-Za-z0-9\s.ç'_,]*$/",$name))
             {
                 throw new Exception("Invalid name character");
             }

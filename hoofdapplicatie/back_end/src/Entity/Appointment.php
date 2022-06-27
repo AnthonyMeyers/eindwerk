@@ -8,6 +8,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\AppointmentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
@@ -110,6 +111,18 @@ class Appointment
 
     public function setApmTitle(string $apmTitle): self
     {
+        if(strlen($apmTitle) <= 3)
+        {
+            throw new Exception("To short to add.");
+        }
+
+        if (!preg_match("/^[A-Za-z\s_.']*$/",$apmTitle))
+        {
+            throw new \Exception("Invalid characters");
+        }
+
+
+
         $this->apmTitle = trim(strip_tags($apmTitle));
         $this->setApmUpdatedat();
         return $this;

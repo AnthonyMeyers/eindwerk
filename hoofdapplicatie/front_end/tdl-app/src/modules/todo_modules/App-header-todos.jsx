@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAddOnetodoMutation } from "../../data/todoApi";
 import Configgroup from "../extra_modules/Configgroup";
 import { errorhandlingtodos } from "../../helpers/errorhandling";
-import Errormessage from "../extra_modules/Errormessage";
 import { parseCookies } from "nookies";
+import { ToastContainer } from "react-toastify";
+import { errorToast } from "../../helpers/toast";
 
 const AppHeaderTodos = () => {
   //Get token & navigation
@@ -17,9 +18,17 @@ const AppHeaderTodos = () => {
   ////Get user id
   const userId = localStorage.getItem("userId");
 
+  useEffect(() => {
+    if (error) {
+      errorToast(error);
+      setError(null);
+    }
+  }, [error]);
+
   //Add a todo
   function handleAddtodoSubmit(e) {
     e.preventDefault();
+
     const hasError = errorhandlingtodos("todo-title", todo);
 
     if (!hasError) {
@@ -32,9 +41,8 @@ const AppHeaderTodos = () => {
               resolve?.error?.data?.violations?.[0]?.message ||
                 "An error occured"
             );
-          }
+          } else setTodo("");
         });
-        setTodo("");
       } catch (e) {
         setError("An error has occured.");
       }
@@ -44,6 +52,7 @@ const AppHeaderTodos = () => {
   return (
     <>
       <header className="header">
+        <ToastContainer />
         <div className="header__panel">
           <h1 className="header__panel__title">My To Do List</h1>
           <div className="header__panel__configgroup configgroup">
@@ -64,7 +73,6 @@ const AppHeaderTodos = () => {
               onInput={(e) => setTodo(e.target.value)}
             />
           </label>
-          <Errormessage className={"error-center"}>{error}</Errormessage>
           <button type="submit" className="header__todoform__addtodo">
             <span className="header__todoform__addtodo__text">
               Add todo submit button

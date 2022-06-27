@@ -5,7 +5,8 @@ import ToastDeleteApm from "./ToastDeleteApm";
 import AppointmentContact from "./AppointmentContact";
 import { parseCookies } from "nookies";
 import { errorhandlingappointments } from "../../helpers/errorhandling";
-import ErrorMessage from "../extra_modules/Errormessage";
+import { ToastContainer, toast } from "react-toastify";
+import { errorToast } from "../../helpers/toast";
 
 const Appointment = ({ appointment, contacts, activeItem }) => {
   //Get token
@@ -36,7 +37,6 @@ const Appointment = ({ appointment, contacts, activeItem }) => {
     new Date(apmStopsat).toLocaleTimeString().substr(0, 5)
   );
   const [contactPerson, setContactPerson] = useState(apmCnt?.id || 0);
-  const [errorTitle, setErrorTitle] = useState(null);
 
   //Functional usestates
   const [disabled, setDisabled] = useState(true);
@@ -84,7 +84,7 @@ const Appointment = ({ appointment, contacts, activeItem }) => {
   function handleUpdateappointmentSubmit(e) {
     e.preventDefault();
     const appointError = errorhandlingappointments("appointment-title", title);
-    setErrorTitle(appointError);
+    errorToast(appointError);
     if (!appointError) {
       const start = new Date(dateStarts + " " + timeStarts).getTime();
       const stop = new Date(dateStops + " " + timeStops).getTime();
@@ -101,7 +101,7 @@ const Appointment = ({ appointment, contacts, activeItem }) => {
         });
         statusAppointment.then((resolve) => {
           if ("error" in resolve) {
-            setErrorTitle("An error occured");
+            errorToast("An error occured");
           }
         });
       }
@@ -110,8 +110,8 @@ const Appointment = ({ appointment, contacts, activeItem }) => {
 
   return (
     <>
-      <ErrorMessage className={"error-center"}>{errorTitle}</ErrorMessage>
       <div className="appointment">
+        <ToastContainer />
         <form
           className="appointment__front"
           id={`appointment-${formId}`}
@@ -238,13 +238,14 @@ const Appointment = ({ appointment, contacts, activeItem }) => {
               Save appointment
             </button>
             <button
+              type="button"
               className="appointment__front__buttongroup__button btn btn-primary"
               onClick={() => setShowDelete(!showDelete)}
             >
-              {" "}
               Delete appointment
             </button>
             <button
+              type="button"
               className="appointment__front__buttongroup__button btn btn-primary"
               onClick={handleShowcontactdataClick}
             >

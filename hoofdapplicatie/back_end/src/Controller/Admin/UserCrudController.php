@@ -48,7 +48,8 @@ class UserCrudController extends AbstractCrudController
             ->setFormType(PasswordType::class)
             ->setFormTypeOption('empty_data', '')
             ->setRequired(false)
-            ->hideOnIndex()->onlyWhenUpdating();
+            ->hideOnIndex()->onlyWhenUpdating()
+            ->setHelp("Admin is allowed to customize password.");;
 
         $newpassword = TextField::new('clearpassword')
             ->setLabel("New Password")
@@ -56,14 +57,15 @@ class UserCrudController extends AbstractCrudController
             ->setFormTypeOption('empty_data', '')
             ->setRequired(true)
             ->onlyWhenCreating()
-            ->hideOnIndex();
-
+            ->hideOnIndex()
+            ->setHelp("Admin is allowed to customize password.");
         $fields = [];
 
 
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('usrName','Name'),
+            TextField::new('usrName','Name')
+            ->setFormTypeOptions(['attr' =>['minlength' => "5", "maxlength" => "50","pattern"=>"/^[A-Za-z0-9\s.ç'_,]*$/"]])->setHelp("Min 5 characters"),
             $password,
             $newpassword,
             TextField::new('usrMail','Email'),
@@ -71,7 +73,7 @@ class UserCrudController extends AbstractCrudController
             ChoiceField::new('usrRoles','Roles')->renderExpanded()
                 ->setChoices(["Administrator role"=>"ROLE_ADMIN","Standard role"=>"ROLE_USER"])->allowMultipleChoices(),
             BooleanField::new('usrHasagreed', 'Did agree')
-                ->setRequired(true)->hideWhenUpdating()->hideOnIndex(),
+                ->setRequired(true)->hideWhenUpdating()->hideOnIndex()->setHelp("Always agree with the use agreement before continueing"),
             BooleanField::new('usrHasagreed', 'Did agree')
             ->hideWhenCreating()->setDisabled()->hideOnIndex(),
             DateTimeField::new('usrCreatedat','Created')->hideOnForm(),

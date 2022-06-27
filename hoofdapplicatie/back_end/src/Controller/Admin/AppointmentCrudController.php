@@ -23,7 +23,8 @@ class AppointmentCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('apmTitle', 'Title'),
+            TextField::new('apmTitle', 'Title')
+,
             AssociationField::new('apmUsr', 'User')
                 ->setRequired(true)->renderAsNativeWidget(),
             AssociationField::new('apmCnt', 'Contact'),

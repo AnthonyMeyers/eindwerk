@@ -3,11 +3,12 @@ import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import IndexFooter from "../standard_modules/Footer";
-import Errormessage from "../extra_modules/Errormessage";
 import { saveJWTinCookie } from "../../helpers/jwttokens";
 import { errorhandlinglogin } from "../../helpers/errorhandling";
 import { useSelector, useDispatch } from "react-redux";
 import { clearmessage } from "../../data/message";
+import { ToastContainer, toast } from "react-toastify";
+import { successToast, errorToast } from "../../helpers/toast";
 
 const Login = () => {
   //Save the login cookie in the browser, activate dispatch & messagestate
@@ -27,7 +28,8 @@ const Login = () => {
   const nav = useNavigate();
 
   useEffect(() => {
-    if (messageService && messageService.length > 0) {
+    if (messageService) {
+      successToast(messageService);
       setTimeout(() => {
         dispatch(clearmessage());
         setMessageService(null);
@@ -35,6 +37,14 @@ const Login = () => {
     }
     return;
   }, []);
+
+  useEffect(() => {
+    if (error) {
+      errorToast(error);
+      setError(null);
+    }
+  }, [error]);
+
   //Handle the user login submit
   async function handleUserloginSubmit(e) {
     //Log the user in
@@ -83,6 +93,19 @@ const Login = () => {
   return (
     <>
       <section className="container login">
+        <div>
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
+        </div>
         <div className="login__block">
           <h1 className="login__block__title">
             Welcome to the To Do List application.
@@ -108,11 +131,7 @@ const Login = () => {
               onInput={(e) => setPassword(e.target.value)}
             />
           </label>
-          <Errormessage className="error-center">{error}</Errormessage>
           <div className="login__form__buttongroup">
-            {messageService && messageService.length > 0 && (
-              <p className="message">{messageService}</p>
-            )}
             <button
               className="login__form__buttongroup__button btn btn btn-primary"
               type="submit"

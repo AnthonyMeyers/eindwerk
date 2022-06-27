@@ -23,7 +23,8 @@ class TodoCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('tdoTitle', 'Title'),
+            TextField::new('tdoTitle', 'Title')
+                ->setFormTypeOptions(['attr' =>['minlength' => "3",'maxlength => 22']])->setHelp("Min 3, max 22 characters"),
             BooleanField::new('tdoIsdone', 'Is done'),
             AssociationField::new('tdoUsr','Todo user')
                 ->setRequired(true)->renderAsNativeWidget(),

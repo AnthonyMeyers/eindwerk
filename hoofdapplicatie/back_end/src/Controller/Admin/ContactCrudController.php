@@ -24,7 +24,9 @@ class ContactCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id')->hideOnForm(),
+            IdField::new('id')->hideOnForm()
+                ->setFormTypeOptions
+                (['attr' =>['minlength' => "4", "maxlength" => "22","pattern"=>"[A-Za-z\s.ç'_,]+"]]),
             TextField::new('cntName', 'Name'),
             TextField::new('cntstreet', 'Street')->hideOnIndex(),
             TextField::new('cntPostal', 'Postal')->hideOnIndex(),

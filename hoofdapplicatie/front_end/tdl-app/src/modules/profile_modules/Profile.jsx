@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import IndexFooter from "../standard_modules/Footer";
 import { useSelector } from "react-redux";
 import ToastProfileDelete from "./ToastProfileDelete";
 import ToastProfilePicture from "./ToastProfilePicture";
 import { useGetProfilePicQuery } from "../../data/todoApi";
 import { parseCookies } from "nookies";
+import { ToastContainer } from "react-toastify";
+import { successToast, errorToast } from "../../helpers/toast";
 
 const Profile = () => {
   //Get jwt token
@@ -19,12 +21,24 @@ const Profile = () => {
   const [deleteToast, setDeleteToast] = useState(false);
   const [pictureToast, setPictureToast] = useState(false);
   const userId = localStorage.getItem("userId");
+  const [pictureStatus, setPictureStatus] = useState(null);
 
   //Gets the profile picture
   const { data: profileData } = useGetProfilePicQuery({
     id: userId,
     token,
   });
+
+  useEffect(() => {
+    if (pictureStatus) {
+      if (pictureStatus === true) {
+        successToast("The image has been updated.");
+      } else {
+        errorToast("The image update failed");
+      }
+    }
+    setPictureStatus(null);
+  }, [pictureStatus]);
 
   //Show picturetoast disable others
   function handlePicturetoastClick() {
@@ -49,6 +63,7 @@ const Profile = () => {
   return (
     <>
       <section className="container profile">
+        <ToastContainer />
         <h2 className="profile__title">My profile</h2>
         <div className="profile__personalsheet">
           <div className="profile__personalsheet__imgholder">
@@ -114,6 +129,7 @@ const Profile = () => {
         <ToastProfilePicture
           title={"Change profile picture"}
           useShowPicture={setPictureToast}
+          usePictureStatus={setPictureStatus}
           userId={userId}
         />
       )}

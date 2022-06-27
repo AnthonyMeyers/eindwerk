@@ -2,24 +2,22 @@
 namespace App\EventSubscribers;
 
 use App\Entity\Priority;
-use App\Entity\Todo;
 use App\Entity\User;
 use App\Entity\Contact;
 use App\Entity\Category;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeCrudActionEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Core\Security;
 
 class HideActionSubscriber implements EventSubscriberInterface
 {
-    private $security;
+
     private $adminContext;
 
     //Deze class zorgt ervoor dat de gebruiker zichzelf niet kan wissen in het admin panel
-    public function __construct( Security $security)
+    public function __construct( )
     {
-        $this->security = $security;
+
     }
 
     public function onBeforeCrudActionEvent(BeforeCrudActionEvent $event)
