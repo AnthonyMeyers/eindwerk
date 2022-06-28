@@ -21,4 +21,5 @@ This allowed the use of Doctrine and ORM for database / class management and API
 The project was build in slighty about 3,5 weeks.
 There are multiple front pages, with a login and register.
 This to access the actual application.
-The application itself serves the purpose as a demo for a final project.
+The application itself serves the purpose as a demo for a school project.
+Not for implementation & actual use.
