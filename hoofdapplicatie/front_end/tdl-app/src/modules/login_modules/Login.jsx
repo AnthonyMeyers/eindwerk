@@ -52,7 +52,7 @@ const Login = () => {
     setError(null);
     try {
       const { data } = await axios.post(
-        "https://wdev2.be/fs_anthonym/eindwerk/api/login_check",
+        import.meta.env.VITE_LOGIN_PATH,
         {
           username,
           password,

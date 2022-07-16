@@ -23,7 +23,7 @@ const api = createApi({
     //Get alle prioriteiten
     getAllPriorities: builder.query({
       query: (token) => ({
-        url: `/priorities.json?pagination=false`,
+        url: `/priorities?pagination=false`,
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/jsonld",
@@ -34,7 +34,7 @@ const api = createApi({
     //Get alle user informatie
     getAllUserInfo: builder.query({
       query: ({ id, token }) => ({
-        url: `/users/${id}.json?pagination=false`,
+        url: `/users/${id}?pagination=false`,
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
@@ -45,7 +45,7 @@ const api = createApi({
     //Get profile picture
     getProfilePic: builder.query({
       query: ({ id, token }) => ({
-        url: `/users/${id}.json`,
+        url: `/users/${id}`,
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
@@ -57,7 +57,7 @@ const api = createApi({
     //Get alle contact  informatie
     getContactInfo: builder.query({
       query: ({ id, token }) => ({
-        url: `/contacts/${id}.json`,
+        url: `/contacts/${id}`,
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
@@ -69,7 +69,7 @@ const api = createApi({
     //Get alle contacts van een user order by asc, set title index
     getAllUserContactsIndexed: builder.query({
       query: ({ id, token }) => ({
-        url: `/contacts.json?pagination=false&cntUsr=${
+        url: `/contacts?pagination=false&cntUsr=${
           id | 0
         }&order%5BcntName%5D=asc`,
         headers: {
@@ -139,7 +139,7 @@ const api = createApi({
     //Register user
     registerUser: builder.mutation({
       query: ({ username, password, email, hasAgreed }) => ({
-        url: `/users.json`,
+        url: `/users`,
         headers: {
           "Content-Type": "application/json",
           accept: "application/json",
@@ -156,7 +156,7 @@ const api = createApi({
     //Post een todo
     addOnetodo: builder.mutation({
       query: ({ id, title, token }) => ({
-        url: `/todos.json`,
+        url: `/todos`,
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
@@ -176,7 +176,7 @@ const api = createApi({
     //Post een contact
     addOneContact: builder.mutation({
       query: ({ userId, name, token }) => ({
-        url: `/contacts.json`,
+        url: `/contacts`,
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
@@ -193,7 +193,7 @@ const api = createApi({
     //Post een appointment
     addOneAppointment: builder.mutation({
       query: ({ id, title, startsAt, stopsAt, token }) => ({
-        url: `/appointments.json`,
+        url: `/appointments`,
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
@@ -213,7 +213,7 @@ const api = createApi({
     //Wijzig isChecked van een todo
     updateIsCheckedTodo: builder.mutation({
       query: ({ id, tdoChecked, token }) => ({
-        url: `/todos/${id}.json`,
+        url: `/todos/${id}`,
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
@@ -229,7 +229,7 @@ const api = createApi({
     //Wijzig de titel van een todo
     updateTitleTodo: builder.mutation({
       query: ({ id, todoTitle, token }) => ({
-        url: `/todos/${id}.json`,
+        url: `/todos/${id}`,
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
@@ -245,7 +245,7 @@ const api = createApi({
     //Wijzig de username van een user
     changeUsername: builder.mutation({
       query: ({ id, name, token }) => ({
-        url: `/users/${id}.json`,
+        url: `/users/${id}`,
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
@@ -258,7 +258,7 @@ const api = createApi({
     //Wijzig de profile pic van een user
     changeUserPicture: builder.mutation({
       query: ({ id, picture, token }) => ({
-        url: `/users/${id}.json`,
+        url: `/users/${id}`,
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
@@ -272,7 +272,7 @@ const api = createApi({
     //Wijzig de category van een todo
     updateCategoryTodo: builder.mutation({
       query: ({ id, catId, token }) => ({
-        url: `/todos/${id}.json`,
+        url: `/todos/${id}`,
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
@@ -288,7 +288,7 @@ const api = createApi({
     //Wijzig de prioriteit van een todo
     updatePriorityTodo: builder.mutation({
       query: ({ id, ptyId, token }) => ({
-        url: `/todos/${id}.json`,
+        url: `/todos/${id}`,
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
@@ -313,7 +313,7 @@ const api = createApi({
         contactId,
         token,
       }) => ({
-        url: `/appointments/${appId}.json`,
+        url: `/appointments/${appId}`,
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
@@ -336,7 +336,7 @@ const api = createApi({
     //Wijzig een contact (PUT)
     updateOneContact: builder.mutation({
       query: ({ conid, name, tel, street, postal, city, mail, token }) => ({
-        url: `/contacts/${conid}.json`,
+        url: `/contacts/${conid}`,
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
@@ -360,7 +360,7 @@ const api = createApi({
     //DELETE een todo
     removeOneTodo: builder.mutation({
       query: ({ id, token }) => ({
-        url: `/todos/${id}.json`,
+        url: `/todos/${id}`,
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
@@ -377,7 +377,7 @@ const api = createApi({
     //DELETE een contact
     removeOneContact: builder.mutation({
       query: ({ id, token }) => ({
-        url: `/contacts/${id}.json`,
+        url: `/contacts/${id}`,
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
@@ -393,7 +393,7 @@ const api = createApi({
     //DELETE een user
     removeUserCompletely: builder.mutation({
       query: ({ userId, token }) => ({
-        url: `/users/${userId}.json`,
+        url: `/users/${userId}`,
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
@@ -406,7 +406,7 @@ const api = createApi({
     //DELETE een appointment
     removeOneAppointment: builder.mutation({
       query: ({ id, token }) => ({
-        url: `/appointments/${id}.json`,
+        url: `/appointments/${id}`,
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
