@@ -15,6 +15,7 @@ class HideActionSubscriber implements EventSubscriberInterface
     private $adminContext;
 
     //Deze class zorgt ervoor dat de gebruiker zichzelf niet kan wissen in het admin panel
+    //en blokkeert andere delete acties
     public function __construct( )
     {
 

@@ -34,7 +34,7 @@ use Doctrine\Common\Collections\ArrayCollection;
     *    denormalizationContext={"groups"={"user:write"}},)
     *
     * @ORM\Entity(repositoryClass=UserRepository::class)
-    * @UniqueEntity(fields={"usrName"}, message="Name is already taken")
+    * @UniqueEntity(fields={"usrName"}, message="Name")
     * @UniqueEntity(fields={"usrMail"}, message="Mail is already taken")
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -156,7 +156,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         //Checks if the email address is valid for storing
         $email = trim(strip_tags($usrMail));
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new \Exception("Invalid email format");
+            throw new \Exception("Ongeldig emailformaat");
         }else {
             $this->setUsrUpdatedat();
             $this->usrMail = $usrMail;

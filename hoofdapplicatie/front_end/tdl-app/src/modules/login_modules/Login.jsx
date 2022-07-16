@@ -60,10 +60,12 @@ const Login = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            accept: "application/json",
+            accept: "*/*",
           },
         }
       );
+      console.log(data);
+
       if ("token" in data) {
         saveJWTinCookie(data.token);
       }

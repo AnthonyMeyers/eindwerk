@@ -81,6 +81,12 @@ const Photogallery = () => {
       imgfile: "https://live.staticflickr.com/3066/3042002903_438f30ddb4_b.jpg",
       credits: "Kim Siever",
     },
+    {
+      id: 13,
+      title: "LEGO DOG",
+      imgfile: "https://live.staticflickr.com/645/21527966829_2d172c793b_b.jpg",
+      credits: "Ochre Jelly",
+    },
   ];
 
   return (

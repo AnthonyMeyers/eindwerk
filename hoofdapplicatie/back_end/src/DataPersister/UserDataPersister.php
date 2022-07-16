@@ -12,7 +12,7 @@ class UserDataPersister implements DataPersisterInterface
     private $entityManager;
     private $userPasswordEncoder;
 
-    //Deze class encode het password voor de User entity
+    //Deze encode het password voor de User entity
     public function __construct(EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordEncoder)
     {
         $this->entityManager = $entityManager;
