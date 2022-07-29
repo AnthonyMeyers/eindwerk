@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { destroyJWTCookie } from "./jwttokens";
+import { destroyJWTCookie } from "../helpers/jwttokens";
 import {
   cleanCategories,
   cleanPriorities,

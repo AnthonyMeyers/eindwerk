@@ -1,6 +1,6 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useLogout } from "../../helpers/logout";
+import { useLogout } from "../../customhooks/useLogout";
 
 const Configgroup = () => {
   //Get custom logout hook & function
