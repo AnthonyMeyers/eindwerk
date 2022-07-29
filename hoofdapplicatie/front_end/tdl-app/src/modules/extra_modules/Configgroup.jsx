@@ -1,20 +1,12 @@
-import { useNavigate } from "react-router";
 import { NavLink, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { destroyJWTCookie } from "../../helpers/jwttokens";
-import { useDispatch } from "react-redux";
-import {
-  cleanCategories,
-  cleanPriorities,
-  cleanUserdata,
-} from "../../data/general";
-import { setmessage } from "../../data/message";
+import { useLogout } from "../../helpers/logout";
 
 const Configgroup = () => {
-  //Get dispatch in the fray
-  const dispatch = useDispatch();
-  //Gather information & nav
-  const nav = useNavigate();
+  //Get custom logout hook & function
+  const logout = useLogout();
+
+  //Gather information
   const location = useLocation();
   const [active, setActive] = useState(location.pathname);
 
@@ -22,17 +14,6 @@ const Configgroup = () => {
   useEffect(() => {
     setActive(location.pathname);
   }, [location]);
-
-  //Logout on door click & states opschonen
-  function handleLogoutClick() {
-    dispatch(setmessage({ message: "You have successfully logged of." }));
-    dispatch(cleanCategories());
-    dispatch(cleanPriorities());
-    dispatch(cleanUserdata());
-    destroyJWTCookie();
-    localStorage.clear();
-    return nav("/login");
-  }
 
   return (
     <>
@@ -67,7 +48,7 @@ const Configgroup = () => {
       )}
       <a
         className="configgroup__logout  configgroup__block"
-        onClick={handleLogoutClick}
+        onClick={() => logout()}
       >
         <span className="configgroup__block__text">logout</span>
       </a>
