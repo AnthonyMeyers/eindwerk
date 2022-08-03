@@ -29,7 +29,7 @@ export function useTimeExpiredLogout() {
   const nav = useNavigate();
 
   return () => {
-    dispatch(setmessage({ message: "You have successfully logged of." }));
+    dispatch(setmessage({ message: "Your time has expired." }));
     dispatch(cleanCategories());
     dispatch(cleanPriorities());
     dispatch(cleanUserdata());
