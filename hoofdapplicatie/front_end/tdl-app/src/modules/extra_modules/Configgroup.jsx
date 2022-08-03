@@ -1,6 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useLogout } from "../../customhooks/useLogout";
+import { Helmet } from "react-helmet";
 
 const Configgroup = () => {
   //Get custom logout hook & function
@@ -17,6 +18,10 @@ const Configgroup = () => {
 
   return (
     <>
+      <Helmet>
+        <title>The tdl app application</title>
+        <meta name="description" content="the todo list application itself" />
+      </Helmet>
       {active != "/phonebook" && (
         <NavLink
           to="/phonebook"

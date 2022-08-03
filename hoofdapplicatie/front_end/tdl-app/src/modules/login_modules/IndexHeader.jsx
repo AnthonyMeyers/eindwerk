@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
+import { Helmet } from "react-helmet";
 
 const IndexHeader = () => {
   //Set state
@@ -12,7 +13,19 @@ const IndexHeader = () => {
 
   return (
     <header className="headerhome">
-      <h1 className="headerhome__title">TDL webapplication</h1>
+      <Helmet>
+        <title>The todo list application</title>
+        <meta
+          name="description"
+          content="A todo application which saves todos, contacts and keeps an agenda."
+        />
+        <meta name="author" content="Meyers Anthony"></meta>
+        <meta
+          name="keywords"
+          content="todo, todos, agenda, contacts, work, application, list, document, free, time, eindwerk"
+        ></meta>
+      </Helmet>
+      ;<h1 className="headerhome__title">TDL webapplication</h1>
       <a
         className={
           menu

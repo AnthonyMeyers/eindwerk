@@ -22,6 +22,7 @@
     "react-calendar": "^3.7.0",
     "react-dom": "^18.0.0",
     "react-dotenv": "^0.1.0",
+    "react-helmet": "^6.1.0",
     "react-input-timepicker": "^1.1.1",
     "react-jwt": "^1.1.6",
     "react-redux": "^8.0.1",
