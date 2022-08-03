@@ -9,7 +9,7 @@ const ProtectedRoute = ({ children }) => {
   const now = new Date();
 
   //Inlogtijd laten verlopen na een 50 min, server stopt token na 60 min
-  const useTime = 50 * 60 * 1;
+  const useTime = 50 * 60 * 1000;
 
   if (!userId || userId === isNaN || time.getTime() + useTime < now.getTime()) {
     expiredLogout();
